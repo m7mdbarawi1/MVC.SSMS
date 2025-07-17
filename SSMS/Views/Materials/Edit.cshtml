@@ -1,0 +1,48 @@
+﻿@model SSMS.Models.Material
+
+@{
+    ViewData["Title"] = "Edit Material";
+}
+<link href="~/css/materials/edit.css" rel="stylesheet" />
+
+<div class="material-edit-container">
+    <h1 class="material-edit-title">Edit Material</h1>
+    <h4 class="material-edit-subtitle">Material Details</h4>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <form asp-action="Edit" class="edit-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="MaterialId" />
+
+                <div class="form-group">
+                    <label asp-for="MaterialNameArabic" class="control-label"></label>
+                    <input asp-for="MaterialNameArabic" class="form-control arabic-input" />
+                    <span asp-validation-for="MaterialNameArabic" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MaterialNameEnglish" class="control-label"></label>
+                    <input asp-for="MaterialNameEnglish" class="form-control" />
+                    <span asp-validation-for="MaterialNameEnglish" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="action-links">
+        <a asp-action="Index" class="back-link">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

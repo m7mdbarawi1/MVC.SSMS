@@ -1,0 +1,30 @@
+﻿@model SSMS.Models.Class
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link href="~/css/classes/details.css" rel="stylesheet" />
+<div class="details-container">
+    <h1 class="details-title">Details</h1>
+
+    <div>
+        <h4 class="details-subtitle">Class</h4>
+        <hr />
+
+        <div class="details-content">
+            <dl class="details-list">
+                <dt class="details-term">@Html.DisplayNameFor(model => model.ClassNameArabic)</dt>
+                <dd class="details-definition">@Html.DisplayFor(model => model.ClassNameArabic)</dd>
+
+                <dt class="details-term">@Html.DisplayNameFor(model => model.ClassNameEnglish)</dt>
+                <dd class="details-definition">@Html.DisplayFor(model => model.ClassNameEnglish)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="details-actions">
+        <a asp-action="Edit" asp-route-id="@Model?.ClassId" class="details-action-link edit">Edit</a>
+        <a asp-action="Index" class="details-action-link">Back to List</a>
+    </div>
+</div>

@@ -1,0 +1,144 @@
+﻿/* Delete Confirmation Page Styles */
+.delete-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.delete-title {
+    color: #ef4444;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.delete-confirmation {
+    color: #6b7280;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.delete-subtitle {
+    color: #4f46e5;
+    font-size: 1.5rem;
+    margin: 1.5rem 0 1rem;
+}
+
+.delete-details {
+    margin: 1.5rem 0;
+}
+
+    .delete-details dl {
+        display: grid;
+        grid-template-columns: max-content auto;
+        gap: 1rem;
+    }
+
+    .delete-details dt {
+        font-weight: 600;
+        color: #4b5563;
+        text-align: right;
+        padding-right: 1rem;
+    }
+
+    .delete-details dd {
+        color: #374151;
+        margin: 0;
+        padding: 0.25rem 0;
+    }
+
+.delete-form {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+    .delete-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+.back-link {
+    display: inline-block;
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+    .back-link:hover {
+        color: #7c3aed;
+        background-color: #f9fafb;
+        text-decoration: none;
+    }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .delete-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .delete-title {
+        font-size: 1.75rem;
+    }
+
+    .delete-confirmation {
+        font-size: 1.1rem;
+    }
+
+    .delete-details dl {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .delete-details dt {
+        text-align: left;
+        padding-right: 0;
+    }
+
+    .delete-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .delete-btn, .back-link {
+        width: 100%;
+        text-align: center;
+    }
+}

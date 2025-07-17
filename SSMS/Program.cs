@@ -1,0 +1,37 @@
+﻿using Microsoft.EntityFrameworkCore;
+using SSMS.Models;
+
+var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+                      ?? throw new InvalidOperationException("Connection string not found.");
+
+builder.Services.AddDbContext<SSMSContext>(options =>
+    options.UseSqlServer(connectionString));
+
+builder.Services.AddAuthentication("SSMSAuth")
+    .AddCookie("SSMSAuth", options =>
+    {
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Pipeline
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

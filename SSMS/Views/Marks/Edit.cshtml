@@ -1,0 +1,44 @@
+﻿@model SSMS.Models.Mark
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<link rel="stylesheet" href="~/css/Marks/Edit.css" />
+
+<div class="edit-marks-container">
+    <h1 class="edit-marks-title">Edit</h1>
+    <h4 class="edit-subtitle">Mark</h4>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Edit" class="edit-marks-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="StudentId" />
+                <input type="hidden" asp-for="ClassId" />
+                <input type="hidden" asp-for="MaterialId" />
+
+                <div class="form-group">
+                    <label asp-for="Mark1" class="control-label"></label>
+                    <input asp-for="Mark1" class="form-control" />
+                    <span asp-validation-for="Mark1" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="save-btn" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index" class="back-link">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,128 @@
+﻿/* Details Page Styles */
+.details-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.details-title {
+    color: #4f46e5;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.details-subtitle {
+    color: #6b7280;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.details-content {
+    margin: 1.5rem 0;
+}
+
+.details-list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.details-term {
+    font-weight: 600;
+    color: #4b5563;
+    text-align: right;
+    padding-right: 1rem;
+}
+
+.details-definition {
+    color: #374151;
+    padding: 0.25rem 0;
+}
+
+.details-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 1rem;
+}
+
+.details-action-link {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+    .details-action-link:hover {
+        color: #7c3aed;
+        background-color: #f5f3ff;
+        text-decoration: none;
+    }
+
+    .details-action-link.edit {
+        background-color: #4f46e5;
+        color: white;
+    }
+
+        .details-action-link.edit:hover {
+            background-color: #4338ca;
+        }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .details-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    .details-title {
+        font-size: 1.75rem;
+    }
+
+    .details-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .details-list {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .details-term {
+        text-align: left;
+        padding-right: 0;
+        margin-top: 0.5rem;
+    }
+
+    .details-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .details-action-link {
+        text-align: center;
+    }
+}

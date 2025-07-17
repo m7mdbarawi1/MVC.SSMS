@@ -1,0 +1,38 @@
+﻿@model SSMS.Models.Material
+
+@{
+    ViewData["Title"] = "Material Details";
+}
+<link href="~/css/materials/details.css" rel="stylesheet" />
+
+<div class="material-details-container">
+    <h1 class="material-details-title">Material Details</h1>
+
+    <div class="details-content">
+        <h4 class="material-details-subtitle">Material Information</h4>
+        <hr />
+
+        <dl class="detail-row">
+            <dt class="detail-label">
+                @Html.DisplayNameFor(model => model.MaterialNameArabic)
+            </dt>
+            <dd class="detail-value arabic-value">
+                @Html.DisplayFor(model => model.MaterialNameArabic)
+            </dd>
+        </dl>
+
+        <dl class="detail-row">
+            <dt class="detail-label">
+                @Html.DisplayNameFor(model => model.MaterialNameEnglish)
+            </dt>
+            <dd class="detail-value">
+                @Html.DisplayFor(model => model.MaterialNameEnglish)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="action-links">
+        <a asp-action="Edit" asp-route-id="@Model?.MaterialId" class="action-link edit">Edit</a>
+        <a asp-action="Index" class="action-link back">Back to List</a>
+    </div>
+</div>

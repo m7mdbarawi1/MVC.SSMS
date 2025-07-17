@@ -1,0 +1,37 @@
+﻿@model SSMS.Models.Mark
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<link rel="stylesheet" href="~/css/Marks/Details.css" />
+
+<div class="details-marks-container">
+    <h1 class="details-marks-title">Details</h1>
+
+    <div>
+        <h4 class="details-subtitle">Mark</h4>
+        <hr />
+
+        <div class="details-content">
+            <dl class="details-list">
+                <dt class="details-term">@Html.DisplayNameFor(model => model.Mark1)</dt>
+                <dd class="details-definition">@Html.DisplayFor(model => model.Mark1)</dd>
+
+                <dt class="details-term">@Html.DisplayNameFor(model => model.Class)</dt>
+                <dd class="details-definition">@Html.DisplayFor(model => model.Class.ClassId)</dd>
+
+                <dt class="details-term">@Html.DisplayNameFor(model => model.Material)</dt>
+                <dd class="details-definition">@Html.DisplayFor(model => model.Material.MaterialId)</dd>
+
+                <dt class="details-term">@Html.DisplayNameFor(model => model.Student)</dt>
+                <dd class="details-definition">@Html.DisplayFor(model => model.Student.StudentId)</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="details-actions">
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }, new { @class = "action-link edit" })
+        <a asp-action="Index" class="action-link">Back to List</a>
+    </div>
+</div>

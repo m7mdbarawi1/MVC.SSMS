@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SSMS.Models.Material>
+
+@{
+    ViewData["Title"] = "Materials";
+}
+
+<link href="~/css/materials/index.css" rel="stylesheet" />
+
+<div class="materials-container">
+    <h1 class="materials-title">Materials</h1>
+
+    <a asp-action="Create" class="create-link">
+        <i class="fas fa-plus"></i> Create New
+    </a>
+
+    <table class="materials-table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaterialNameArabic)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaterialNameEnglish)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaterialNameArabic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaterialNameEnglish)
+                    </td>
+                    <td>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.MaterialId" class="action-link edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.MaterialId" class="action-link details">
+                                <i class="fas fa-info-circle"></i> Details
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.MaterialId" class="action-link delete">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}

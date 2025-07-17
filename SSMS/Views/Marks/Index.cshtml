@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SSMS.Models.Mark>
+
+@{
+    ViewData["Title"] = "Marks";
+}
+
+<link href="~/css/marks/index.css" rel="stylesheet" />
+<div class="marks-container">
+    <h1 class="marks-title">Marks</h1>
+
+    <p>
+        <a asp-action="Create" class="create-link">Create New</a>
+    </p>
+
+    <table class="marks-table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Mark1)</th>
+                <th>@Html.DisplayNameFor(model => model.Class)</th>
+                <th>@Html.DisplayNameFor(model => model.Material)</th>
+                <th>@Html.DisplayNameFor(model => model.Student)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Mark1)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Class.ClassNameArabic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Material.MaterialNameArabic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Student.StudentId)</td>
+                    <td>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId" class="action-link edit">Edit</a>
+                            <a asp-action="Details" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId" class="action-link details">Details</a>
+                            <a asp-action="Delete" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId" class="action-link delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+}

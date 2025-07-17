@@ -1,0 +1,30 @@
+﻿@model IEnumerable<SSMS.Models.Mark>
+
+@{
+    ViewData["Title"] = "My Marks";
+}
+<link href="~/css/marks/mymarks.css" rel="stylesheet" />
+
+<div class="my-marks-container">
+    <h2 class="my-marks-title">My Marks</h2>
+
+    <table class="marks-table">
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>Material</th>
+                <th>Mark</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="arabic-text">@item.Class.ClassNameArabic</td>
+                    <td class="arabic-text">@item.Material.MaterialNameArabic</td>
+                    <td class="mark-value">@item.Mark1</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

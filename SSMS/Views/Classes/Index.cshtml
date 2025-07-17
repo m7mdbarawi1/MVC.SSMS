@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SSMS.Models.Class>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link href="~/css/classes/index.css" rel="stylesheet" />
+<div class="classes-container">
+    <h1 class="classes-title">Classes</h1>
+
+    <p>
+        <a asp-action="Create" class="create-link">Create New</a>
+    </p>
+
+    <table class="classes-table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassNameArabic)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClassNameEnglish)
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassNameArabic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassNameEnglish)
+                    </td>
+                    <td>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.ClassId" class="action-link edit">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.ClassId" class="action-link">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.ClassId" class="action-link delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

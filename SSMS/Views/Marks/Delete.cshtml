@@ -1,0 +1,41 @@
+﻿@model SSMS.Models.Mark
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<link rel="stylesheet" href="~/css/Marks/Delete.css" />
+
+<div class="delete-marks-container">
+    <h1 class="delete-marks-title">Delete</h1>
+    <h3 class="delete-confirmation">Are you sure you want to delete this?</h3>
+
+    <div>
+        <h4 class="delete-subtitle">Mark</h4>
+        <hr />
+
+        <div class="delete-details">
+            <dl class="row">
+                <dt>@Html.DisplayNameFor(model => model.Mark1)</dt>
+                <dd>@Html.DisplayFor(model => model.Mark1)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Class)</dt>
+                <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Material)</dt>
+                <dd>@Html.DisplayFor(model => model.Material.MaterialId)</dd>
+
+                <dt>@Html.DisplayNameFor(model => model.Student)</dt>
+                <dd>@Html.DisplayFor(model => model.Student.StudentId)</dd>
+            </dl>
+        </div>
+
+        <form asp-action="Delete" class="delete-form">
+            <input type="hidden" asp-for="StudentId" />
+            <input type="hidden" asp-for="ClassId" />
+            <input type="hidden" asp-for="MaterialId" />
+            <input type="submit" value="Delete" class="delete-btn" />
+            <a asp-action="Index" class="back-link">Back to List</a>
+        </form>
+    </div>
+</div>
