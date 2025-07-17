@@ -72,7 +72,7 @@ namespace SSMS.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", student.UserId);
             return View(student);
         }
-
+        
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

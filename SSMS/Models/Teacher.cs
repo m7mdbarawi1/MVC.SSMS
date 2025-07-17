@@ -14,7 +14,7 @@ public partial class Teacher
     public int Gender { get; set; }
 
     public string FullNameArabic { get; set; } = null!;
-
+    //Hello world
     public string? FullNameEnglish { get; set; }
 
     public virtual Material Material { get; set; } = null!;

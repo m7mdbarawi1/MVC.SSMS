@@ -15,7 +15,7 @@ builder.Services.AddAuthentication("SSMSAuth")
         options.LoginPath = "/Account/Login";
         options.AccessDeniedPath = "/Account/AccessDenied";
     });
-
+// you look good!
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
 
