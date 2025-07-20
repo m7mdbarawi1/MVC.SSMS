@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace SSMS.Models;
@@ -17,7 +18,9 @@ public partial class Teacher
     //Hello world
     public string? FullNameEnglish { get; set; }
 
+    [ValidateNever]
     public virtual Material Material { get; set; } = null!;
 
+    [ValidateNever]
     public virtual User? User { get; set; }
 }

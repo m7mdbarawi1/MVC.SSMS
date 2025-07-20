@@ -13,10 +13,13 @@ public partial class Mark
     public int MaterialId { get; set; }
 
     public decimal Mark1 { get; set; }
+
     [ValidateNever]
     public virtual Class Class { get; set; } = null!;
+
     [ValidateNever]
     public virtual Material Material { get; set; } = null!;
+
     [ValidateNever]
     public virtual Student Student { get; set; } = null!;
 }

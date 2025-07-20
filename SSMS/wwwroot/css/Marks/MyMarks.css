@@ -1,12 +1,11 @@
-﻿/* My Marks Page Styles - Clean Modern Theme */
+﻿/* My Marks Page Styles */
 .my-marks-container {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 2rem auto;
     padding: 2rem;
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.05);
     animation: fadeInUp 0.5s ease-out;
 }
 
@@ -18,85 +17,101 @@
     text-align: center;
 }
 
+/* Table */
 .marks-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin: 1.5rem 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    table-layout: fixed; /* Equal column widths */
+    text-align: center;
 }
 
-.marks-table thead th {
-    background-color: #4f46e5;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 1rem;
-    text-align: left;
-    border-bottom: none;
-}
+    /* --- HARD RESET to defeat external/global flex/table overrides --- */
+    .marks-table thead,
+    .marks-table tbody,
+    .marks-table tr,
+    .marks-table th,
+    .marks-table td {
+        display: table-row-group;
+    }
 
-.marks-table tbody td {
-    padding: 1rem;
-    border-bottom: 1px solid #e2e8f0;
-    color: #4b5563;
-}
+    .marks-table tr {
+        display: table-row;
+    }
 
-.marks-table tbody tr:last-child td {
-    border-bottom: none;
-}
+    .marks-table th,
+    .marks-table td {
+        display: table-cell;
+        width: 33.333%;
+    }
 
-.marks-table tbody tr:nth-child(even) {
-    background-color: #f8fafc;
-}
+    /* Header */
+    .marks-table thead th {
+        background: #4f46e5;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 1rem;
+        vertical-align: middle;
+        border: none;
+    }
 
-.marks-table tbody tr:hover td {
-    background-color: #f0f4ff;
-}
+    /* Body cells */
+    .marks-table tbody td {
+        padding: 1.25rem 0.75rem;
+        border-bottom: 1px solid #e2e8f0;
+        color: #1e293b;
+        vertical-align: middle;
+        text-align: center;
+        word-wrap: break-word;
+    }
 
-/* Arabic text columns */
+    .marks-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .marks-table tbody tr:hover td {
+        background: #f9fafb;
+    }
+
+/* Arabic text */
 .arabic-text {
-    font-family: 'Arial', 'Segoe UI', sans-serif;
     direction: rtl;
-    text-align: right;
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
 }
 
-/* Mark value styling */
+/* Mark value */
 .mark-value {
     font-weight: 600;
-    color: #4f46e5;
+    color: #1e3a8a;
 }
 
-/* Animations */
+/* Animation */
 @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
     .my-marks-container {
         margin: 1rem;
-        padding: 1rem;
+        padding: 1.5rem;
     }
 
     .my-marks-title {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
 
-    .marks-table {
-        display: block;
-        overflow-x: auto;
-    }
-
-    .marks-table thead th,
-    .marks-table tbody td {
-        padding: 0.75rem;
-        font-size: 0.9rem;
+    .marks-table th, .marks-table td {
+        padding: 0.9rem 0.5rem;
     }
 }

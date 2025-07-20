@@ -1,12 +1,11 @@
-﻿/* Marks Create Page Styles */
+﻿/* Create Mark Page Styles */
 .create-marks-container {
     max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
     animation: fadeInUp 0.5s ease-out;
 }
 
@@ -19,9 +18,9 @@
 
 .create-marks-subtitle {
     color: #6b7280;
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 1.25rem;
     margin-bottom: 1.5rem;
+    font-weight: 500;
 }
 
 .create-marks-form {
@@ -32,12 +31,12 @@
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #4b5563;
-    font-weight: 500;
-}
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #4b5563;
+        font-weight: 500;
+    }
 
 .form-control {
     width: 100%;
@@ -49,20 +48,12 @@
     background-color: #f9fafb;
 }
 
-.form-control:focus {
-    outline: none;
-    border-color: #a5b4fc;
-    box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
-    background-color: white;
-}
-
-select.form-control {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%234b5563' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 0.75rem center;
-    background-size: 16px 12px;
-}
+    .form-control:focus {
+        outline: none;
+        border-color: #a5b4fc;
+        box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
+        background-color: white;
+    }
 
 .text-danger {
     color: #ef4444;
@@ -84,11 +75,10 @@ select.form-control {
     margin-top: 1rem;
 }
 
-.create-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-                0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
+    .create-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
 .back-link {
     display: inline-block;
@@ -97,15 +87,12 @@ select.form-control {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
 }
 
-.back-link:hover {
-    color: #7c3aed;
-    background-color: #f5f3ff;
-    text-decoration: none;
-}
+    .back-link:hover {
+        color: #7c3aed;
+        text-decoration: underline;
+    }
 
 /* Animations */
 @keyframes fadeInUp {
@@ -113,6 +100,7 @@ select.form-control {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -131,7 +119,7 @@ select.form-control {
     }
 
     .create-marks-subtitle {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
 
     .form-group {

@@ -1,12 +1,11 @@
-﻿/* Marks Edit Page Styles */
+﻿/* Edit Mark Page Styles */
 .edit-marks-container {
     max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
     animation: fadeInUp 0.5s ease-out;
 }
 
@@ -26,14 +25,13 @@
 
 .edit-marks-form {
     margin: 1.5rem 0;
-    padding: 1rem 0;
 }
 
 .form-group {
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
+.form-label {
     display: block;
     margin-bottom: 0.5rem;
     color: #4b5563;
@@ -50,12 +48,12 @@
     background-color: #f9fafb;
 }
 
-.form-control:focus {
-    outline: none;
-    border-color: #a5b4fc;
-    box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
-    background-color: white;
-}
+    .form-control:focus {
+        outline: none;
+        border-color: #a5b4fc;
+        box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
+        background-color: white;
+    }
 
 .text-danger {
     color: #ef4444;
@@ -74,31 +72,28 @@
     border-radius: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-top: 1rem;
 }
 
-.save-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-                0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
+    .save-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
 .back-link {
-    display: inline-block;
-    margin-top: 1.5rem;
     color: #4f46e5;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
 }
 
-.back-link:hover {
-    color: #7c3aed;
-    background-color: #f5f3ff;
-    text-decoration: none;
-}
+    .back-link:hover {
+        color: #7c3aed;
+        background-color: #f9fafb;
+        text-decoration: none;
+    }
 
 /* Animations */
 @keyframes fadeInUp {
@@ -106,6 +101,7 @@
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -127,11 +123,9 @@
         font-size: 1.25rem;
     }
 
-    .form-group {
-        margin-bottom: 1.25rem;
-    }
-
-    .save-btn {
+    .save-btn,
+    .back-link {
         width: 100%;
+        text-align: center;
     }
 }

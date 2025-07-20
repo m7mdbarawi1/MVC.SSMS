@@ -1,12 +1,11 @@
-﻿/* Marks Details Page Styles */
+﻿/* Details Mark Page Styles */
 .details-marks-container {
     max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
     animation: fadeInUp 0.5s ease-out;
 }
 
@@ -64,20 +63,20 @@
     border-radius: 0.5rem;
 }
 
-.action-link:hover {
-    color: #7c3aed;
-    background-color: #f5f3ff;
-    text-decoration: none;
-}
+    .action-link:hover {
+        color: #7c3aed;
+        background-color: #f5f3ff;
+        text-decoration: none;
+    }
 
-.action-link.edit {
-    background-color: #4f46e5;
-    color: white;
-}
+    .action-link.edit {
+        background-color: #4f46e5;
+        color: white;
+    }
 
-.action-link.edit:hover {
-    background-color: #4338ca;
-}
+        .action-link.edit:hover {
+            background-color: #4338ca;
+        }
 
 /* Animations */
 @keyframes fadeInUp {
@@ -85,6 +84,7 @@
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

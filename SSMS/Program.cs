@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SSMS.Models;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddAuthentication("SSMSAuth")
 // you look good!
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
