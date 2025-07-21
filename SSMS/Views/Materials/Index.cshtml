@@ -3,25 +3,23 @@
 @{
     ViewData["Title"] = "Materials";
 }
-
 <link href="~/css/materials/index.css" rel="stylesheet" />
 
 <div class="materials-container">
     <h1 class="materials-title">Materials</h1>
 
-    <a asp-action="Create" class="create-link">
-        <i class="fas fa-plus"></i> Create New
-    </a>
+    <p>
+        <a asp-action="Create" class="create-link">Create New</a>
+    </p>
 
-    <table class="materials-table">
+    <!-- ✅ Search Bar -->
+    <input type="text" id="materialSearchInput" class="form-control mb-3" placeholder="Search by Arabic or English material name..." />
+
+    <table class="materials-table" id="materialsTable">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaterialNameArabic)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaterialNameEnglish)
-                </th>
+                <th>@Html.DisplayNameFor(model => model.MaterialNameArabic)</th>
+                <th>@Html.DisplayNameFor(model => model.MaterialNameEnglish)</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,23 +27,13 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaterialNameArabic)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaterialNameEnglish)
-                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.MaterialNameArabic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.MaterialNameEnglish)</td>
                     <td>
                         <div class="action-links">
-                            <a asp-action="Edit" asp-route-id="@item.MaterialId" class="action-link edit">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                            <a asp-action="Details" asp-route-id="@item.MaterialId" class="action-link details">
-                                <i class="fas fa-info-circle"></i> Details
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.MaterialId" class="action-link delete">
-                                <i class="fas fa-trash-alt"></i> Delete
-                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.MaterialId" class="action-link edit">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.MaterialId" class="action-link">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.MaterialId" class="action-link delete">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -54,7 +42,20 @@
     </table>
 </div>
 
+<!-- ✅ JavaScript to filter table rows -->
 @section Scripts {
-    <!-- Add Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <script>
+        document.getElementById("materialSearchInput").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#materialsTable tbody tr");
+
+            rows.forEach(row => {
+                const arabic = row.cells[0].textContent.toLowerCase();
+                const english = row.cells[1].textContent.toLowerCase();
+
+                const match = arabic.includes(filter) || english.includes(filter);
+                row.style.display = match ? "" : "none";
+            });
+        });
+    </script>
 }

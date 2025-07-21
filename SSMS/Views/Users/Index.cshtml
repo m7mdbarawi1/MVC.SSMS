@@ -9,45 +9,56 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<!-- ✅ Search bar -->
+<input type="text" id="userSearchInput" class="form-control mb-3" placeholder="Search users by name, username, password, or user type..." />
+
+<table class="table" id="userTable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserType)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.FullName)</th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Password)</th>
+            <th>@Html.DisplayNameFor(model => model.UserType)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserType)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserType)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- ✅ JavaScript search filter for all fields -->
+<script>
+    document.getElementById("userSearchInput").addEventListener("keyup", function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll("#userTable tbody tr");
+
+        rows.forEach(row => {
+            const fullName = row.cells[0].textContent.toLowerCase();
+            const userName = row.cells[1].textContent.toLowerCase();
+            const password = row.cells[2].textContent.toLowerCase();
+            const userType = row.cells[3].textContent.toLowerCase();
+
+            const match = fullName.includes(filter)
+                || userName.includes(filter)
+                || password.includes(filter)
+                || userType.includes(filter);
+
+            row.style.display = match ? "" : "none";
+        });
+    });
+</script>

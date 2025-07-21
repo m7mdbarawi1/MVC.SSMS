@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SSMS.Models;
 using Microsoft.OpenApi.Models;
+using SSMS.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

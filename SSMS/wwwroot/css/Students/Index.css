@@ -1,5 +1,4 @@
-﻿/* Materials Index Page Styles */
-.materials-container {
+﻿.students-container {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 2rem;
@@ -9,7 +8,7 @@
     animation: fadeInUp 0.5s ease-out;
 }
 
-.materials-title {
+.students-title {
     color: #4f46e5;
     font-size: 2rem;
     font-weight: 700;
@@ -33,14 +32,14 @@
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
 
-.materials-table {
+.students-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin: 1.5rem 0;
+    margin-top: 1.5rem;
 }
 
-    .materials-table thead th {
+    .students-table thead th {
         background-color: #f8fafc;
         color: #4f46e5;
         font-weight: 600;
@@ -49,57 +48,39 @@
         border-bottom: 2px solid #e2e8f0;
     }
 
-    .materials-table tbody td {
+    .students-table tbody td {
         padding: 1rem;
         border-bottom: 1px solid #e2e8f0;
-        color: #4b5563;
+        color: #374151;
     }
 
-    .materials-table tbody tr:last-child td {
+    .students-table tbody tr:last-child td {
         border-bottom: none;
     }
 
-    .materials-table tbody tr:hover td {
+    .students-table tbody tr:hover td {
         background-color: #f9fafb;
     }
 
-.action-links {
-    display: flex;
-    gap: 1rem;
-}
-
 .action-link {
-    color: #4f46e5;
+    margin-right: 1rem;
     text-decoration: none;
     font-weight: 500;
-    transition: all 0.2s ease;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
+    color: #4f46e5;
 }
 
     .action-link:hover {
-        color: #7c3aed;
-        background-color: #f5f3ff;
-        text-decoration: none;
+        text-decoration: underline;
     }
-
-    .action-link.edit {
-        color: #2563eb;
-    }
-
-        .action-link.edit:hover {
-            background-color: #dbeafe;
-        }
 
     .action-link.delete {
         color: #dc2626;
     }
 
         .action-link.delete:hover {
-            background-color: #fee2e2;
+            text-decoration: underline;
         }
 
-/* Animations */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -112,30 +93,14 @@
     }
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-    .materials-container {
+    .students-container {
         margin: 1rem;
         padding: 1.5rem;
     }
 
-    .materials-title {
-        font-size: 1.75rem;
-    }
-
-    .materials-table {
+    .students-table {
         display: block;
         overflow-x: auto;
-    }
-
-    .action-links {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .action-link {
-        display: block;
-        padding: 0.5rem;
-        text-align: center;
     }
 }

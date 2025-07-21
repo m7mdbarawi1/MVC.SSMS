@@ -9,51 +9,62 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+
+<!-- ✅ Search Bar -->
+<input type="text" id="teacherSearchInput" class="form-control mb-3" placeholder="Search by name, gender, material ID, or user ID..." />
+
+<table class="table" id="teachersTable">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullNameArabic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullNameEnglish)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Material)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Gender)</th>
+            <th>@Html.DisplayNameFor(model => model.FullNameArabic)</th>
+            <th>@Html.DisplayNameFor(model => model.FullNameEnglish)</th>
+            <th>@Html.DisplayNameFor(model => model.Material)</th>
+            <th>@Html.DisplayNameFor(model => model.User)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullNameArabic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullNameEnglish)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Material.MaterialId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TeacherId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TeacherId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TeacherId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                <td>@Html.DisplayFor(modelItem => item.FullNameArabic)</td>
+                <td>@Html.DisplayFor(modelItem => item.FullNameEnglish)</td>
+                <td>@Html.DisplayFor(modelItem => item.Material.MaterialId)</td>
+                <td>@Html.DisplayFor(modelItem => item.User.UserId)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TeacherId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TeacherId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TeacherId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<!-- ✅ JavaScript for client-side filtering -->
+@section Scripts {
+    <script>
+        document.getElementById("teacherSearchInput").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#teachersTable tbody tr");
+
+            rows.forEach(row => {
+                const gender = row.cells[0].textContent.toLowerCase();
+                const nameAr = row.cells[1].textContent.toLowerCase();
+                const nameEn = row.cells[2].textContent.toLowerCase();
+                const materialId = row.cells[3].textContent.toLowerCase();
+                const userId = row.cells[4].textContent.toLowerCase();
+
+                const match = gender.includes(filter)
+                    || nameAr.includes(filter)
+                    || nameEn.includes(filter)
+                    || materialId.includes(filter)
+                    || userId.includes(filter);
+
+                row.style.display = match ? "" : "none";
+            });
+        });
+    </script>
+}

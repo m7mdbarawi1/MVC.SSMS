@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using SSMS.Models;
 
-namespace SSMS.Models;
+namespace SSMS.Data;
 
 public partial class SSMSContext : DbContext
 {

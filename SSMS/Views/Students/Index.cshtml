@@ -1,65 +1,73 @@
 ﻿@model IEnumerable<SSMS.Models.Student>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Students";
 }
+<link href="~/css/students/index.css" rel="stylesheet" />
 
-<h1>Index</h1>
+<div class="students-container">
+    <h1 class="students-title">Students</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullNameArabic)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullNameEnglish)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Class)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullNameArabic)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullNameEnglish)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.ClassId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StudentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
-            </td>
-        </tr>
+    <a asp-action="Create" class="create-link">Create New</a>
+
+    <!-- ✅ Search Bar -->
+    <input type="text" id="studentSearchInput" class="form-control mb-3" placeholder="Search by name, gender, class, or username..." />
+
+    <table class="students-table" id="studentsTable">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Gender)</th>
+                <th>@Html.DisplayNameFor(model => model.FullNameArabic)</th>
+                <th>@Html.DisplayNameFor(model => model.FullNameEnglish)</th>
+                <th>@Html.DisplayNameFor(model => model.Age)</th>
+                <th>@Html.DisplayNameFor(model => model.Class)</th>
+                <th>@Html.DisplayNameFor(model => model.User)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                    <td class="arabic-value">@Html.DisplayFor(modelItem => item.FullNameArabic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FullNameEnglish)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Age)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Class.ClassNameEnglish)</td>
+                    <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.StudentId" class="action-link">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.StudentId" class="action-link">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.StudentId" class="action-link delete">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- ✅ JavaScript for client-side filtering -->
+@section Scripts {
+    <script>
+        document.getElementById("studentSearchInput").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#studentsTable tbody tr");
+
+            rows.forEach(row => {
+                const gender = row.cells[0].textContent.toLowerCase();
+                const nameAr = row.cells[1].textContent.toLowerCase();
+                const nameEn = row.cells[2].textContent.toLowerCase();
+                const className = row.cells[4].textContent.toLowerCase();
+                const username = row.cells[5].textContent.toLowerCase();
+
+                const match = gender.includes(filter)
+                    || nameAr.includes(filter)
+                    || nameEn.includes(filter)
+                    || className.includes(filter)
+                    || username.includes(filter);
+
+                row.style.display = match ? "" : "none";
+            });
+        });
+    </script>
 }
-    </tbody>
-</table>

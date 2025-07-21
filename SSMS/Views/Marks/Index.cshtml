@@ -4,6 +4,7 @@
     ViewData["Title"] = "Marks";
 }
 <link href="~/css/marks/index.css" rel="stylesheet" />
+
 <div class="marks-container">
     <h1 class="marks-title">Marks</h1>
 
@@ -11,7 +12,10 @@
         <a asp-action="Create" class="create-link">Create New</a>
     </p>
 
-    <table class="marks-table">
+    <!-- ✅ Search Input -->
+    <input type="text" id="markSearchInput" class="form-control mb-3" placeholder="Search by mark, class, material, or student ID..." />
+
+    <table class="marks-table" id="marksTable">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Mark1)</th>
@@ -43,5 +47,26 @@
 </div>
 
 @section Scripts {
+    <script>
+        document.getElementById("markSearchInput").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#marksTable tbody tr");
+
+            rows.forEach(row => {
+                const mark = row.cells[0].textContent.toLowerCase();
+                const className = row.cells[1].textContent.toLowerCase();
+                const materialName = row.cells[2].textContent.toLowerCase();
+                const studentId = row.cells[3].textContent.toLowerCase();
+
+                const match = mark.includes(filter)
+                    || className.includes(filter)
+                    || materialName.includes(filter)
+                    || studentId.includes(filter);
+
+                row.style.display = match ? "" : "none";
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 }

@@ -5,6 +5,7 @@
 }
 
 <link href="~/css/classes/index.css" rel="stylesheet" />
+
 <div class="classes-container">
     <h1 class="classes-title">Classes</h1>
 
@@ -12,15 +13,14 @@
         <a asp-action="Create" class="create-link">Create New</a>
     </p>
 
-    <table class="classes-table">
+    <!-- ✅ Search Bar -->
+    <input type="text" id="classSearchInput" class="form-control mb-3" placeholder="Search classes by Arabic or English name..." />
+
+    <table class="classes-table" id="classesTable">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassNameArabic)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ClassNameEnglish)
-                </th>
+                <th>@Html.DisplayNameFor(model => model.ClassNameArabic)</th>
+                <th>@Html.DisplayNameFor(model => model.ClassNameEnglish)</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,12 +28,8 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassNameArabic)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClassNameEnglish)
-                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.ClassNameArabic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ClassNameEnglish)</td>
                     <td>
                         <div class="action-links">
                             <a asp-action="Edit" asp-route-id="@item.ClassId" class="action-link edit">Edit</a>
@@ -46,3 +42,22 @@
         </tbody>
     </table>
 </div>
+
+<!-- ✅ JavaScript for client-side search -->
+<script>
+    document.getElementById("classSearchInput").addEventListener("keyup", function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll("#classesTable tbody tr");
+
+        rows.forEach(row => {
+            const arabicName = row.cells[0].textContent.toLowerCase();
+            const englishName = row.cells[1].textContent.toLowerCase();
+
+            if (arabicName.includes(filter) || englishName.includes(filter)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+</script>
