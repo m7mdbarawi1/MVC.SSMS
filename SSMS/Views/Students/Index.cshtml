@@ -33,7 +33,7 @@
                     <td>@Html.DisplayFor(modelItem => item.FullNameEnglish)</td>
                     <td>@Html.DisplayFor(modelItem => item.Age)</td>
                     <td>@Html.DisplayFor(modelItem => item.Class.ClassNameEnglish)</td>
-                    <td>@Html.DisplayFor(modelItem => item.User.UserName)</td>
+                    <td>@(item.User != null ? item.User.UserId.ToString() : "N/A")</td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.StudentId" class="action-link">Edit</a>
                         <a asp-action="Details" asp-route-id="@item.StudentId" class="action-link">Details</a>
