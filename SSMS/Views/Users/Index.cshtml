@@ -10,7 +10,6 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-<!-- ✅ Search bar -->
 <input type="text" id="userSearchInput" class="form-control mb-3" placeholder="Search users by name, username, password, or user type..." />
 
 <table class="table" id="userTable">
@@ -41,7 +40,6 @@
     </tbody>
 </table>
 
-<!-- ✅ JavaScript search filter for all fields -->
 <script>
     document.getElementById("userSearchInput").addEventListener("keyup", function () {
         const filter = this.value.toLowerCase();

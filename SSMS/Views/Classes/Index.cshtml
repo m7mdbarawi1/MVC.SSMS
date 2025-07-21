@@ -13,7 +13,6 @@
         <a asp-action="Create" class="create-link">Create New</a>
     </p>
 
-    <!-- ✅ Search Bar -->
     <input type="text" id="classSearchInput" class="form-control mb-3" placeholder="Search classes by Arabic or English name..." />
 
     <table class="classes-table" id="classesTable">
@@ -43,7 +42,6 @@
     </table>
 </div>
 
-<!-- ✅ JavaScript for client-side search -->
 <script>
     document.getElementById("classSearchInput").addEventListener("keyup", function () {
         const filter = this.value.toLowerCase();

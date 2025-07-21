@@ -12,7 +12,6 @@
         <a asp-action="Create" class="create-link">Create New</a>
     </p>
 
-    <!-- ✅ Search Bar -->
     <input type="text" id="materialSearchInput" class="form-control mb-3" placeholder="Search by Arabic or English material name..." />
 
     <table class="materials-table" id="materialsTable">
@@ -42,7 +41,6 @@
     </table>
 </div>
 
-<!-- ✅ JavaScript to filter table rows -->
 @section Scripts {
     <script>
         document.getElementById("materialSearchInput").addEventListener("keyup", function () {

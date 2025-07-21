@@ -10,7 +10,6 @@
 
     <a asp-action="Create" class="create-link">Create New</a>
 
-    <!-- ✅ Search Bar -->
     <input type="text" id="studentSearchInput" class="form-control mb-3" placeholder="Search by name, gender, class, or username..." />
 
     <table class="students-table" id="studentsTable">
@@ -46,7 +45,6 @@
     </table>
 </div>
 
-<!-- ✅ JavaScript for client-side filtering -->
 @section Scripts {
     <script>
         document.getElementById("studentSearchInput").addEventListener("keyup", function () {
