@@ -1,37 +1,44 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<link href="~/css/home/index.css" rel="stylesheet" />
-<div class="home-container">
+
+<div class="page-container">
     <!-- Section 1: Welcome Banner -->
-    <section class="welcome-section">
-        <h1 class="display-4">🎓 Welcome to SSMS</h1>
-        <p>Your trusted Simple School Management System for students, teachers, and administration.</p>
+    <section class="section-block">
+        <h1 class="section-title">Welcome to SSMS</h1>
+        <p class="section-text">
+            The Simple School Management System (SSMS) is your all-in-one platform for managing students, teachers, classes, and academic data.
+            Whether you're an administrator, a teacher, or a student, SSMS makes your school operations smooth and efficient.
+        </p>
     </section>
 
     <!-- Section 2: System Features -->
-    <section class="features-section">
-        <h2>💡 Key Features</h2>
-        <ul>
-            <li>📚 Manage Classes, Students, Teachers, and Materials</li>
-            <li>📝 Track Student Marks and Progress</li>
-            <li>🔐 Secure Role-Based Access (Admin, Teacher, Student)</li>
-            <li>📊 Organized Interface for Smooth Navigation</li>
+    <section class="section-block">
+        <h2 class="section-subtitle">Key Features</h2>
+        <ul class="feature-list">
+            <li>Manage classes, students, teachers, and academic materials with ease</li>
+            <li>Track student performance, grades, and academic progress in real time</li>
+            <li>Role-based access control for administrators, teachers, and students</li>
+            <li>User-friendly interface designed for clarity, speed, and ease of use</li>
         </ul>
     </section>
 
     <!-- Section 3: About the System -->
-    <section class="about-section">
-        <h2>📘 About SSMS</h2>
-        <p>
-            SSMS is built using ASP.NET Core MVC and SQL Server. It provides an efficient way to manage school operations,
-            allowing administrators to control data flow, teachers to input marks, and students to view their performance.
+    <section class="section-block">
+        <h2 class="section-subtitle">About SSMS</h2>
+        <p class="section-text">
+            SSMS is developed using ASP.NET Core MVC and SQL Server. It enables educational institutions to centralize data management,
+            automate repetitive tasks, and provide stakeholders with timely access to the information they need. With SSMS, administrators
+            can streamline school workflows, teachers can manage coursework and assessments, and students can monitor their academic performance.
         </p>
     </section>
 
     <!-- Section 4: Contact or Call to Action -->
-    <section class="contact-section">
-        <h2>📞 Get in Touch</h2>
-        <p>Have questions or want a demo? Contact the admin team at <a href="mailto:info@ssms.com">info@ssms.com</a></p>
+    <section class="section-block">
+        <h2 class="section-subtitle">Contact Us</h2>
+        <p class="section-text">
+            For inquiries, support, or to request a live demo, please reach out to our admin team at
+            <a href="mailto:info@ssms.com" class="link">info@ssms.com</a>.
+        </p>
     </section>
 </div>

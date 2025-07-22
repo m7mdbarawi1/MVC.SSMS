@@ -1,46 +1,48 @@
 ﻿@model IEnumerable<SSMS.Models.Teacher>
-<link href="~/css/teachers/index.css" rel="stylesheet" />
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Teachers";
 }
 
-<h1>Index</h1>
+<div class="page-container">
+    <h1 class="section-title">Teachers</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <a asp-action="Create" class="btn btn-primary mb-3">Create New</a>
 
-<input type="text" id="teacherSearchInput" class="form-control mb-3" placeholder="Search by name, gender, material ID, or user ID..." />
+    <input type="text" id="teacherSearchInput" class="input-field search-input mb-4" placeholder="Search by name, gender, material ID, or user ID..." />
 
-<table class="table" id="teachersTable">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Gender)</th>
-            <th>@Html.DisplayNameFor(model => model.FullNameArabic)</th>
-            <th>@Html.DisplayNameFor(model => model.FullNameEnglish)</th>
-            <th>@Html.DisplayNameFor(model => model.Material)</th>
-            <th>@Html.DisplayNameFor(model => model.User)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="data-table" id="teachersTable">
+        <thead>
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-                <td>@Html.DisplayFor(modelItem => item.FullNameArabic)</td>
-                <td>@Html.DisplayFor(modelItem => item.FullNameEnglish)</td>
-                <td>@Html.DisplayFor(modelItem => item.Material.MaterialId)</td>
-                <td>@(item.User != null ? item.User.UserId.ToString() : "N/A")</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.TeacherId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.TeacherId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.TeacherId">Delete</a>
-                </td>
+                <th>@Html.DisplayNameFor(model => model.Gender)</th>
+                <th>@Html.DisplayNameFor(model => model.FullNameArabic)</th>
+                <th>@Html.DisplayNameFor(model => model.FullNameEnglish)</th>
+                <th>@Html.DisplayNameFor(model => model.Material)</th>
+                <th>@Html.DisplayNameFor(model => model.User)</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                    <td class="arabic-text">@Html.DisplayFor(modelItem => item.FullNameArabic)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FullNameEnglish)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Material.MaterialId)</td>
+                    <td>@(item.User != null ? item.User.UserId.ToString() : "N/A")</td>
+                    <td>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.TeacherId" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.TeacherId" class="btn btn-sm btn-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.TeacherId" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 @section Scripts {
     <script>

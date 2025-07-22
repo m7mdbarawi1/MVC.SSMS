@@ -1,21 +1,18 @@
 ﻿@model IEnumerable<SSMS.Models.Class>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Classes";
 }
 
-<link href="~/css/classes/index.css" rel="stylesheet" />
+<div class="page-container">
+    <h1 class="section-title">Classes</h1>
 
-<div class="classes-container">
-    <h1 class="classes-title">Classes</h1>
+    <div class="actions-bar">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <input type="text" class="search-input" placeholder="Search classes by Arabic or English name..." />
+    </div>
 
-    <p>
-        <a asp-action="Create" class="create-link">Create New</a>
-    </p>
-
-    <input type="text" id="classSearchInput" class="form-control mb-3" placeholder="Search classes by Arabic or English name..." />
-
-    <table class="classes-table" id="classesTable">
+    <table class="data-table">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.ClassNameArabic)</th>
@@ -31,7 +28,7 @@
                     <td>@Html.DisplayFor(modelItem => item.ClassNameEnglish)</td>
                     <td>
                         <div class="action-links">
-                            <a asp-action="Edit" asp-route-id="@item.ClassId" class="action-link edit">Edit</a>
+                            <a asp-action="Edit" asp-route-id="@item.ClassId" class="action-link">Edit</a>
                             <a asp-action="Details" asp-route-id="@item.ClassId" class="action-link">Details</a>
                             <a asp-action="Delete" asp-route-id="@item.ClassId" class="action-link delete">Delete</a>
                         </div>
@@ -42,20 +39,17 @@
     </table>
 </div>
 
-<script>
-    document.getElementById("classSearchInput").addEventListener("keyup", function () {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll("#classesTable tbody tr");
+@section Scripts {
+    <script>
+        document.querySelector(".search-input").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll(".data-table tbody tr");
 
-        rows.forEach(row => {
-            const arabicName = row.cells[0].textContent.toLowerCase();
-            const englishName = row.cells[1].textContent.toLowerCase();
-
-            if (arabicName.includes(filter) || englishName.includes(filter)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
+            rows.forEach(row => {
+                const arabicName = row.cells[0].textContent.toLowerCase();
+                const englishName = row.cells[1].textContent.toLowerCase();
+                row.style.display = arabicName.includes(filter) || englishName.includes(filter) ? "" : "none";
+            });
         });
-    });
-</script>
+    </script>
+}

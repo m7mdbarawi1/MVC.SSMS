@@ -1,53 +1,53 @@
 ﻿@model SSMS.Models.User
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create User";
 }
 
-<h1>Create</h1>
+<div class="page-container">
+    <h1 class="section-title">Create User</h1>
+    <hr />
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FullName" class="control-label"></label>
-                <input asp-for="FullName" class="form-control" />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserType" class="control-label"></label>
-                <input asp-for="UserType" class="form-control" />
-                <span asp-validation-for="UserType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    <form asp-action="Create" class="form">
+        <div asp-validation-summary="ModelOnly" class="validation-summary text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="UserId" class="form-label"></label>
+            <input asp-for="UserId" class="input-field" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="input-field" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="input-field" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="input-field" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserType" class="form-label"></label>
+            <input asp-for="UserType" class="input-field" />
+            <span asp-validation-for="UserType" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-outline">Back to List</a>
+        </div>
+    </form>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }

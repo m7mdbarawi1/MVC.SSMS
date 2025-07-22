@@ -1,63 +1,68 @@
 ﻿@model IEnumerable<SSMS.Models.User>
-<link href="~/css/users/index.css" rel="stylesheet" />
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Users";
 }
 
-<h1>Index</h1>
+<div class="page-container">
+    <h1 class="section-title">Users</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create" class="create-link">Create New</a>
+    </p>
 
-<input type="text" id="userSearchInput" class="form-control mb-3" placeholder="Search users by name, username, password, or user type..." />
+    <input type="text" id="userSearchInput" class="search-input" placeholder="Search users by name, username, password, or user type..." />
 
-<table class="table" id="userTable">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.FullName)</th>
-            <th>@Html.DisplayNameFor(model => model.UserName)</th>
-            <th>@Html.DisplayNameFor(model => model.Password)</th>
-            <th>@Html.DisplayNameFor(model => model.UserType)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <table class="data-table" id="usersTable">
+        <thead>
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.FullName)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Password)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserType)</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
-                </td>
+                <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                <th>@Html.DisplayNameFor(model => model.Password)</th>
+                <th>@Html.DisplayNameFor(model => model.UserType)</th>
+                <th>Actions</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserType)</td>
+                    <td>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.UserId" class="action-link edit">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.UserId" class="action-link">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.UserId" class="action-link delete">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<script>
-    document.getElementById("userSearchInput").addEventListener("keyup", function () {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll("#userTable tbody tr");
+@section Scripts {
+    <script>
+        document.getElementById("userSearchInput").addEventListener("keyup", function () {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll("#usersTable tbody tr");
 
-        rows.forEach(row => {
-            const fullName = row.cells[0].textContent.toLowerCase();
-            const userName = row.cells[1].textContent.toLowerCase();
-            const password = row.cells[2].textContent.toLowerCase();
-            const userType = row.cells[3].textContent.toLowerCase();
+            rows.forEach(row => {
+                const fullName = row.cells[0].textContent.toLowerCase();
+                const userName = row.cells[1].textContent.toLowerCase();
+                const password = row.cells[2].textContent.toLowerCase();
+                const userType = row.cells[3].textContent.toLowerCase();
 
-            const match = fullName.includes(filter)
-                || userName.includes(filter)
-                || password.includes(filter)
-                || userType.includes(filter);
+                const match = fullName.includes(filter) ||
+                              userName.includes(filter) ||
+                              password.includes(filter) ||
+                              userType.includes(filter);
 
-            row.style.display = match ? "" : "none";
+                row.style.display = match ? "" : "none";
+            });
         });
-    });
-</script>
+    </script>
+}

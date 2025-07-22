@@ -3,18 +3,19 @@
 @{
     ViewData["Title"] = "Marks";
 }
-<link href="~/css/marks/index.css" rel="stylesheet" />
 
-<div class="marks-container">
-    <h1 class="marks-title">Marks</h1>
+<div class="page-container">
+    <h1 class="section-title">Marks</h1>
 
-    <p>
-        <a asp-action="Create" class="create-link">Create New</a>
-    </p>
+    <div class="actions-bar">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </div>
 
-    <input type="text" id="markSearchInput" class="form-control mb-3" placeholder="Search by mark, class, material, or student ID..." />
+    <div class="search-bar">
+        <input type="text" class="input-field" id="markSearchInput" placeholder="Search by mark, class, material, or student ID..." />
+    </div>
 
-    <table class="marks-table" id="marksTable">
+    <table class="data-table" id="marksTable">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Mark1)</th>
@@ -33,10 +34,24 @@
                     <td>@Html.DisplayFor(modelItem => item.Material.MaterialNameArabic)</td>
                     <td>@Html.DisplayFor(modelItem => item.Student.StudentId)</td>
                     <td>
-                        <div class="action-links">
-                            <a asp-action="Edit" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId" class="action-link edit">Edit</a>
-                            <a asp-action="Details" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId" class="action-link details">Details</a>
-                            <a asp-action="Delete" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId" class="action-link delete">Delete</a>
+                        <div class="table-actions">
+                            <a asp-action="Edit"
+                               asp-route-studentId="@item.StudentId"
+                               asp-route-classId="@item.ClassId"
+                               asp-route-materialId="@item.MaterialId"
+                               class="btn btn-secondary">Edit</a>
+
+                            <a asp-action="Details"
+                               asp-route-studentId="@item.StudentId"
+                               asp-route-classId="@item.ClassId"
+                               asp-route-materialId="@item.MaterialId"
+                               class="btn btn-secondary">Details</a>
+
+                            <a asp-action="Delete"
+                               asp-route-studentId="@item.StudentId"
+                               asp-route-classId="@item.ClassId"
+                               asp-route-materialId="@item.MaterialId"
+                               class="btn btn-danger">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -47,7 +62,7 @@
 
 @section Scripts {
     <script>
-        document.getElementById("markSearchInput").addEventListener("keyup", function () {
+        document.querySelector("#markSearchInput").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
             const rows = document.querySelectorAll("#marksTable tbody tr");
 
@@ -66,6 +81,4 @@
             });
         });
     </script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 }

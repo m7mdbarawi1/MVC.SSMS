@@ -3,16 +3,15 @@
 @{
     ViewData["Title"] = "Students";
 }
-<link href="~/css/students/index.css" rel="stylesheet" />
 
-<div class="students-container">
-    <h1 class="students-title">Students</h1>
+<div class="page-container">
+    <h1 class="section-title">Students</h1>
 
-    <a asp-action="Create" class="create-link">Create New</a>
+    <a asp-action="Create" class="btn btn-primary mb-3">Create New</a>
 
-    <input type="text" id="studentSearchInput" class="form-control mb-3" placeholder="Search by name, gender, class, or username..." />
+    <input type="text" class="input-field mb-3" id="studentSearchInput" placeholder="Search by name, gender, class, or username..." />
 
-    <table class="students-table" id="studentsTable">
+    <table class="data-table" id="studentsTable">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Gender)</th>
@@ -29,15 +28,17 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Gender)</td>
-                    <td class="arabic-value">@Html.DisplayFor(modelItem => item.FullNameArabic)</td>
+                    <td class="arabic-text">@Html.DisplayFor(modelItem => item.FullNameArabic)</td>
                     <td>@Html.DisplayFor(modelItem => item.FullNameEnglish)</td>
                     <td>@Html.DisplayFor(modelItem => item.Age)</td>
                     <td>@Html.DisplayFor(modelItem => item.Class.ClassNameEnglish)</td>
                     <td>@(item.User != null ? item.User.UserId.ToString() : "N/A")</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.StudentId" class="action-link">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.StudentId" class="action-link">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.StudentId" class="action-link delete">Delete</a>
+                        <div class="action-links">
+                            <a asp-action="Edit" asp-route-id="@item.StudentId" class="btn btn-sm btn-outline">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.StudentId" class="btn btn-sm btn-outline">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.StudentId" class="btn btn-sm btn-outline text-danger">Delete</a>
+                        </div>
                     </td>
                 </tr>
             }

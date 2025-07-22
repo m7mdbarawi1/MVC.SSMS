@@ -4,34 +4,36 @@
     ViewData["Title"] = "Details";
 }
 
-<link rel="stylesheet" href="~/css/Marks/Details.css" />
+<div class="page-container">
+    <h1 class="section-title">Mark Details</h1>
 
-<div class="details-marks-container">
-    <h1 class="details-marks-title">Details</h1>
+    <div class="details-group">
+        <h4 class="form-subtitle">Mark</h4>
+        <hr class="divider" />
 
-    <div>
-        <h4 class="details-subtitle">Mark</h4>
-        <hr />
+        <dl class="details-list">
+            <dt class="details-label">@Html.DisplayNameFor(model => model.Mark1)</dt>
+            <dd class="details-value">@Html.DisplayFor(model => model.Mark1)</dd>
 
-        <div class="details-content">
-            <dl class="details-list">
-                <dt class="details-term">@Html.DisplayNameFor(model => model.Mark1)</dt>
-                <dd class="details-definition">@Html.DisplayFor(model => model.Mark1)</dd>
+            <dt class="details-label">@Html.DisplayNameFor(model => model.Class)</dt>
+            <dd class="details-value">@Html.DisplayFor(model => model.Class.ClassId)</dd>
 
-                <dt class="details-term">@Html.DisplayNameFor(model => model.Class)</dt>
-                <dd class="details-definition">@Html.DisplayFor(model => model.Class.ClassId)</dd>
+            <dt class="details-label">@Html.DisplayNameFor(model => model.Material)</dt>
+            <dd class="details-value">@Html.DisplayFor(model => model.Material.MaterialId)</dd>
 
-                <dt class="details-term">@Html.DisplayNameFor(model => model.Material)</dt>
-                <dd class="details-definition">@Html.DisplayFor(model => model.Material.MaterialId)</dd>
-
-                <dt class="details-term">@Html.DisplayNameFor(model => model.Student)</dt>
-                <dd class="details-definition">@Html.DisplayFor(model => model.Student.StudentId)</dd>
-            </dl>
-        </div>
+            <dt class="details-label">@Html.DisplayNameFor(model => model.Student)</dt>
+            <dd class="details-value">@Html.DisplayFor(model => model.Student.StudentId)</dd>
+        </dl>
     </div>
 
-    <div class="details-actions">
-        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }, new { @class = "action-link edit" })
-        <a asp-action="Index" class="action-link">Back to List</a>
+    <div class="form-actions">
+        @Html.ActionLink("Edit", "Edit", new
+            {
+                studentId = Model.StudentId,
+                classId = Model.ClassId,
+                materialId = Model.MaterialId
+            }, new { @class = "btn btn-primary" })
+
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
 </div>

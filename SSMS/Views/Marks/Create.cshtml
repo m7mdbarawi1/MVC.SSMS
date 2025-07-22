@@ -4,53 +4,45 @@
     ViewData["Title"] = "Create";
 }
 
-<link rel="stylesheet" href="~/css/Marks/Create.css" />
+<div class="page-container">
+    <h1 class="section-title">Create Mark</h1>
+    <h4 class="form-subtitle">Mark Details</h4>
+    <hr class="divider" />
 
-<div class="create-marks-container">
-    <h1 class="create-marks-title">Create</h1>
-    <h4 class="create-marks-subtitle">Mark</h4>
-    <hr />
+    <form asp-action="Create" class="form-container">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <form asp-action="Create" class="create-marks-form">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="form-group">
-                    <label asp-for="StudentId" class="control-label"></label>
-                    <select asp-for="StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="ClassId" class="control-label"></label>
-                    <select asp-for="ClassId" class="form-control" asp-items="ViewBag.ClassId"></select>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="MaterialId" class="control-label"></label>
-                    <select asp-for="MaterialId" class="form-control" asp-items="ViewBag.MaterialId"></select>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Mark1" class="control-label"></label>
-                    <input asp-for="Mark1" class="form-control" />
-                    <span asp-validation-for="Mark1" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Create" class="create-btn" />
-                </div>
-            </form>
+        <div class="form-group">
+            <label asp-for="StudentId" class="form-label"></label>
+            <select asp-for="StudentId" asp-items="ViewBag.StudentId" class="input-field"></select>
+            <span asp-validation-for="StudentId" class="validation-message"></span>
         </div>
-    </div>
 
-    <div>
-        <a asp-action="Index" class="back-link">Back to List</a>
-    </div>
+        <div class="form-group">
+            <label asp-for="ClassId" class="form-label"></label>
+            <select asp-for="ClassId" asp-items="ViewBag.ClassId" class="input-field"></select>
+            <span asp-validation-for="ClassId" class="validation-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="MaterialId" class="form-label"></label>
+            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId" class="input-field"></select>
+            <span asp-validation-for="MaterialId" class="validation-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Mark1" class="form-label"></label>
+            <input asp-for="Mark1" class="input-field" />
+            <span asp-validation-for="Mark1" class="validation-message"></span>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
 </div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
