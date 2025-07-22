@@ -1,1 +1,157 @@
-﻿
+﻿/* Teachers Index Page Styles */
+/* Main container */
+body {
+    background-color: #f5f7fa;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.container {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Header */
+h1 {
+    color: #4f46e5;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+    h1::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #4f46e5 0%, #a5b4fc 100%);
+        border-radius: 2px;
+    }
+
+/* Create New link */
+p > a {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white !important;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+
+    p > a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+/* Search input */
+#teacherSearchInput {
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    background-color: #f8fafc;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+    #teacherSearchInput:focus {
+        border-color: #a5b4fc;
+        box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.3);
+        outline: none;
+    }
+
+/* Table styles */
+#teachersTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+    #teachersTable thead th {
+        background-color: #f8fafc;
+        color: #4f46e5;
+        font-weight: 600;
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    #teachersTable tbody td {
+        padding: 1rem;
+        border-bottom: 1px solid #e2e8f0;
+        color: #4b5563;
+    }
+
+    #teachersTable tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    #teachersTable tbody tr:hover td {
+        background-color: #f9fafb;
+    }
+
+    /* Action links */
+    #teachersTable a {
+        color: #4f46e5;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+    }
+
+        #teachersTable a:hover {
+            text-decoration: none;
+        }
+
+        #teachersTable a[href*="Edit"] {
+            color: #2563eb;
+        }
+
+            #teachersTable a[href*="Edit"]:hover {
+                background-color: #dbeafe;
+            }
+
+        #teachersTable a[href*="Details"] {
+            color: #10b981;
+        }
+
+            #teachersTable a[href*="Details"]:hover {
+                background-color: #d1fae5;
+            }
+
+        #teachersTable a[href*="Delete"] {
+            color: #dc2626;
+        }
+
+            #teachersTable a[href*="Delete"]:hover {
+                background-color: #fee2e2;
+            }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    #teachersTable {
+        display: block;
+        overflow-x: auto;
+    }
+
+        #teachersTable a {
+            display: inline-block;
+            margin: 0.25rem 0;
+            padding: 0.5rem;
+        }
+}

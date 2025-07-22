@@ -17,15 +17,10 @@ public partial class SSMSContext : DbContext
     }
 
     public virtual DbSet<Class> Classes { get; set; }
-
     public virtual DbSet<Mark> Marks { get; set; }
-
     public virtual DbSet<Material> Materials { get; set; }
-
     public virtual DbSet<Student> Students { get; set; }
-
     public virtual DbSet<Teacher> Teachers { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

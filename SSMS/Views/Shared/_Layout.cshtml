@@ -30,14 +30,14 @@
                     </a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
                             @if (User.Identity.IsAuthenticated)
-                            {
+                                            {
                                 <li class="nav-item"><a class="nav-link" asp-controller="Users" asp-action="MyProfile">My Profile</a></li>
                                 if (User.IsInRole("3"))
                                 {
@@ -94,20 +94,6 @@
                 <div class="footer-links">
                     <a asp-controller="Home" asp-action="Index">Home</a>
                     <a asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    <a asp-controller="Home" asp-action="About">About</a>
-                    <a asp-controller="Home" asp-action="Contact">Contact</a>
-                </div>
-
-                <div class="social-icons">
-                    <a href="#" class="social-icon" title="Facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="social-icon" title="Twitter">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="social-icon" title="LinkedIn">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
                 </div>
 
                 <div class="footer-copyright">
