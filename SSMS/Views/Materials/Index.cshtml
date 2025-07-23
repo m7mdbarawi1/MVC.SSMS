@@ -4,43 +4,47 @@
     ViewData["Title"] = "Materials";
 }
 
-<main>
-    <h1>Materials</h1>
+<div class="page-container">
+    <h1 class="page-title">Materials</h1>
 
-    <a asp-action="Create">Create New</a>
+    <div class="action-buttons">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </div>
 
-    <input type="text" placeholder="Search by Arabic or English material name..." />
+    <input type="text" id="materialsSearchInput" class="search-input" placeholder="Search by Arabic or English material name..." />
 
-    <table>
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.MaterialNameArabic)</th>
-                <th>@Html.DisplayNameFor(model => model.MaterialNameEnglish)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-container">
+        <table id="materialsTable" class="data-table">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(m => item.MaterialNameArabic)</td>
-                    <td>@Html.DisplayFor(m => item.MaterialNameEnglish)</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.MaterialId">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.MaterialId">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.MaterialId">Delete</a>
-                    </td>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.MaterialNameArabic)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.MaterialNameEnglish)</th>
+                    <th class="table-header">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</main>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-row">
+                        <td>@Html.DisplayFor(m => item.MaterialNameArabic)</td>
+                        <td>@Html.DisplayFor(m => item.MaterialNameEnglish)</td>
+                        <td class="action-buttons">
+                            <a asp-action="Edit" asp-route-id="@item.MaterialId" class="btn btn-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.MaterialId" class="btn btn-secondary">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.MaterialId" class="btn btn-secondary">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     <script>
-        document.querySelector("input[type='text']").addEventListener("keyup", function () {
+        document.getElementById("materialsSearchInput").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll("table tbody tr");
+            const rows = document.querySelectorAll("#materialsTable tbody tr");
 
             rows.forEach(row => {
                 const arabic = row.cells[0].textContent.toLowerCase();

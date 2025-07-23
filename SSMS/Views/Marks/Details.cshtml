@@ -1,39 +1,35 @@
 ﻿@model SSMS.Models.Mark
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Mark Details";
 }
 
-<main>
-    <h1>Mark Details</h1>
+<div class="page-container" id="detailsMarkPage">
+    <h1 class="page-title">Mark Details</h1>
+    <h2 class="section-title">Mark Information</h2>
+    <hr />
 
-    <section>
-        <h2>Mark</h2>
-        <hr />
+    <dl class="details-group">
+        <dt class="details-label">@Html.DisplayNameFor(model => model.Mark1)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.Mark1)</dd>
 
-        <dl>
-            <dt>@Html.DisplayNameFor(model => model.Mark1)</dt>
-            <dd>@Html.DisplayFor(model => model.Mark1)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.Class)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.Class.ClassNameArabic)</dd>
 
-            <dt>@Html.DisplayNameFor(model => model.Class)</dt>
-            <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.Material)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.Material.MaterialNameArabic)</dd>
 
-            <dt>@Html.DisplayNameFor(model => model.Material)</dt>
-            <dd>@Html.DisplayFor(model => model.Material.MaterialId)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.Student)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.Student.FullNameEnglish)</dd>
+    </dl>
 
-            <dt>@Html.DisplayNameFor(model => model.Student)</dt>
-            <dd>@Html.DisplayFor(model => model.Student.StudentId)</dd>
-        </dl>
-    </section>
-
-    <nav>
-        @Html.ActionLink("Edit", "Edit", new
-            {
-                studentId = Model.StudentId,
-                classId = Model.ClassId,
-                materialId = Model.MaterialId
-            })
-
-        <a asp-action="Index">Back to List</a>
-    </nav>
-</main>
+    <div class="action-buttons">
+        <a asp-action="Edit"
+           asp-route-studentId="@Model.StudentId"
+           asp-route-classId="@Model.ClassId"
+           asp-route-materialId="@Model.MaterialId"
+           class="btn btn-primary"
+           id="editBtn">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary" id="backLink">Back to List</a>
+    </div>
+</div>

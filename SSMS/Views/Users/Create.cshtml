@@ -4,48 +4,50 @@
     ViewData["Title"] = "Create User";
 }
 
-<h1>Create User</h1>
-<hr />
+<main class="page-container">
+    <h1 class="section-title">Create User</h1>
+    <hr />
 
-<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Create" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-    <div>
-        <label asp-for="UserId"></label>
-        <input asp-for="UserId" />
-        <span asp-validation-for="UserId"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="UserId" class="form-label"></label>
+            <input asp-for="UserId" class="form-input" />
+            <span asp-validation-for="UserId" class="validation-message"></span>
+        </div>
 
-    <div>
-        <label asp-for="FullName"></label>
-        <input asp-for="FullName" />
-        <span asp-validation-for="FullName"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-input" />
+            <span asp-validation-for="FullName" class="validation-message"></span>
+        </div>
 
-    <div>
-        <label asp-for="UserName"></label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="UserName" class="form-label"></label>
+            <input asp-for="UserName" class="form-input" />
+            <span asp-validation-for="UserName" class="validation-message"></span>
+        </div>
 
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="Password" class="form-label"></label>
+            <input asp-for="Password" class="form-input" />
+            <span asp-validation-for="Password" class="validation-message"></span>
+        </div>
 
-    <div>
-        <label asp-for="UserType"></label>
-        <input asp-for="UserType" />
-        <span asp-validation-for="UserType"></span>
-    </div>
+        <div class="form-group">
+            <label asp-for="UserType" class="form-label"></label>
+            <input asp-for="UserType" class="form-input" />
+            <span asp-validation-for="UserType" class="validation-message"></span>
+        </div>
 
-    <div>
-        <input type="submit" value="Create" />
-        <a asp-action="Index">Back to List</a>
-    </div>
-</form>
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

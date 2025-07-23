@@ -4,39 +4,39 @@
     ViewData["Title"] = "Create Material";
 }
 
-<main>
-    <h1>Create New Material</h1>
-    <h2>Material Details</h2>
+<main class="page-container">
+    <h1 class="section-title">Create New Material</h1>
+    <h2 class="form-subtitle">Material Details</h2>
     <hr />
 
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Create" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-        <div>
-            <label asp-for="MaterialId"></label>
-            <input asp-for="MaterialId" />
-            <span asp-validation-for="MaterialId"></span>
+        <div class="form-group">
+            <label asp-for="MaterialId" class="form-label"></label>
+            <input asp-for="MaterialId" class="form-input" />
+            <span asp-validation-for="MaterialId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="MaterialNameArabic"></label>
-            <input asp-for="MaterialNameArabic" />
-            <span asp-validation-for="MaterialNameArabic"></span>
+        <div class="form-group">
+            <label asp-for="MaterialNameArabic" class="form-label"></label>
+            <input asp-for="MaterialNameArabic" class="form-input" />
+            <span asp-validation-for="MaterialNameArabic" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="MaterialNameEnglish"></label>
-            <input asp-for="MaterialNameEnglish" />
-            <span asp-validation-for="MaterialNameEnglish"></span>
+        <div class="form-group">
+            <label asp-for="MaterialNameEnglish" class="form-label"></label>
+            <input asp-for="MaterialNameEnglish" class="form-input" />
+            <span asp-validation-for="MaterialNameEnglish" class="validation-message"></span>
         </div>
 
-        <div>
-            <input type="submit" value="Create" />
-            <a asp-action="Index">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         </div>
     </form>
 </main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

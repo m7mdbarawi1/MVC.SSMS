@@ -4,51 +4,55 @@
     ViewData["Title"] = "Students";
 }
 
-<main>
-    <h1>Students</h1>
+<div class="page-container">
+    <h1 class="page-title">Students</h1>
 
-    <a asp-action="Create">Create New</a>
+    <div class="action-buttons">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </div>
 
-    <input type="text" placeholder="Search by name, gender, class, or username..." />
+    <input type="text" id="studentsSearchInput" class="search-input" placeholder="Search by name, gender, class, or username..." />
 
-    <table>
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Gender)</th>
-                <th>@Html.DisplayNameFor(model => model.FullNameArabic)</th>
-                <th>@Html.DisplayNameFor(model => model.FullNameEnglish)</th>
-                <th>@Html.DisplayNameFor(model => model.Age)</th>
-                <th>@Html.DisplayNameFor(model => model.Class)</th>
-                <th>@Html.DisplayNameFor(model => model.User)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-container">
+        <table id="studentsTable" class="data-table">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(m => item.Gender)</td>
-                    <td>@Html.DisplayFor(m => item.FullNameArabic)</td>
-                    <td>@Html.DisplayFor(m => item.FullNameEnglish)</td>
-                    <td>@Html.DisplayFor(m => item.Age)</td>
-                    <td>@Html.DisplayFor(m => item.Class.ClassNameEnglish)</td>
-                    <td>@(item.User?.UserId.ToString() ?? "N/A")</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.StudentId">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.StudentId">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.StudentId">Delete</a>
-                    </td>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Gender)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.FullNameArabic)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.FullNameEnglish)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Age)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Class)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.User)</th>
+                    <th class="table-header">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</main>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-row">
+                        <td>@Html.DisplayFor(m => item.Gender)</td>
+                        <td>@Html.DisplayFor(m => item.FullNameArabic)</td>
+                        <td>@Html.DisplayFor(m => item.FullNameEnglish)</td>
+                        <td>@Html.DisplayFor(m => item.Age)</td>
+                        <td>@Html.DisplayFor(m => item.Class.ClassNameEnglish)</td>
+                        <td>@(item.User?.UserId.ToString() ?? "N/A")</td>
+                        <td class="action-buttons">
+                            <a asp-action="Edit" asp-route-id="@item.StudentId" class="btn btn-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.StudentId" class="btn btn-secondary">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.StudentId" class="btn btn-secondary">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     <script>
-        document.querySelector("input[type='text']").addEventListener("keyup", function () {
+        document.getElementById("studentsSearchInput").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll("table tbody tr");
+            const rows = document.querySelectorAll("#studentsTable tbody tr");
 
             rows.forEach(row => {
                 const values = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());

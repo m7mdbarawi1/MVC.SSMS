@@ -4,43 +4,47 @@
     ViewData["Title"] = "Classes";
 }
 
-<main>
-    <h1>Classes</h1>
+<div class="page-container">
+    <h1 class="page-title">Classes</h1>
 
-    <a asp-action="Create">Create New</a>
+    <div class="action-buttons">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    </div>
 
-    <input type="text" placeholder="Search classes by Arabic or English name..." />
+    <input type="text" id="classesSearchInput" class="search-input" placeholder="Search classes by Arabic or English name..." />
 
-    <table>
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.ClassNameArabic)</th>
-                <th>@Html.DisplayNameFor(model => model.ClassNameEnglish)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-container">
+        <table id="classesTable" class="data-table">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(m => item.ClassNameArabic)</td>
-                    <td>@Html.DisplayFor(m => item.ClassNameEnglish)</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.ClassId">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.ClassId">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.ClassId">Delete</a>
-                    </td>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.ClassNameArabic)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.ClassNameEnglish)</th>
+                    <th class="table-header">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</main>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-row">
+                        <td>@Html.DisplayFor(m => item.ClassNameArabic)</td>
+                        <td>@Html.DisplayFor(m => item.ClassNameEnglish)</td>
+                        <td class="action-buttons">
+                            <a asp-action="Edit" asp-route-id="@item.ClassId" class="btn btn-secondary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.ClassId" class="btn btn-secondary">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.ClassId" class="btn btn-secondary">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     <script>
-        document.querySelector('input[type="text"]').addEventListener("keyup", function () {
+        document.getElementById("classesSearchInput").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll("table tbody tr");
+            const rows = document.querySelectorAll("#classesTable tbody tr");
 
             rows.forEach(row => {
                 const arabic = row.cells[0].textContent.toLowerCase();

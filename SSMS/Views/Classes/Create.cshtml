@@ -4,39 +4,39 @@
     ViewData["Title"] = "Create Class";
 }
 
-<main>
-    <section>
-        <h1>Create New Class</h1>
+<main class="page-container">
+    <h1 class="section-title">Create Class</h1>
+    <h2 class="form-subtitle">Class Details</h2>
+    <hr />
 
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Create" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-            <div>
-                <label asp-for="ClassId"></label>
-                <input asp-for="ClassId" />
-                <span asp-validation-for="ClassId"></span>
-            </div>
+        <div class="form-group">
+            <label asp-for="ClassId" class="form-label"></label>
+            <input asp-for="ClassId" class="form-input" />
+            <span asp-validation-for="ClassId" class="validation-message"></span>
+        </div>
 
-            <div>
-                <label asp-for="ClassNameArabic"></label>
-                <input asp-for="ClassNameArabic" />
-                <span asp-validation-for="ClassNameArabic"></span>
-            </div>
+        <div class="form-group">
+            <label asp-for="ClassNameArabic" class="form-label"></label>
+            <input asp-for="ClassNameArabic" class="form-input" />
+            <span asp-validation-for="ClassNameArabic" class="validation-message"></span>
+        </div>
 
-            <div>
-                <label asp-for="ClassNameEnglish"></label>
-                <input asp-for="ClassNameEnglish" />
-                <span asp-validation-for="ClassNameEnglish"></span>
-            </div>
+        <div class="form-group">
+            <label asp-for="ClassNameEnglish" class="form-label"></label>
+            <input asp-for="ClassNameEnglish" class="form-input" />
+            <span asp-validation-for="ClassNameEnglish" class="validation-message"></span>
+        </div>
 
-            <div>
-                <button type="submit">Create</button>
-                <a asp-action="Index">Back to List</a>
-            </div>
-        </form>
-    </section>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
 </main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

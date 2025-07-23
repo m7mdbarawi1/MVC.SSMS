@@ -3,20 +3,20 @@
     ViewData["Title"] = "Error";
 }
 
-<main>
-    <h1>Error</h1>
+<main class="error-page">
+    <h1 class="error-title">Error</h1>
 
-    <h2>An error occurred while processing your request.</h2>
+    <h2 class="error-subtitle">An error occurred while processing your request.</h2>
 
     @if (Model.ShowRequestId)
     {
-        <p>
+        <p class="error-request-id">
             <strong>Request ID:</strong> <code>@Model.RequestId</code>
         </p>
     }
 
-    <section>
-        <h3>Development Mode</h3>
+    <section class="error-details">
+        <h3 class="error-section-title">Development Mode</h3>
         <p>
             Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
         </p>

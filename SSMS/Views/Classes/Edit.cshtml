@@ -4,28 +4,28 @@
     ViewData["Title"] = "Edit Class";
 }
 
-<main>
-    <h1>Edit Class</h1>
+<main class="page-container" id="editClassPage">
+    <h1 class="page-title">Edit Class</h1>
 
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Edit" class="form-container" id="classForm">
+        <div asp-validation-summary="ModelOnly" class="form-error"></div>
         <input type="hidden" asp-for="ClassId" />
 
-        <div>
-            <label asp-for="ClassNameArabic"></label>
-            <input asp-for="ClassNameArabic" />
-            <span asp-validation-for="ClassNameArabic"></span>
+        <div class="form-group">
+            <label asp-for="ClassNameArabic" class="form-label"></label>
+            <input asp-for="ClassNameArabic" class="form-input" id="classNameArabicInput" />
+            <span asp-validation-for="ClassNameArabic" class="form-error"></span>
         </div>
 
-        <div>
-            <label asp-for="ClassNameEnglish"></label>
-            <input asp-for="ClassNameEnglish" />
-            <span asp-validation-for="ClassNameEnglish"></span>
+        <div class="form-group">
+            <label asp-for="ClassNameEnglish" class="form-label"></label>
+            <input asp-for="ClassNameEnglish" class="form-input" id="classNameEnglishInput" />
+            <span asp-validation-for="ClassNameEnglish" class="form-error"></span>
         </div>
 
-        <div>
-            <input type="submit" value="Save" />
-            <a asp-action="Index">Back to List</a>
+        <div class="action-buttons">
+            <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" />
+            <a asp-action="Index" class="btn btn-secondary back-link" id="backLink">Back to List</a>
         </div>
     </form>
 </main>

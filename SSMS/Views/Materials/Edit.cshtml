@@ -4,30 +4,30 @@
     ViewData["Title"] = "Edit Material";
 }
 
-<main>
-    <h1>Edit Material</h1>
-    <h2>Material Details</h2>
+<main class="page-container" id="editMaterialPage">
+    <h1 class="page-title">Edit Material</h1>
+    <h2 class="section-title">Material Details</h2>
     <hr />
 
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Edit" class="form-container" id="materialForm">
+        <div asp-validation-summary="ModelOnly" class="form-error"></div>
         <input type="hidden" asp-for="MaterialId" />
 
-        <div>
-            <label asp-for="MaterialNameArabic"></label>
-            <input asp-for="MaterialNameArabic" />
-            <span asp-validation-for="MaterialNameArabic"></span>
+        <div class="form-group">
+            <label asp-for="MaterialNameArabic" class="form-label"></label>
+            <input asp-for="MaterialNameArabic" class="form-input" id="materialNameArabicInput" />
+            <span asp-validation-for="MaterialNameArabic" class="form-error"></span>
         </div>
 
-        <div>
-            <label asp-for="MaterialNameEnglish"></label>
-            <input asp-for="MaterialNameEnglish" />
-            <span asp-validation-for="MaterialNameEnglish"></span>
+        <div class="form-group">
+            <label asp-for="MaterialNameEnglish" class="form-label"></label>
+            <input asp-for="MaterialNameEnglish" class="form-input" id="materialNameEnglishInput" />
+            <span asp-validation-for="MaterialNameEnglish" class="form-error"></span>
         </div>
 
-        <div>
-            <input type="submit" value="Save" />
-            <a asp-action="Index">Back to List</a>
+        <div class="action-buttons">
+            <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" />
+            <a asp-action="Index" class="btn btn-secondary back-link" id="backLink">Back to List</a>
         </div>
     </form>
 </main>

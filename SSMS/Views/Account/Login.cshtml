@@ -2,27 +2,29 @@
     ViewData["Title"] = "Login";
 }
 
-<main>
-    <section>
-        <h1>Login</h1>
+<main class="auth-page">
+    <section class="auth-section">
+        <h1 class="auth-title">Login</h1>
 
-        <form method="post">
-            <div>
+        <form method="post" class="auth-form">
+            <div class="form-group">
                 <label for="username">Username</label>
-                <input name="username" id="username" required />
+                <input id="username" name="username" type="text" required />
             </div>
 
-            <div>
+            <div class="form-group">
                 <label for="password">Password</label>
-                <input name="password" id="password" type="password" required />
+                <input id="password" name="password" type="password" required />
             </div>
 
             @if (ViewBag.Error != null)
             {
-                <p>@ViewBag.Error</p>
+                <div class="form-error">@ViewBag.Error</div>
             }
 
-            <button type="submit">Login</button>
+            <div class="form-actions">
+                <button type="submit">Login</button>
+            </div>
         </form>
     </section>
 </main>

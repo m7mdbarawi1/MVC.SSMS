@@ -4,51 +4,65 @@
     ViewData["Title"] = "Marks";
 }
 
-<main>
-    <h1>Marks</h1>
+<div class="page-container">
+    <h1 class="page-title">Marks</h1>
 
-    <div>
-        <a asp-action="Create">Create New</a>
+    <div class="action-buttons">
+        <a asp-action="Create" class="btn btn-primary">Create New</a>
     </div>
 
-    <div>
-        <input type="text" placeholder="Search by mark, class, material, or student ID..." />
-    </div>
+    <input type="text" id="marksSearchInput" class="search-input" placeholder="Search by mark, class, material, or student ID..." />
 
-    <table>
-        <thead>
-            <tr>
-                <th>@Html.DisplayNameFor(model => model.Mark1)</th>
-                <th>@Html.DisplayNameFor(model => model.Class)</th>
-                <th>@Html.DisplayNameFor(model => model.Material)</th>
-                <th>@Html.DisplayNameFor(model => model.Student)</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-container">
+        <table id="marksTable" class="data-table">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(m => item.Mark1)</td>
-                    <td>@Html.DisplayFor(m => item.Class.ClassNameArabic)</td>
-                    <td>@Html.DisplayFor(m => item.Material.MaterialNameArabic)</td>
-                    <td>@Html.DisplayFor(m => item.Student.StudentId)</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId">Edit</a>
-                        <a asp-action="Details" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId">Details</a>
-                        <a asp-action="Delete" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId">Delete</a>
-                    </td>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Mark1)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Class)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Material)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Student)</th>
+                    <th class="table-header">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</main>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-row">
+                        <td>@Html.DisplayFor(m => item.Mark1)</td>
+                        <td>@Html.DisplayFor(m => item.Class.ClassNameArabic)</td>
+                        <td>@Html.DisplayFor(m => item.Material.MaterialNameArabic)</td>
+                        <td>@Html.DisplayFor(m => item.Student.StudentId)</td>
+                        <td class="action-buttons">
+                            <a asp-action="Edit"
+                               asp-route-studentId="@item.StudentId"
+                               asp-route-classId="@item.ClassId"
+                               asp-route-materialId="@item.MaterialId"
+                               class="btn btn-secondary">Edit</a>
+
+                            <a asp-action="Details"
+                               asp-route-studentId="@item.StudentId"
+                               asp-route-classId="@item.ClassId"
+                               asp-route-materialId="@item.MaterialId"
+                               class="btn btn-secondary">Details</a>
+
+                            <a asp-action="Delete"
+                               asp-route-studentId="@item.StudentId"
+                               asp-route-classId="@item.ClassId"
+                               asp-route-materialId="@item.MaterialId"
+                               class="btn btn-secondary">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     <script>
-        document.querySelector("input[type='text']").addEventListener("keyup", function () {
+        document.getElementById("marksSearchInput").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll("table tbody tr");
+            const rows = document.querySelectorAll("#marksTable tbody tr");
 
             rows.forEach(row => {
                 const values = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());

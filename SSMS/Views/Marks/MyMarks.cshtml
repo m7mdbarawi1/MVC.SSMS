@@ -4,10 +4,10 @@
     ViewData["Title"] = "My Marks";
 }
 
-<main>
-    <h2>My Marks</h2>
+<main class="my-marks-container">
+    <h2 class="my-marks-title">My Marks</h2>
 
-    <table>
+    <table class="marks-table">
         <thead>
             <tr>
                 <th>Class</th>
@@ -19,9 +19,9 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Class.ClassNameArabic</td>
-                    <td>@item.Material.MaterialNameArabic</td>
-                    <td>@item.Mark1</td>
+                    <td class="arabic-text">@item.Class.ClassNameArabic</td>
+                    <td class="arabic-text">@item.Material.MaterialNameArabic</td>
+                    <td class="mark-value">@item.Mark1</td>
                 </tr>
             }
         </tbody>

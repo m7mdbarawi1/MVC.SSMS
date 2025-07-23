@@ -4,24 +4,21 @@
     ViewData["Title"] = "Material Details";
 }
 
-<main>
-    <h1>Material Details</h1>
+<div class="page-container" id="detailsMaterialPage">
+    <h1 class="page-title">Material Details</h1>
+    <h2 class="section-title">Material Information</h2>
+    <hr />
 
-    <section>
-        <h2>Material Information</h2>
-        <hr />
+    <dl class="details-group">
+        <dt class="details-label">@Html.DisplayNameFor(model => model.MaterialNameArabic)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.MaterialNameArabic)</dd>
 
-        <dl>
-            <dt>@Html.DisplayNameFor(model => model.MaterialNameArabic)</dt>
-            <dd>@Html.DisplayFor(model => model.MaterialNameArabic)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.MaterialNameEnglish)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.MaterialNameEnglish)</dd>
+    </dl>
 
-            <dt>@Html.DisplayNameFor(model => model.MaterialNameEnglish)</dt>
-            <dd>@Html.DisplayFor(model => model.MaterialNameEnglish)</dd>
-        </dl>
-    </section>
-
-    <nav>
-        <a asp-action="Edit" asp-route-id="@Model?.MaterialId">Edit</a>
-        <a asp-action="Index">Back to List</a>
-    </nav>
-</main>
+    <div class="action-buttons">
+        <a asp-action="Edit" asp-route-id="@Model?.MaterialId" class="btn btn-primary" id="editBtn">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary" id="backLink">Back to List</a>
+    </div>
+</div>

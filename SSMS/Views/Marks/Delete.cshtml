@@ -1,18 +1,17 @@
 ﻿@model SSMS.Models.Mark
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Mark";
 }
 
-<main>
-    <h1>Delete Mark</h1>
-    <p>Are you sure you want to delete this?</p>
+<div class="page-container">
+    <h1 class="page-title">Delete Mark</h1>
+    <h3 class="page-subtitle">Are you sure you want to delete this mark?</h3>
 
-    <section>
-        <h2>Mark Information</h2>
+    <section class="details-section">
+        <h4 class="section-heading">Mark Information</h4>
         <hr />
-
-        <dl>
+        <dl class="details-group">
             <dt>@Html.DisplayNameFor(model => model.Mark1)</dt>
             <dd>@Html.DisplayFor(model => model.Mark1)</dd>
 
@@ -32,7 +31,9 @@
         <input type="hidden" asp-for="ClassId" />
         <input type="hidden" asp-for="MaterialId" />
 
-        <input type="submit" value="Delete" />
-        <a asp-action="Index">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
     </form>
-</main>
+</div>

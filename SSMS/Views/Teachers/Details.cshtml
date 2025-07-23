@@ -4,30 +4,30 @@
     ViewData["Title"] = "Teacher Details";
 }
 
-<main>
-    <h1>Teacher Details</h1>
-    <h2>Information Summary</h2>
+<div class="page-container" id="detailsTeacherPage">
+    <h1 class="page-title">Teacher Details</h1>
+    <h2 class="section-title">Information Summary</h2>
     <hr />
 
-    <dl>
-        <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
-        <dd>@Html.DisplayFor(model => model.Gender)</dd>
+    <dl class="details-group">
+        <dt class="details-label">@Html.DisplayNameFor(model => model.Gender)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.Gender)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.FullNameArabic)</dt>
-        <dd>@Html.DisplayFor(model => model.FullNameArabic)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.FullNameArabic)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.FullNameArabic)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.FullNameEnglish)</dt>
-        <dd>@Html.DisplayFor(model => model.FullNameEnglish)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.FullNameEnglish)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.FullNameEnglish)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Material)</dt>
-        <dd>@Html.DisplayFor(model => model.Material.MaterialId)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.Material)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.Material.MaterialNameArabic)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.User)</dt>
-        <dd>@Html.DisplayFor(model => model.User.UserId)</dd>
+        <dt class="details-label">@Html.DisplayNameFor(model => model.User)</dt>
+        <dd class="details-value">@Html.DisplayFor(model => model.User.FullName)</dd>
     </dl>
 
-    <nav>
-        <a asp-action="Edit" asp-route-id="@Model?.TeacherId">Edit</a>
-        <a asp-action="Index">Back to List</a>
-    </nav>
-</main>
+    <div class="action-buttons">
+        <a asp-action="Edit" asp-route-id="@Model?.TeacherId" class="btn btn-primary" id="editBtn">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary" id="backLink">Back to List</a>
+    </div>
+</div>

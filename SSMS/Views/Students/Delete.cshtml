@@ -1,19 +1,17 @@
 ﻿@model SSMS.Models.Student
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Student";
 }
 
-<main>
-    <h1>Delete</h1>
+<div class="page-container">
+    <h1 class="page-title">Delete Student</h1>
+    <h3 class="page-subtitle">Are you sure you want to delete this student?</h3>
 
-    <h2>Are you sure you want to delete this?</h2>
-
-    <section>
-        <h3>Student</h3>
+    <section class="details-section">
+        <h4 class="section-heading">Student Details</h4>
         <hr />
-
-        <dl>
+        <dl class="details-group">
             <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
             <dd>@Html.DisplayFor(model => model.Gender)</dd>
 
@@ -36,7 +34,9 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="StudentId" />
-        <input type="submit" value="Delete" />
-        <a asp-action="Index">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </div>
     </form>
-</main>
+</div>

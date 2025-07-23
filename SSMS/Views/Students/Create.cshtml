@@ -4,63 +4,63 @@
     ViewData["Title"] = "Create Student";
 }
 
-<main>
-    <h1>Create New Student</h1>
-    <h2>Student Details</h2>
+<main class="page-container">
+    <h1 class="section-title">Create New Student</h1>
+    <h2 class="form-subtitle">Student Details</h2>
     <hr />
 
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Create" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-        <div>
-            <label asp-for="StudentId"></label>
-            <input asp-for="StudentId" />
-            <span asp-validation-for="StudentId"></span>
+        <div class="form-group">
+            <label asp-for="StudentId" class="form-label"></label>
+            <input asp-for="StudentId" class="form-input" />
+            <span asp-validation-for="StudentId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="ClassId"></label>
-            <select asp-for="ClassId" asp-items="ViewBag.ClassId"></select>
-            <span asp-validation-for="ClassId"></span>
+        <div class="form-group">
+            <label asp-for="ClassId" class="form-label"></label>
+            <select asp-for="ClassId" asp-items="ViewBag.ClassId" class="form-select"></select>
+            <span asp-validation-for="ClassId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="UserId"></label>
-            <select asp-for="UserId" asp-items="ViewBag.UserId"></select>
-            <span asp-validation-for="UserId"></span>
+        <div class="form-group">
+            <label asp-for="UserId" class="form-label"></label>
+            <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-select"></select>
+            <span asp-validation-for="UserId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="Gender"></label>
-            <input asp-for="Gender" />
-            <span asp-validation-for="Gender"></span>
+        <div class="form-group">
+            <label asp-for="Gender" class="form-label"></label>
+            <input asp-for="Gender" class="form-input" />
+            <span asp-validation-for="Gender" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="FullNameArabic"></label>
-            <input asp-for="FullNameArabic" />
-            <span asp-validation-for="FullNameArabic"></span>
+        <div class="form-group">
+            <label asp-for="FullNameArabic" class="form-label"></label>
+            <input asp-for="FullNameArabic" class="form-input" />
+            <span asp-validation-for="FullNameArabic" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="FullNameEnglish"></label>
-            <input asp-for="FullNameEnglish" />
-            <span asp-validation-for="FullNameEnglish"></span>
+        <div class="form-group">
+            <label asp-for="FullNameEnglish" class="form-label"></label>
+            <input asp-for="FullNameEnglish" class="form-input" />
+            <span asp-validation-for="FullNameEnglish" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="Age"></label>
-            <input asp-for="Age" />
-            <span asp-validation-for="Age"></span>
+        <div class="form-group">
+            <label asp-for="Age" class="form-label"></label>
+            <input asp-for="Age" class="form-input" />
+            <span asp-validation-for="Age" class="validation-message"></span>
         </div>
 
-        <div>
-            <input type="submit" value="Create" />
-            <a asp-action="Index">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         </div>
     </form>
 </main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

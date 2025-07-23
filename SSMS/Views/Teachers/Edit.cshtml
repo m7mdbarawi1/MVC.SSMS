@@ -4,48 +4,48 @@
     ViewData["Title"] = "Edit Teacher";
 }
 
-<main>
-    <h1>Edit Teacher</h1>
-    <h2>Teacher Details</h2>
+<main class="page-container" id="editTeacherPage">
+    <h1 class="page-title">Edit Teacher</h1>
+    <h2 class="section-title">Teacher Details</h2>
     <hr />
 
-    <form asp-action="Edit">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Edit" class="form-container" id="teacherForm">
+        <div asp-validation-summary="ModelOnly" class="form-error"></div>
         <input type="hidden" asp-for="TeacherId" />
 
-        <div>
-            <label asp-for="UserId"></label>
-            <select asp-for="UserId" asp-items="ViewBag.UserId"></select>
-            <span asp-validation-for="UserId"></span>
+        <div class="form-group">
+            <label asp-for="UserId" class="form-label"></label>
+            <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-input" id="userIdSelect"></select>
+            <span asp-validation-for="UserId" class="form-error"></span>
         </div>
 
-        <div>
-            <label asp-for="MaterialId"></label>
-            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId"></select>
-            <span asp-validation-for="MaterialId"></span>
+        <div class="form-group">
+            <label asp-for="MaterialId" class="form-label"></label>
+            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId" class="form-input" id="materialIdSelect"></select>
+            <span asp-validation-for="MaterialId" class="form-error"></span>
         </div>
 
-        <div>
-            <label asp-for="Gender"></label>
-            <input asp-for="Gender" />
-            <span asp-validation-for="Gender"></span>
+        <div class="form-group">
+            <label asp-for="Gender" class="form-label"></label>
+            <input asp-for="Gender" class="form-input" id="genderInput" />
+            <span asp-validation-for="Gender" class="form-error"></span>
         </div>
 
-        <div>
-            <label asp-for="FullNameArabic"></label>
-            <input asp-for="FullNameArabic" />
-            <span asp-validation-for="FullNameArabic"></span>
+        <div class="form-group">
+            <label asp-for="FullNameArabic" class="form-label"></label>
+            <input asp-for="FullNameArabic" class="form-input" id="fullNameArabicInput" />
+            <span asp-validation-for="FullNameArabic" class="form-error"></span>
         </div>
 
-        <div>
-            <label asp-for="FullNameEnglish"></label>
-            <input asp-for="FullNameEnglish" />
-            <span asp-validation-for="FullNameEnglish"></span>
+        <div class="form-group">
+            <label asp-for="FullNameEnglish" class="form-label"></label>
+            <input asp-for="FullNameEnglish" class="form-input" id="fullNameEnglishInput" />
+            <span asp-validation-for="FullNameEnglish" class="form-error"></span>
         </div>
 
-        <div>
-            <input type="submit" value="Save" />
-            <a asp-action="Index">Back to List</a>
+        <div class="action-buttons">
+            <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" />
+            <a asp-action="Index" class="btn btn-secondary back-link" id="backLink">Back to List</a>
         </div>
     </form>
 </main>

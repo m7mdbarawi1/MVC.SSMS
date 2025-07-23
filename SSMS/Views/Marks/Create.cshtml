@@ -1,48 +1,48 @@
 ﻿@model SSMS.Models.Mark
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Mark";
 }
 
-<main>
-    <h1>Create Mark</h1>
-    <h2>Mark Details</h2>
+<main class="page-container">
+    <h1 class="section-title">Create Mark</h1>
+    <h2 class="form-subtitle">Mark Details</h2>
     <hr />
 
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly"></div>
+    <form asp-action="Create" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
-        <div>
-            <label asp-for="StudentId"></label>
-            <select asp-for="StudentId" asp-items="ViewBag.StudentId"></select>
-            <span asp-validation-for="StudentId"></span>
+        <div class="form-group">
+            <label asp-for="StudentId" class="form-label"></label>
+            <select asp-for="StudentId" asp-items="ViewBag.StudentId" class="form-select"></select>
+            <span asp-validation-for="StudentId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="ClassId"></label>
-            <select asp-for="ClassId" asp-items="ViewBag.ClassId"></select>
-            <span asp-validation-for="ClassId"></span>
+        <div class="form-group">
+            <label asp-for="ClassId" class="form-label"></label>
+            <select asp-for="ClassId" asp-items="ViewBag.ClassId" class="form-select"></select>
+            <span asp-validation-for="ClassId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="MaterialId"></label>
-            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId"></select>
-            <span asp-validation-for="MaterialId"></span>
+        <div class="form-group">
+            <label asp-for="MaterialId" class="form-label"></label>
+            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId" class="form-select"></select>
+            <span asp-validation-for="MaterialId" class="validation-message"></span>
         </div>
 
-        <div>
-            <label asp-for="Mark1"></label>
-            <input asp-for="Mark1" />
-            <span asp-validation-for="Mark1"></span>
+        <div class="form-group">
+            <label asp-for="Mark1" class="form-label"></label>
+            <input asp-for="Mark1" class="form-input" />
+            <span asp-validation-for="Mark1" class="validation-message"></span>
         </div>
 
-        <div>
-            <input type="submit" value="Create" />
-            <a asp-action="Index">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         </div>
     </form>
 </main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
