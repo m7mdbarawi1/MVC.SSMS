@@ -4,18 +4,18 @@
     ViewData["Title"] = "Marks";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Marks</h1>
+<main>
+    <h1>Marks</h1>
 
-    <div class="actions-bar">
-        <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <div>
+        <a asp-action="Create">Create New</a>
     </div>
 
-    <div class="search-bar">
-        <input type="text" class="input-field" id="markSearchInput" placeholder="Search by mark, class, material, or student ID..." />
+    <div>
+        <input type="text" placeholder="Search by mark, class, material, or student ID..." />
     </div>
 
-    <table class="data-table" id="marksTable">
+    <table>
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.Mark1)</th>
@@ -29,54 +29,30 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Mark1)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Class.ClassNameArabic)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Material.MaterialNameArabic)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Student.StudentId)</td>
+                    <td>@Html.DisplayFor(m => item.Mark1)</td>
+                    <td>@Html.DisplayFor(m => item.Class.ClassNameArabic)</td>
+                    <td>@Html.DisplayFor(m => item.Material.MaterialNameArabic)</td>
+                    <td>@Html.DisplayFor(m => item.Student.StudentId)</td>
                     <td>
-                        <div class="table-actions">
-                            <a asp-action="Edit"
-                               asp-route-studentId="@item.StudentId"
-                               asp-route-classId="@item.ClassId"
-                               asp-route-materialId="@item.MaterialId"
-                               class="btn btn-secondary">Edit</a>
-
-                            <a asp-action="Details"
-                               asp-route-studentId="@item.StudentId"
-                               asp-route-classId="@item.ClassId"
-                               asp-route-materialId="@item.MaterialId"
-                               class="btn btn-secondary">Details</a>
-
-                            <a asp-action="Delete"
-                               asp-route-studentId="@item.StudentId"
-                               asp-route-classId="@item.ClassId"
-                               asp-route-materialId="@item.MaterialId"
-                               class="btn btn-danger">Delete</a>
-                        </div>
+                        <a asp-action="Edit" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId">Edit</a>
+                        <a asp-action="Details" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId">Details</a>
+                        <a asp-action="Delete" asp-route-studentId="@item.StudentId" asp-route-classId="@item.ClassId" asp-route-materialId="@item.MaterialId">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-</div>
+</main>
 
 @section Scripts {
     <script>
-        document.querySelector("#markSearchInput").addEventListener("keyup", function () {
+        document.querySelector("input[type='text']").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll("#marksTable tbody tr");
+            const rows = document.querySelectorAll("table tbody tr");
 
             rows.forEach(row => {
-                const mark = row.cells[0].textContent.toLowerCase();
-                const className = row.cells[1].textContent.toLowerCase();
-                const materialName = row.cells[2].textContent.toLowerCase();
-                const studentId = row.cells[3].textContent.toLowerCase();
-
-                const match = mark.includes(filter)
-                    || className.includes(filter)
-                    || materialName.includes(filter)
-                    || studentId.includes(filter);
-
+                const values = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+                const match = values.some(val => val.includes(filter));
                 row.style.display = match ? "" : "none";
             });
         });

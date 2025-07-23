@@ -4,63 +4,49 @@
     ViewData["Title"] = "Users";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Users</h1>
+<h1>Users</h1>
 
-    <p>
-        <a asp-action="Create" class="create-link">Create New</a>
-    </p>
+<a asp-action="Create">Create New</a>
 
-    <input type="text" id="userSearchInput" class="search-input" placeholder="Search users by name, username, password, or user type..." />
+<input type="text" placeholder="Search users by name, username, password, or user type..." />
 
-    <table class="data-table" id="usersTable">
-        <thead>
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.FullName)</th>
+            <th>@Html.DisplayNameFor(model => model.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.Password)</th>
+            <th>@Html.DisplayNameFor(model => model.UserType)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>@Html.DisplayNameFor(model => model.FullName)</th>
-                <th>@Html.DisplayNameFor(model => model.UserName)</th>
-                <th>@Html.DisplayNameFor(model => model.Password)</th>
-                <th>@Html.DisplayNameFor(model => model.UserType)</th>
-                <th>Actions</th>
+                <td>@Html.DisplayFor(m => item.FullName)</td>
+                <td>@Html.DisplayFor(m => item.UserName)</td>
+                <td>@Html.DisplayFor(m => item.Password)</td>
+                <td>@Html.DisplayFor(m => item.UserType)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.UserId">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.FullName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Password)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserType)</td>
-                    <td>
-                        <div class="action-links">
-                            <a asp-action="Edit" asp-route-id="@item.UserId" class="action-link edit">Edit</a>
-                            <a asp-action="Details" asp-route-id="@item.UserId" class="action-link">Details</a>
-                            <a asp-action="Delete" asp-route-id="@item.UserId" class="action-link delete">Delete</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
 
 @section Scripts {
     <script>
-        document.getElementById("userSearchInput").addEventListener("keyup", function () {
+        document.querySelector("input[type='text']").addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll("#usersTable tbody tr");
+            const rows = document.querySelectorAll("table tbody tr");
 
             rows.forEach(row => {
-                const fullName = row.cells[0].textContent.toLowerCase();
-                const userName = row.cells[1].textContent.toLowerCase();
-                const password = row.cells[2].textContent.toLowerCase();
-                const userType = row.cells[3].textContent.toLowerCase();
-
-                const match = fullName.includes(filter) ||
-                              userName.includes(filter) ||
-                              password.includes(filter) ||
-                              userType.includes(filter);
-
+                const values = Array.from(row.cells).map(cell => cell.textContent.toLowerCase());
+                const match = values.some(val => val.includes(filter));
                 row.style.display = match ? "" : "none";
             });
         });

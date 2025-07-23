@@ -4,27 +4,25 @@
     ViewData["Title"] = "User Details";
 }
 
-<div class="page-container">
-    <h1 class="section-title">User Details</h1>
-    <h4 class="section-subtitle">Account Information</h4>
-    <hr />
+<h1>User Details</h1>
+<h4>Account Information</h4>
+<hr />
 
-    <dl class="details-list">
-        <dt class="details-label">@Html.DisplayNameFor(model => model.FullName)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.FullName)</dd>
+<dl>
+    <dt>@Html.DisplayNameFor(model => model.FullName)</dt>
+    <dd>@Html.DisplayFor(model => model.FullName)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.UserName)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.UserName)</dd>
+    <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+    <dd>@Html.DisplayFor(model => model.UserName)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.Password)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.Password)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Password)</dt>
+    <dd>@Html.DisplayFor(model => model.Password)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.UserType)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.UserType)</dd>
-    </dl>
+    <dt>@Html.DisplayNameFor(model => model.UserType)</dt>
+    <dd>@Html.DisplayFor(model => model.UserType)</dd>
+</dl>
 
-    <div class="form-actions">
-        <a asp-action="Edit" asp-route-id="@Model?.UserId" class="btn btn-primary">Edit</a>
-        <a asp-action="Index" class="btn btn-outline">Back to List</a>
-    </div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.UserId">Edit</a>
+    <a asp-action="Index">Back to List</a>
 </div>

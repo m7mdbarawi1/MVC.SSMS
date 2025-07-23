@@ -4,37 +4,39 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<main>
+    <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+    <h2>Are you sure you want to delete this?</h2>
 
-<div>
-    <h4>Student</h4>
-    <hr />
+    <section>
+        <h3>Student</h3>
+        <hr />
 
-    <dl>
-        <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
-        <dd>@Html.DisplayFor(model => model.Gender)</dd>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
+            <dd>@Html.DisplayFor(model => model.Gender)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.FullNameArabic)</dt>
-        <dd>@Html.DisplayFor(model => model.FullNameArabic)</dd>
+            <dt>@Html.DisplayNameFor(model => model.FullNameArabic)</dt>
+            <dd>@Html.DisplayFor(model => model.FullNameArabic)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.FullNameEnglish)</dt>
-        <dd>@Html.DisplayFor(model => model.FullNameEnglish)</dd>
+            <dt>@Html.DisplayNameFor(model => model.FullNameEnglish)</dt>
+            <dd>@Html.DisplayFor(model => model.FullNameEnglish)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Age)</dt>
-        <dd>@Html.DisplayFor(model => model.Age)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Age)</dt>
+            <dd>@Html.DisplayFor(model => model.Age)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.Class)</dt>
-        <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Class)</dt>
+            <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
 
-        <dt>@Html.DisplayNameFor(model => model.User)</dt>
-        <dd>@Html.DisplayFor(model => model.User.UserId)</dd>
-    </dl>
+            <dt>@Html.DisplayNameFor(model => model.User)</dt>
+            <dd>@Html.DisplayFor(model => model.User.UserId)</dd>
+        </dl>
+    </section>
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="StudentId" />
         <input type="submit" value="Delete" />
         <a asp-action="Index">Back to List</a>
     </form>
-</div>
+</main>

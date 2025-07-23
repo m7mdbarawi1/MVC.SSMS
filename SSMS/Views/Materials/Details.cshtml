@@ -4,24 +4,24 @@
     ViewData["Title"] = "Material Details";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Material Details</h1>
+<main>
+    <h1>Material Details</h1>
 
-    <div class="card">
-        <h4 class="section-subtitle">Material Information</h4>
-        <hr class="divider" />
+    <section>
+        <h2>Material Information</h2>
+        <hr />
 
-        <dl class="detail-list">
-            <dt class="detail-term">@Html.DisplayNameFor(model => model.MaterialNameArabic)</dt>
-            <dd class="detail-description">@Html.DisplayFor(model => model.MaterialNameArabic)</dd>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.MaterialNameArabic)</dt>
+            <dd>@Html.DisplayFor(model => model.MaterialNameArabic)</dd>
 
-            <dt class="detail-term">@Html.DisplayNameFor(model => model.MaterialNameEnglish)</dt>
-            <dd class="detail-description">@Html.DisplayFor(model => model.MaterialNameEnglish)</dd>
+            <dt>@Html.DisplayNameFor(model => model.MaterialNameEnglish)</dt>
+            <dd>@Html.DisplayFor(model => model.MaterialNameEnglish)</dd>
         </dl>
-    </div>
+    </section>
 
-    <div class="form-actions">
-        <a asp-action="Edit" asp-route-id="@Model?.MaterialId" class="btn btn-primary">Edit</a>
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-    </div>
-</div>
+    <nav>
+        <a asp-action="Edit" asp-route-id="@Model?.MaterialId">Edit</a>
+        <a asp-action="Index">Back to List</a>
+    </nav>
+</main>

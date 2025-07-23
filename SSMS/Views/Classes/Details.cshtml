@@ -4,21 +4,21 @@
     ViewData["Title"] = "Class Details";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Class Details</h1>
+<main>
+    <h1>Class Details</h1>
 
-    <div class="card">
-        <dl class="detail-list">
-            <dt class="detail-term">@Html.DisplayNameFor(model => model.ClassNameArabic)</dt>
-            <dd class="detail-description">@Html.DisplayFor(model => model.ClassNameArabic)</dd>
+    <section>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.ClassNameArabic)</dt>
+            <dd>@Html.DisplayFor(model => model.ClassNameArabic)</dd>
 
-            <dt class="detail-term">@Html.DisplayNameFor(model => model.ClassNameEnglish)</dt>
-            <dd class="detail-description">@Html.DisplayFor(model => model.ClassNameEnglish)</dd>
+            <dt>@Html.DisplayNameFor(model => model.ClassNameEnglish)</dt>
+            <dd>@Html.DisplayFor(model => model.ClassNameEnglish)</dd>
         </dl>
-    </div>
+    </section>
 
-    <div class="form-actions">
-        <a asp-action="Edit" asp-route-id="@Model?.ClassId" class="btn btn-primary">Edit</a>
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-    </div>
-</div>
+    <nav>
+        <a asp-action="Edit" asp-route-id="@Model?.ClassId">Edit</a>
+        <a asp-action="Index">Back to List</a>
+    </nav>
+</main>

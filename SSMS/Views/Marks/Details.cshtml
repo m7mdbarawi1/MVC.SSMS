@@ -4,36 +4,36 @@
     ViewData["Title"] = "Details";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Mark Details</h1>
+<main>
+    <h1>Mark Details</h1>
 
-    <div class="details-group">
-        <h4 class="form-subtitle">Mark</h4>
-        <hr class="divider" />
+    <section>
+        <h2>Mark</h2>
+        <hr />
 
-        <dl class="details-list">
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Mark1)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Mark1)</dd>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.Mark1)</dt>
+            <dd>@Html.DisplayFor(model => model.Mark1)</dd>
 
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Class)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Class.ClassId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Class)</dt>
+            <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
 
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Material)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Material.MaterialId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Material)</dt>
+            <dd>@Html.DisplayFor(model => model.Material.MaterialId)</dd>
 
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Student)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Student.StudentId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Student)</dt>
+            <dd>@Html.DisplayFor(model => model.Student.StudentId)</dd>
         </dl>
-    </div>
+    </section>
 
-    <div class="form-actions">
+    <nav>
         @Html.ActionLink("Edit", "Edit", new
             {
                 studentId = Model.StudentId,
                 classId = Model.ClassId,
                 materialId = Model.MaterialId
-            }, new { @class = "btn btn-primary" })
+            })
 
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
-    </div>
-</div>
+        <a asp-action="Index">Back to List</a>
+    </nav>
+</main>

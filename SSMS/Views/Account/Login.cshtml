@@ -2,25 +2,27 @@
     ViewData["Title"] = "Login";
 }
 
-<div class="page-container">
-    <h2 class="section-title">Login</h2>
+<main>
+    <section>
+        <h1>Login</h1>
 
-    <form method="post" class="form">
-        <div class="form-group">
-            <label for="username" class="form-label">Username</label>
-            <input name="username" id="username" class="input-field" required />
-        </div>
+        <form method="post">
+            <div>
+                <label for="username">Username</label>
+                <input name="username" id="username" required />
+            </div>
 
-        <div class="form-group">
-            <label for="password" class="form-label">Password</label>
-            <input name="password" id="password" type="password" class="input-field" required />
-        </div>
+            <div>
+                <label for="password">Password</label>
+                <input name="password" id="password" type="password" required />
+            </div>
 
-        @if (ViewBag.Error != null)
-        {
-            <div class="form-error">@ViewBag.Error</div>
-        }
+            @if (ViewBag.Error != null)
+            {
+                <p>@ViewBag.Error</p>
+            }
 
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-</div>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+</main>

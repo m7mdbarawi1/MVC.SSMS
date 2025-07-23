@@ -4,33 +4,33 @@
     ViewData["Title"] = "Student Details";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Student Details</h1>
-    <h4 class="section-subtitle">Student</h4>
+<main>
+    <h1>Student Details</h1>
+    <h2>Student</h2>
     <hr />
 
-    <dl class="details-list">
-        <dt class="details-label">@Html.DisplayNameFor(model => model.Gender)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.Gender)</dd>
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.Gender)</dt>
+        <dd>@Html.DisplayFor(model => model.Gender)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.FullNameArabic)</dt>
-        <dd class="details-value arabic-text">@Html.DisplayFor(model => model.FullNameArabic)</dd>
+        <dt>@Html.DisplayNameFor(model => model.FullNameArabic)</dt>
+        <dd>@Html.DisplayFor(model => model.FullNameArabic)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.FullNameEnglish)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.FullNameEnglish)</dd>
+        <dt>@Html.DisplayNameFor(model => model.FullNameEnglish)</dt>
+        <dd>@Html.DisplayFor(model => model.FullNameEnglish)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.Age)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.Age)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Age)</dt>
+        <dd>@Html.DisplayFor(model => model.Age)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.Class)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.Class.ClassId)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Class)</dt>
+        <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
 
-        <dt class="details-label">@Html.DisplayNameFor(model => model.User)</dt>
-        <dd class="details-value">@Html.DisplayFor(model => model.User.UserId)</dd>
+        <dt>@Html.DisplayNameFor(model => model.User)</dt>
+        <dd>@Html.DisplayFor(model => model.User.UserId)</dd>
     </dl>
 
-    <div class="form-actions">
-        <a asp-action="Edit" asp-route-id="@Model?.StudentId" class="btn btn-primary">Edit</a>
-        <a asp-action="Index" class="btn btn-outline">Back to List</a>
-    </div>
-</div>
+    <nav>
+        <a asp-action="Edit" asp-route-id="@Model?.StudentId">Edit</a>
+        <a asp-action="Index">Back to List</a>
+    </nav>
+</main>

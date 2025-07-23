@@ -4,30 +4,30 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Edit</h1>
-    <h4 class="form-subtitle">Mark</h4>
-    <hr class="divider" />
+<main>
+    <h1>Edit</h1>
+    <h2>Mark</h2>
+    <hr />
 
-    <form asp-action="Edit" class="form">
-        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly"></div>
 
         <input type="hidden" asp-for="StudentId" />
         <input type="hidden" asp-for="ClassId" />
         <input type="hidden" asp-for="MaterialId" />
 
-        <div class="form-group">
-            <label asp-for="Mark1" class="form-label"></label>
-            <input asp-for="Mark1" class="input-field" />
-            <span asp-validation-for="Mark1" class="form-validation"></span>
+        <div>
+            <label asp-for="Mark1"></label>
+            <input asp-for="Mark1" />
+            <span asp-validation-for="Mark1"></span>
         </div>
 
-        <div class="form-actions">
-            <input type="submit" value="Save" class="btn btn-primary" />
-            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <div>
+            <input type="submit" value="Save" />
+            <a asp-action="Index">Back to List</a>
         </div>
     </form>
-</div>
+</main>
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");

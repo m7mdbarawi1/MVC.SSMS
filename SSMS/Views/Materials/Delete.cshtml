@@ -4,26 +4,26 @@
     ViewData["Title"] = "Delete Material";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Delete Material</h1>
-    <p class="warning-text">Are you sure you want to delete this?</p>
+<main>
+    <h1>Delete Material</h1>
+    <p>Are you sure you want to delete this?</p>
 
-    <div class="card">
-        <h4 class="section-subtitle">Material Details</h4>
-        <hr class="divider" />
+    <section>
+        <h2>Material Details</h2>
+        <hr />
 
-        <dl class="detail-list">
-            <dt class="detail-term">@Html.DisplayNameFor(model => model.MaterialNameArabic)</dt>
-            <dd class="detail-description">@Html.DisplayFor(model => model.MaterialNameArabic)</dd>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.MaterialNameArabic)</dt>
+            <dd>@Html.DisplayFor(model => model.MaterialNameArabic)</dd>
 
-            <dt class="detail-term">@Html.DisplayNameFor(model => model.MaterialNameEnglish)</dt>
-            <dd class="detail-description">@Html.DisplayFor(model => model.MaterialNameEnglish)</dd>
+            <dt>@Html.DisplayNameFor(model => model.MaterialNameEnglish)</dt>
+            <dd>@Html.DisplayFor(model => model.MaterialNameEnglish)</dd>
         </dl>
-    </div>
+    </section>
 
-    <form asp-action="Delete" class="form-actions">
+    <form asp-action="Delete">
         <input type="hidden" asp-for="MaterialId" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <input type="submit" value="Delete" />
+        <a asp-action="Index">Back to List</a>
     </form>
-</div>
+</main>

@@ -4,35 +4,35 @@
     ViewData["Title"] = "Delete";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Delete Mark</h1>
-    <p class="form-warning">Are you sure you want to delete this?</p>
+<main>
+    <h1>Delete Mark</h1>
+    <p>Are you sure you want to delete this?</p>
 
-    <div class="details-group">
-        <h4 class="form-subtitle">Mark Information</h4>
-        <hr class="divider" />
+    <section>
+        <h2>Mark Information</h2>
+        <hr />
 
-        <dl class="details-list">
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Mark1)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Mark1)</dd>
+        <dl>
+            <dt>@Html.DisplayNameFor(model => model.Mark1)</dt>
+            <dd>@Html.DisplayFor(model => model.Mark1)</dd>
 
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Class)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Class.ClassId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Class)</dt>
+            <dd>@Html.DisplayFor(model => model.Class.ClassId)</dd>
 
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Material)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Material.MaterialId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Material)</dt>
+            <dd>@Html.DisplayFor(model => model.Material.MaterialId)</dd>
 
-            <dt class="details-label">@Html.DisplayNameFor(model => model.Student)</dt>
-            <dd class="details-value">@Html.DisplayFor(model => model.Student.StudentId)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Student)</dt>
+            <dd>@Html.DisplayFor(model => model.Student.StudentId)</dd>
         </dl>
-    </div>
+    </section>
 
-    <form asp-action="Delete" class="form-actions">
+    <form asp-action="Delete">
         <input type="hidden" asp-for="StudentId" />
         <input type="hidden" asp-for="ClassId" />
         <input type="hidden" asp-for="MaterialId" />
 
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        <input type="submit" value="Delete" />
+        <a asp-action="Index">Back to List</a>
     </form>
-</div>
+</main>

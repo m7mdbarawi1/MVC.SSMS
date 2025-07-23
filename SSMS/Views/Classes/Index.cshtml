@@ -4,15 +4,14 @@
     ViewData["Title"] = "Classes";
 }
 
-<div class="page-container">
-    <h1 class="section-title">Classes</h1>
+<main>
+    <h1>Classes</h1>
 
-    <div class="actions-bar">
-        <a asp-action="Create" class="btn btn-primary">Create New</a>
-        <input type="text" class="search-input" placeholder="Search classes by Arabic or English name..." />
-    </div>
+    <a asp-action="Create">Create New</a>
 
-    <table class="data-table">
+    <input type="text" placeholder="Search classes by Arabic or English name..." />
+
+    <table>
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(model => model.ClassNameArabic)</th>
@@ -24,31 +23,29 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.ClassNameArabic)</td>
-                    <td>@Html.DisplayFor(modelItem => item.ClassNameEnglish)</td>
+                    <td>@Html.DisplayFor(m => item.ClassNameArabic)</td>
+                    <td>@Html.DisplayFor(m => item.ClassNameEnglish)</td>
                     <td>
-                        <div class="action-links">
-                            <a asp-action="Edit" asp-route-id="@item.ClassId" class="action-link">Edit</a>
-                            <a asp-action="Details" asp-route-id="@item.ClassId" class="action-link">Details</a>
-                            <a asp-action="Delete" asp-route-id="@item.ClassId" class="action-link delete">Delete</a>
-                        </div>
+                        <a asp-action="Edit" asp-route-id="@item.ClassId">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.ClassId">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.ClassId">Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-</div>
+</main>
 
 @section Scripts {
     <script>
-        document.querySelector(".search-input").addEventListener("keyup", function () {
+        document.querySelector('input[type="text"]').addEventListener("keyup", function () {
             const filter = this.value.toLowerCase();
-            const rows = document.querySelectorAll(".data-table tbody tr");
+            const rows = document.querySelectorAll("table tbody tr");
 
             rows.forEach(row => {
-                const arabicName = row.cells[0].textContent.toLowerCase();
-                const englishName = row.cells[1].textContent.toLowerCase();
-                row.style.display = arabicName.includes(filter) || englishName.includes(filter) ? "" : "none";
+                const arabic = row.cells[0].textContent.toLowerCase();
+                const english = row.cells[1].textContent.toLowerCase();
+                row.style.display = arabic.includes(filter) || english.includes(filter) ? "" : "none";
             });
         });
     </script>
