@@ -10,71 +10,79 @@
     @RenderSection("Head", required: false)
 </head>
 <body>
-    <header>
-        <nav>
-            <a asp-area="" asp-controller="Home" asp-action="Index">
-                <img src="~/ssms-logo.png" alt="SSMS Logo" />
-            </a>
+    <!-- Site Header -->
+    <header class="site-header">
+        <nav class="navbar" id="mainNavbar">
+            <div class="navbar-container">
+                <!-- Logo -->
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-logo">
+                    <img src="~/ssms-logo.png" alt="SSMS Logo" />
+                </a>
 
-            <ul>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <li><a asp-controller="Users" asp-action="MyProfile">My Profile</a></li>
+                <!-- Navigation Links -->
+                <ul class="nav-links">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-controller="Users" asp-action="MyProfile" class="nav-link">My Profile</a></li>
 
-                    @if (User.IsInRole("3")) // Admin
-                    {
-                        <li><a asp-controller="Classes" asp-action="Index">Classes</a></li>
-                        <li><a asp-controller="Materials" asp-action="Index">Materials</a></li>
-                        <li><a asp-controller="Students" asp-action="Index">Students</a></li>
-                        <li><a asp-controller="Teachers" asp-action="Index">Teachers</a></li>
-                        <li><a asp-controller="Users" asp-action="Index">Users</a></li>
-                    }
-                    else if (User.IsInRole("2")) // Teacher
-                    {
-                        <li><a asp-controller="Marks" asp-action="Index">Marks</a></li>
-                    }
-                    else if (User.IsInRole("1")) // Student
-                    {
-                        <li><a asp-controller="Marks" asp-action="MyMarks">My Marks</a></li>
-                    }
-                }
-            </ul>
-
-            <div>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <span>
-                        Welcome, @User.Identity.Name!
-                        (@(User.FindFirst(ClaimTypes.Role)?.Value switch
+                        @if (User.IsInRole("3")) // Admin
                         {
-                            "1" => "Student",
-                            "2" => "Teacher",
-                            "3" => "Admin",
-                            _ => "Unknown"
-                        }))
-                    </span>
-                    <a asp-controller="Account" asp-action="Logout">Logout</a>
-                }
-                else
-                {
-                    <a asp-controller="Account" asp-action="Login">Login</a>
-                }
+                            <li><a asp-controller="Classes" asp-action="Index" class="nav-link">Classes</a></li>
+                            <li><a asp-controller="Materials" asp-action="Index" class="nav-link">Materials</a></li>
+                            <li><a asp-controller="Students" asp-action="Index" class="nav-link">Students</a></li>
+                            <li><a asp-controller="Teachers" asp-action="Index" class="nav-link">Teachers</a></li>
+                            <li><a asp-controller="Users" asp-action="Index" class="nav-link">Users</a></li>
+                        }
+                        else if (User.IsInRole("2")) // Teacher
+                        {
+                            <li><a asp-controller="Marks" asp-action="Index" class="nav-link">Marks</a></li>
+                        }
+                        else if (User.IsInRole("1")) // Student
+                        {
+                            <li><a asp-controller="Marks" asp-action="MyMarks" class="nav-link">My Marks</a></li>
+                        }
+                    }
+                </ul>
+
+                <!-- User Info -->
+                <div class="auth-info">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="user-greeting">
+                            Welcome, @User.Identity.Name!
+                            (@(User.FindFirst(ClaimTypes.Role)?.Value switch
+                            {
+                                "1" => "Student",
+                                "2" => "Teacher",
+                                "3" => "Admin",
+                                _ => "Unknown"
+                            }))
+                        </span>
+                        <a asp-controller="Account" asp-action="Logout" class="btn btn-secondary">Logout</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-primary" id="loginBtn">Login</a>
+                    }
+                </div>
             </div>
         </nav>
     </header>
 
-    <main>
-        <section>
+    <!-- Main Content -->
+    <main class="page-container" id="mainContent">
+        <section class="section">
             @RenderBody()
         </section>
     </main>
 
-    <footer>
-        <nav>
-            <a asp-controller="Home" asp-action="Index">Home</a>
-            <a asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <nav class="footer-nav">
+            <a asp-controller="Home" asp-action="Index" class="footer-link">Home</a>
+            <a asp-controller="Home" asp-action="Privacy" class="footer-link">Privacy</a>
         </nav>
-        <p>&copy; 2025 SSMS - School Management System</p>
+        <p class="footer-copy">&copy; 2025 SSMS - School Management System</p>
     </footer>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
