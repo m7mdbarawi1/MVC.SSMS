@@ -1,1 +1,153 @@
-﻿
+﻿/* ================================
+   MY PROFILE PAGE STYLES
+   File: /css/users/myprofile.css
+================================== */
+
+.page-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background-color: #1e293b;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    font-family: 'Segoe UI', sans-serif;
+    color: #f1f5f9;
+    animation: fadeInUp 0.6s ease-in-out;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #38bdf8;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Success message */
+.success-message {
+    background-color: #22c55e;
+    color: #f0fdf4;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+/* Form Styling */
+form {
+    margin-bottom: 2rem;
+}
+
+    form div {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.5rem;
+    }
+
+label {
+    font-weight: 600;
+    color: #facc15;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 0.75rem 1.2rem;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: #0f172a;
+    color: #f8fafc;
+    box-shadow: inset 0 0 0 1px #334155;
+    transition: box-shadow 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #38bdf8;
+}
+
+/* Validation message */
+span[data-valmsg-for] {
+    color: #f87171;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+/* Buttons container */
+.form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* General Button Styles */
+.btn {
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: none;
+    min-width: 160px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Update Button */
+.btn-primary {
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: white;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        transform: translateY(-2px);
+    }
+
+/* Delete Button */
+.btn-danger {
+    background: linear-gradient(135deg, #f87171, #ef4444);
+    color: white;
+}
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        transform: translateY(-2px);
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page-container {
+        padding: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

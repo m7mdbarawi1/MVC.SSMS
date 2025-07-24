@@ -1,1 +1,137 @@
-﻿
+﻿/* ================================
+   USER DETAILS PAGE STYLES
+   File: /css/users/details.css
+================================= */
+
+#detailsUserPage {
+    max-width: 750px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #1e293b;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    font-family: 'Segoe UI', sans-serif;
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+.page-title {
+    color: #38bdf8;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    color: #f1f5f9;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+hr {
+    border-color: #334155;
+    margin-bottom: 2rem;
+}
+
+.details-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #0f172a;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #334155;
+}
+
+.details-label {
+    color: #94a3b8;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+.details-value {
+    color: #f8fafc;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #1e293b;
+    border-radius: 0.5rem;
+    border: 1px solid #334155;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    }
+
+.btn-secondary {
+    background-color: #475569;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-secondary:hover {
+        background-color: #64748b;
+    }
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 600px) {
+    #detailsUserPage {
+        padding: 1.5rem;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .details-label,
+    .details-value {
+        font-size: 0.95rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

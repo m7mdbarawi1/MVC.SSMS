@@ -1,1 +1,138 @@
-﻿
+﻿/* ================================
+   STUDENTS DELETE PAGE STYLES
+   File: /css/students/delete.css
+================================== */
+
+.page-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem 2.5rem;
+    background-color: #1e293b;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    font-family: 'Segoe UI', sans-serif;
+    animation: fadeInUp 0.5s ease-in-out;
+    color: #f1f5f9;
+}
+
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #38bdf8;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.page-subtitle,
+.section-heading {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #facc15;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #334155;
+    margin-bottom: 2rem;
+}
+
+.details-group {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+    background-color: #0f172a;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+    .details-group dt {
+        font-weight: 600;
+        color: #94a3b8;
+    }
+
+    .details-group dd {
+        color: #e2e8f0;
+        margin: 0;
+    }
+
+/* Buttons Container */
+.form-actions,
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+/* Buttons Style */
+.btn {
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    border: none;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 140px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+
+    .btn-danger:hover {
+        background: linear-gradient(135deg, #dc2626, #991b1b);
+        transform: translateY(-2px);
+    }
+
+.btn-secondary {
+    background-color: #334155;
+    color: #e2e8f0;
+}
+
+    .btn-secondary:hover {
+        background-color: #475569;
+        transform: translateY(-2px);
+    }
+
+/* ================================
+   RESPONSIVE
+================================== */
+@media (max-width: 768px) {
+    .details-group {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions,
+    .action-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* ================================
+   ANIMATION
+================================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

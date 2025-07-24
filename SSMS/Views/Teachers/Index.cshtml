@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SSMS.Models.Teacher>
+<link href="~/css/teachers/index.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Teachers";
@@ -7,11 +8,10 @@
 <div class="page-container">
     <h1 class="page-title">Teachers</h1>
 
-    <div class="action-buttons">
+    <div class="actions-search-bar">
         <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <input type="text" id="teachersSearchInput" class="search-input" placeholder="Search by name, gender, material ID, or user ID..." />
     </div>
-
-    <input type="text" id="teachersSearchInput" class="search-input" placeholder="Search by name, gender, material ID, or user ID..." />
 
     <div class="table-container">
         <table id="teachersTable" class="data-table">
@@ -32,7 +32,7 @@
                         <td>@Html.DisplayFor(m => item.Gender)</td>
                         <td>@Html.DisplayFor(m => item.FullNameArabic)</td>
                         <td>@Html.DisplayFor(m => item.FullNameEnglish)</td>
-                        <td>@Html.DisplayFor(m => item.Material.MaterialId)</td>
+                        <td>@item.Material?.MaterialId</td>
                         <td>@(item.User?.UserId.ToString() ?? "N/A")</td>
                         <td class="action-buttons">
                             <a asp-action="Edit" asp-route-id="@item.TeacherId" class="btn btn-secondary">Edit</a>

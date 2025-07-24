@@ -1,1 +1,137 @@
-﻿
+﻿/* ================================
+   MATERIALS INDEX PAGE STYLES
+================================ */
+
+.page-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    color: #38bdf8;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.actions-search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    }
+
+.search-input {
+    flex: 1;
+    min-width: 250px;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #334155;
+    background-color: #0f172a;
+    color: #f8fafc;
+    transition: border-color 0.3s ease;
+}
+
+    .search-input:focus {
+        outline: none;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+    }
+
+.table-container {
+    overflow-x: auto;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 0.5rem;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+    .data-table th,
+    .data-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #334155;
+        white-space: nowrap;
+    }
+
+.table-header {
+    background-color: #0f172a;
+    color: #94a3b8;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.table-row td {
+    color: #f1f5f9;
+    font-size: 0.95rem;
+}
+
+.table-row:hover {
+    background-color: #334155;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+    .action-buttons .btn-secondary {
+        padding: 0.4rem 0.9rem;
+        border: none;
+        border-radius: 0.4rem;
+        background-color: #475569;
+        color: white;
+        font-size: 0.85rem;
+        transition: background-color 0.2s ease;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .action-buttons .btn-secondary:hover {
+            background-color: #64748b;
+        }
+
+/* ================================
+   RESPONSIVE ADJUSTMENTS
+================================ */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .search-input {
+        padding: 0.6rem 0.9rem;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

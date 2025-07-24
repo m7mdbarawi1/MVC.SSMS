@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SSMS.Models.Material>
+<link href="~/css/materials/index.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Materials";
@@ -7,11 +8,10 @@
 <div class="page-container">
     <h1 class="page-title">Materials</h1>
 
-    <div class="action-buttons">
+    <div class="actions-search-bar">
         <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <input type="text" id="materialsSearchInput" class="search-input" placeholder="Search by Arabic or English material name..." />
     </div>
-
-    <input type="text" id="materialsSearchInput" class="search-input" placeholder="Search by Arabic or English material name..." />
 
     <div class="table-container">
         <table id="materialsTable" class="data-table">

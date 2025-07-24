@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SSMS.Models.Mark>
+<link href="~/css/marks/index.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Marks";
@@ -7,11 +8,10 @@
 <div class="page-container">
     <h1 class="page-title">Marks</h1>
 
-    <div class="action-buttons">
+    <div class="actions-search-bar">
         <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <input type="text" id="marksSearchInput" class="search-input" placeholder="Search by mark, class, material, or student ID..." />
     </div>
-
-    <input type="text" id="marksSearchInput" class="search-input" placeholder="Search by mark, class, material, or student ID..." />
 
     <div class="table-container">
         <table id="marksTable" class="data-table">

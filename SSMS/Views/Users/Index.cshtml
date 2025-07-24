@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<SSMS.Models.User>
-
+<link href="~/css/users/index.css" rel="stylesheet" />
 @{
     ViewData["Title"] = "Users";
 }
@@ -7,11 +7,10 @@
 <div class="page-container">
     <h1 class="page-title">Users</h1>
 
-    <div class="action-buttons">
+    <div class="actions-search-bar">
         <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <input type="text" id="usersSearchInput" class="search-input" placeholder="Search users by name, username, password, or user type..." />
     </div>
-
-    <input type="text" id="usersSearchInput" class="search-input" placeholder="Search users by name, username, password, or user type..." />
 
     <div class="table-container">
         <table id="usersTable" class="data-table">

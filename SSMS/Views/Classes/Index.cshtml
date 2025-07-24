@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SSMS.Models.Class>
+<link href="~/css/classes/index.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Classes";
@@ -7,11 +8,10 @@
 <div class="page-container">
     <h1 class="page-title">Classes</h1>
 
-    <div class="action-buttons">
+    <div class="actions-search-bar">
         <a asp-action="Create" class="btn btn-primary">Create New</a>
+        <input type="text" id="classesSearchInput" class="search-input" placeholder="Search classes by Arabic or English name..." />
     </div>
-
-    <input type="text" id="classesSearchInput" class="search-input" placeholder="Search classes by Arabic or English name..." />
 
     <div class="table-container">
         <table id="classesTable" class="data-table">
