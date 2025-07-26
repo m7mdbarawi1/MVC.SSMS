@@ -8,7 +8,7 @@ public partial class Teacher
 {
     public int TeacherId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public int MaterialId { get; set; }
 
@@ -22,5 +22,5 @@ public partial class Teacher
     public virtual Material Material { get; set; } = null!;
 
     [ValidateNever]
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; }
 }

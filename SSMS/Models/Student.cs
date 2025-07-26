@@ -10,7 +10,7 @@ public partial class Student
 
     public int ClassId { get; set; }
 
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
 
     public int Gender { get; set; }
 
@@ -25,5 +25,5 @@ public partial class Student
 
     public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();
     [ValidateNever]
-    public virtual User? User { get; set; }
+    public virtual User User { get; set; }
 }

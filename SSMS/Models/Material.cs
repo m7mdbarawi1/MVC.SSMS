@@ -13,7 +13,7 @@ public partial class Material
 
     public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();
 
-    public virtual ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
+    public virtual Teacher? Teacher { get; set; }
 
     public virtual ICollection<Class> Classes { get; set; } = new List<Class>();
 }

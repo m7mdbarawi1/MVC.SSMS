@@ -121,6 +121,7 @@ public partial class SSMSContext : DbContext
             entity.HasKey(e => e.TeacherId).HasName("PK__Teachers__EDF2594478F4A71C");
 
             entity.HasIndex(e => e.UserId, "UQ__Teachers__1788CCADD8C65CBA").IsUnique();
+            entity.HasIndex(e => e.MaterialId).IsUnique();
 
             entity.Property(e => e.TeacherId)
                 .ValueGeneratedNever()
@@ -130,8 +131,9 @@ public partial class SSMSContext : DbContext
             entity.Property(e => e.MaterialId).HasColumnName("MaterialID");
             entity.Property(e => e.UserId).HasColumnName("UserID");
 
-            entity.HasOne(d => d.Material).WithMany(p => p.Teachers)
-                .HasForeignKey(d => d.MaterialId)
+            entity.HasOne(d => d.Material).WithOne(p => p.Teacher)
+                .HasForeignKey<Teacher>(d => d.MaterialId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Teachers__Materi__3F466844");
 
             entity.HasOne(d => d.User).WithOne(p => p.Teacher)
