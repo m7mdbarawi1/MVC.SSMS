@@ -46,7 +46,7 @@ public partial class SSMSContext : DbContext
             entity.Property(e => e.StudentId).HasColumnName("StudentID");
             entity.Property(e => e.ClassId).HasColumnName("ClassID");
             entity.Property(e => e.MaterialId).HasColumnName("MaterialID");
-            entity.Property(e => e.Mark1)
+            entity.Property(e => e.Marks)
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("Mark");
 

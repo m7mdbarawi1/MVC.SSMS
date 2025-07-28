@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SSMS.Models;
 
@@ -12,7 +13,8 @@ public partial class Mark
 
     public int MaterialId { get; set; }
 
-    public decimal Mark1 { get; set; }
+    [Range(0, 100, ErrorMessage = "Mark must be between 0 and 100.")]
+    public decimal Marks { get; set; }
 
     [ValidateNever]
     public virtual Class Class { get; set; } = null!;

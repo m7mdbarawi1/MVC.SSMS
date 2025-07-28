@@ -35,7 +35,8 @@
                                 <ul class="material-list">
                                     @foreach (var mat in item.Materials)
                                     {
-                                        <li>@mat.MaterialNameArabic</li>
+                                        var teacherName = mat.Teacher?.FullNameArabic ?? "No teacher";
+                                        <li>@mat.MaterialNameArabic - <span class="teacher-name">(@teacherName)</span></li>
                                     }
                                 </ul>
                             }

@@ -26,7 +26,8 @@ namespace SSMS.Controllers
         public async Task<IActionResult> Index()
         {
             var classes = await _context.Classes
-                .Include(c => c.Materials) // 🔵 This line adds materials to each class
+                .Include(c => c.Materials)
+                    .ThenInclude(m => m.Teacher) // ✅ this loads the teacher
                 .ToListAsync();
 
             return View(classes);

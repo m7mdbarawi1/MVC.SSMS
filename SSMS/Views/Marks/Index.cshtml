@@ -17,7 +17,7 @@
         <table id="marksTable" class="data-table">
             <thead>
                 <tr>
-                    <th class="table-header">@Html.DisplayNameFor(model => model.Mark1)</th>
+                    <th class="table-header">@Html.DisplayNameFor(model => model.Marks)</th>
                     <th class="table-header">@Html.DisplayNameFor(model => model.Class)</th>
                     <th class="table-header">@Html.DisplayNameFor(model => model.Material)</th>
                     <th class="table-header">@Html.DisplayNameFor(model => model.Student)</th>
@@ -28,7 +28,7 @@
                 @foreach (var item in Model)
                 {
                     <tr class="table-row">
-                        <td>@Html.DisplayFor(m => item.Mark1)</td>
+                        <td>@Html.DisplayFor(m => item.Marks)</td>
                         <td>@Html.DisplayFor(m => item.Class.ClassNameArabic)</td>
                         <td>@Html.DisplayFor(m => item.Material.MaterialNameArabic)</td>
                         <td>@Html.DisplayFor(m => item.Student.StudentId)</td>

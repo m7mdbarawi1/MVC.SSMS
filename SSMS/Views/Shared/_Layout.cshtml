@@ -1,5 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @using System.Security.Claims
+@using Microsoft.EntityFrameworkCore
+@using SSMS.Data
+@inject SSMSContext _context
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,16 +52,38 @@
                 <div class="auth-info">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <span class="user-greeting">
-                            Welcome, @User.Identity.Name!
-                            (@(User.FindFirst(ClaimTypes.Role)?.Value switch
+                        var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
+                        var role = User.FindFirst(ClaimTypes.Role)?.Value;
+                        string displayInfo = "";
+
+                        if (role == "1") // Student
+                        {
+                            var student = _context.Students.Include(s => s.Class).FirstOrDefault(s => s.UserId == userId);
+                            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+                            if (student != null || user != null)
                             {
-                                "1" => "Student",
-                                "2" => "Teacher",
-                                "3" => "Admin",
-                                _ => "Unknown"
-                            }))
-                        </span>
+                                displayInfo = $"{user.FullName} (Student, {student.Class?.ClassNameEnglish ?? "N/A"})";
+                            }
+                        }
+                        else if (role == "2") // Teacher
+                        {
+                            var teacher = _context.Teachers.Include(t => t.Material).FirstOrDefault(t => t.UserId == userId);
+                            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+                            if (teacher != null || user !=null)
+                            {
+                                displayInfo = $"{user.FullName} (Teacher, {teacher.Material?.MaterialNameArabic ?? "N/A"})";
+                            }
+                        }
+                        else if (role == "3")
+                        {
+                            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
+                            if (user != null)
+                            {
+                                displayInfo = $"{user.FullName} (Admin)";
+                            }
+                        }
+
+                        <span class="user-greeting">@displayInfo</span>
                         <a asp-controller="Account" asp-action="Logout" class="btn btn-secondary">Logout</a>
                     }
                     else

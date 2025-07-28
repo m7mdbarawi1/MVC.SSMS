@@ -98,7 +98,7 @@ namespace SSMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "2")]
-        public async Task<IActionResult> Create([Bind("StudentId,ClassId,MaterialId,Mark1")] Mark mark)
+        public async Task<IActionResult> Create([Bind("StudentId,ClassId,MaterialId,Marks")] Mark mark)
         {
             var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
             var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == userId);
@@ -116,10 +116,10 @@ namespace SSMS.Controllers
             }
 
             // ✅ Check: Material is assigned to the selected class
-            bool isMaterialAssignedToClass = await _context.Set<Dictionary<string, object>>("ClassMaterials")
-                .AnyAsync(cm =>
-                    EF.Property<int>(cm, "ClassID") == mark.ClassId &&
-                    EF.Property<int>(cm, "MaterialID") == mark.MaterialId);
+            bool isMaterialAssignedToClass = await _context.Classes
+                .AnyAsync(c =>
+                    c.ClassId == mark.ClassId &&
+                    c.Materials.Any(m => m.MaterialId == mark.MaterialId));
             if (!isMaterialAssignedToClass)
             {
                 ModelState.AddModelError("", "The selected material is not assigned to the selected class.");
@@ -164,7 +164,7 @@ namespace SSMS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "2")]
-        public async Task<IActionResult> Edit(int studentId, int classId, int materialId, [Bind("StudentId,ClassId,MaterialId,Mark1")] Mark mark)
+        public async Task<IActionResult> Edit(int studentId, int classId, int materialId, [Bind("StudentId,ClassId,MaterialId,Marks")] Mark mark)
         {
             if (studentId != mark.StudentId || classId != mark.ClassId || materialId != mark.MaterialId)
             {
@@ -182,10 +182,10 @@ namespace SSMS.Controllers
             }
 
             // ✅ Check: Material is assigned to the selected class
-            bool isMaterialAssignedToClass = await _context.Set<Dictionary<string, object>>("ClassMaterials")
-                .AnyAsync(cm =>
-                    EF.Property<int>(cm, "ClassID") == mark.ClassId &&
-                    EF.Property<int>(cm, "MaterialID") == mark.MaterialId);
+            bool isMaterialAssignedToClass = await _context.Classes
+                .AnyAsync(c =>
+                    c.ClassId == mark.ClassId &&
+                    c.Materials.Any(m => m.MaterialId == mark.MaterialId));
             if (!isMaterialAssignedToClass)
             {
                 ModelState.AddModelError("", "The selected material is not assigned to the selected class.");
