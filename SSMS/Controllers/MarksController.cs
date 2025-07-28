@@ -23,10 +23,22 @@ namespace SSMS.Controllers
 
         // GET: Marks
         [Authorize(Roles = "2")]
+        [Authorize(Roles = "2")]
         public async Task<IActionResult> Index()
         {
-            var sSMSContext = _context.Marks.Include(m => m.Class).Include(m => m.Material).Include(m => m.Student);
-            return View(await sSMSContext.ToListAsync());
+            var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == userId);
+            if (teacher == null)
+                return Unauthorized("Teacher not found.");
+
+            var marks = await _context.Marks
+                .Include(m => m.Class)
+                .Include(m => m.Material)
+                .Include(m => m.Student)
+                .Where(m => m.MaterialId == teacher.MaterialId)
+                .ToListAsync();
+
+            return View(marks);
         }
 
         // GET: Marks/Details/5
@@ -52,11 +64,17 @@ namespace SSMS.Controllers
 
         // GET: Marks/Create
         [Authorize(Roles = "2")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == userId);
+            if (teacher == null)
+                return Unauthorized();
+
             ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId");
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId");
+            ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacher.MaterialId), "MaterialId", "MaterialId");
             ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId");
+
             return View();
         }
 
@@ -65,37 +83,32 @@ namespace SSMS.Controllers
         [Authorize(Roles = "2")]
         public async Task<IActionResult> Create([Bind("StudentId,ClassId,MaterialId,Mark1")] Mark mark)
         {
-            Console.WriteLine($"TRYING TO CREATE: S:{mark.StudentId} C:{mark.ClassId} M:{mark.MaterialId} => {mark.Mark1}");
+            var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == userId);
+            if (teacher == null)
+                return Unauthorized();
+
+            if (mark.MaterialId != teacher.MaterialId)
+            {
+                ModelState.AddModelError("", "Unauthorized to add mark for this material.");
+                return View(mark);
+            }
 
             if (MarkExists(mark.StudentId, mark.ClassId, mark.MaterialId))
             {
                 ModelState.AddModelError("", "This mark already exists.");
-                Console.WriteLine("DUPLICATE");
                 return View(mark);
-            }
-
-            if (!ModelState.IsValid)
-            {
-                Console.WriteLine("MODEL STATE INVALID");
-                foreach (var modelError in ModelState)
-                {
-                    foreach (var error in modelError.Value.Errors)
-                    {
-                        Console.WriteLine($"Error for {modelError.Key}: {error.ErrorMessage}");
-                    }
-                }
             }
 
             if (ModelState.IsValid)
             {
                 _context.Add(mark);
                 await _context.SaveChangesAsync();
-                Console.WriteLine("SAVED");
                 return RedirectToAction(nameof(Index));
             }
 
             ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", mark.ClassId);
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", mark.MaterialId);
+            ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacher.MaterialId), "MaterialId", "MaterialId", mark.MaterialId);
             ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", mark.StudentId);
             return View(mark);
         }
