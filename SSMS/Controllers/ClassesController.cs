@@ -25,7 +25,11 @@ namespace SSMS.Controllers
         // GET: Classes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Classes.ToListAsync());
+            var classes = await _context.Classes
+                .Include(c => c.Materials) // 🔵 This line adds materials to each class
+                .ToListAsync();
+
+            return View(classes);
         }
 
         // GET: Classes/Details/5
@@ -49,6 +53,7 @@ namespace SSMS.Controllers
         // GET: Classes/Create
         public IActionResult Create()
         {
+            ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic");
             return View();
         }
 
@@ -57,16 +62,25 @@ namespace SSMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClassId,ClassNameArabic,ClassNameEnglish")] Class @class)
+        public async Task<IActionResult> Create(Class @class, int[] selectedMaterialIds)
         {
             if (ModelState.IsValid)
             {
+                var materials = await _context.Materials
+                    .Where(m => selectedMaterialIds.Contains(m.MaterialId))
+                    .ToListAsync();
+
+                @class.Materials = materials;
+
                 _context.Add(@class);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
             return View(@class);
         }
+
 
         // GET: Classes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -76,11 +90,20 @@ namespace SSMS.Controllers
                 return NotFound();
             }
 
-            var @class = await _context.Classes.FindAsync(id);
+            var @class = await _context.Classes
+            .Include(c => c.Materials)
+            .FirstOrDefaultAsync(c => c.ClassId == id);
+
             if (@class == null)
             {
                 return NotFound();
             }
+            
+            ViewBag.Materials = new MultiSelectList(
+            _context.Materials,
+            "MaterialId",
+            "MaterialNameArabic",
+            @class.Materials.Select(m => m.MaterialId) );
             return View(@class);
         }
 
@@ -89,35 +112,46 @@ namespace SSMS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClassId,ClassNameArabic,ClassNameEnglish")] Class @class)
+        public async Task<IActionResult> Edit(int id, Class @class, int[] selectedMaterialIds)
         {
             if (id != @class.ClassId)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(@class);
+                    var existingClass = await _context.Classes
+                        .Include(c => c.Materials)
+                        .FirstOrDefaultAsync(c => c.ClassId == id);
+
+                    if (existingClass == null) return NotFound();
+
+                    existingClass.ClassNameArabic = @class.ClassNameArabic;
+                    existingClass.ClassNameEnglish = @class.ClassNameEnglish;
+
+                    existingClass.Materials.Clear();
+                    var materials = await _context.Materials
+                        .Where(m => selectedMaterialIds.Contains(m.MaterialId))
+                        .ToListAsync();
+
+                    foreach (var mat in materials)
+                        existingClass.Materials.Add(mat);
+
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClassExists(@class.ClassId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!ClassExists(@class.ClassId)) return NotFound();
+                    else throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
             return View(@class);
         }
+
 
         // GET: Classes/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -150,6 +184,14 @@ namespace SSMS.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> ClassMaterials()
+        {
+            var classMaterials = await _context.Classes
+                .Include(c => c.Materials)
+                .ToListAsync();
+
+            return View(classMaterials);
         }
 
         private bool ClassExists(int id)

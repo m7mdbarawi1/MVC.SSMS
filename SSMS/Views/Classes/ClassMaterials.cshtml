@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SSMS.Models.Class>
+<link href="~/css/classes/classmaterials.css" rel="stylesheet" />
+
+@{
+    ViewData["Title"] = "Class Materials";
+}
+
+<main class="page-container">
+    <h1 class="section-title">Class - Materials Mapping</h1>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Class ID</th>
+                <th>Class Name (Arabic)</th>
+                <th>Class Name (English)</th>
+                <th>Assigned Materials</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cls in Model)
+            {
+                <tr>
+                    <td>@cls.ClassId</td>
+                    <td>@cls.ClassNameArabic</td>
+                    <td>@cls.ClassNameEnglish</td>
+                    <td>
+                        <ul>
+                            @foreach (var mat in cls.Materials)
+                            {
+                                <li>@mat.MaterialNameArabic (@mat.MaterialNameEnglish)</li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</main>

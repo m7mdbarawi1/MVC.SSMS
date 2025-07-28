@@ -1,0 +1,39 @@
+﻿.page-container {
+    padding: 2rem;
+    max-width: 1100px;
+    margin: auto;
+    background: #1e293b;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px #00000050;
+    color: #f1f5f9;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #38bdf8;
+    margin-bottom: 2rem;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .data-table th,
+    .data-table td {
+        padding: 0.75rem;
+        border: 1px solid #334155;
+        text-align: left;
+    }
+
+    .data-table th {
+        background-color: #0f172a;
+        color: #facc15;
+    }
+
+    .data-table td ul {
+        padding-left: 1.25rem;
+        margin: 0;
+    }

@@ -1,5 +1,5 @@
 ﻿@model SSMS.Models.Class
-<link href="~/css/classes/edit.css" rel="stylesheet" />
+<link href="~/css/Classes/Edit.css" rel="stylesheet" />
 @{
     ViewData["Title"] = "Edit Class";
 }
@@ -21,6 +21,19 @@
             <label asp-for="ClassNameEnglish" class="form-label"></label>
             <input asp-for="ClassNameEnglish" class="form-input" id="classNameEnglishInput" />
             <span asp-validation-for="ClassNameEnglish" class="form-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Select Materials</label>
+            <div class="checkbox-list">
+                @foreach (var item in (MultiSelectList)ViewBag.Materials)
+                {
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="selectedMaterialIds" value="@item.Value" @(item.Selected ? "checked" : "") />
+                        @item.Text
+                    </label>
+                }
+            </div>
         </div>
 
         <div class="action-buttons">

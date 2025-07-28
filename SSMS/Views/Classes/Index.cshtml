@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<SSMS.Models.Class>
-<link href="~/css/classes/index.css" rel="stylesheet" />
+<link href="~/css/Classes/index.css" rel="stylesheet" />
 
 @{
     ViewData["Title"] = "Classes";
@@ -19,6 +19,7 @@
                 <tr>
                     <th class="table-header">@Html.DisplayNameFor(model => model.ClassNameArabic)</th>
                     <th class="table-header">@Html.DisplayNameFor(model => model.ClassNameEnglish)</th>
+                    <th class="table-header">Materials</th>
                     <th class="table-header">Actions</th>
                 </tr>
             </thead>
@@ -28,6 +29,21 @@
                     <tr class="table-row">
                         <td>@Html.DisplayFor(m => item.ClassNameArabic)</td>
                         <td>@Html.DisplayFor(m => item.ClassNameEnglish)</td>
+                        <td>
+                            @if (item.Materials != null && item.Materials.Any())
+                            {
+                                <ul class="material-list">
+                                    @foreach (var mat in item.Materials)
+                                    {
+                                        <li>@mat.MaterialNameArabic</li>
+                                    }
+                                </ul>
+                            }
+                            else
+                            {
+                                <span>No materials</span>
+                            }
+                        </td>
                         <td class="action-buttons">
                             <a asp-action="Edit" asp-route-id="@item.ClassId" class="btn btn-secondary">Edit</a>
                             <a asp-action="Details" asp-route-id="@item.ClassId" class="btn btn-secondary">Details</a>

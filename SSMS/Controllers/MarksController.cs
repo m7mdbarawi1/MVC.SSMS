@@ -23,7 +23,6 @@ namespace SSMS.Controllers
 
         // GET: Marks
         [Authorize(Roles = "2")]
-        [Authorize(Roles = "2")]
         public async Task<IActionResult> Index()
         {
             var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
@@ -71,9 +70,27 @@ namespace SSMS.Controllers
             if (teacher == null)
                 return Unauthorized();
 
-            ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId");
-            ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacher.MaterialId), "MaterialId", "MaterialId");
-            ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId");
+            var teacherMaterialId = teacher.MaterialId;
+
+            // ✅ Get class IDs that have this material (from ClassMaterials join table)
+            var classIdsWithThisMaterial = await _context.Classes
+                .Where(c => c.Materials.Any(m => m.MaterialId == teacherMaterialId))
+                .Select(c => c.ClassId)
+                .ToListAsync();
+
+            // ✅ Filter classes that are assigned this material
+            var filteredClasses = await _context.Classes
+                .Where(c => classIdsWithThisMaterial.Contains(c.ClassId))
+                .ToListAsync();
+
+            // ✅ Filter students who belong to these classes
+            var filteredStudents = await _context.Students
+                .Where(s => classIdsWithThisMaterial.Contains(s.ClassId))
+                .ToListAsync();
+
+            ViewData["ClassId"] = new SelectList(filteredClasses, "ClassId", "ClassId");
+            ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacherMaterialId), "MaterialId", "MaterialId");
+            ViewData["StudentId"] = new SelectList(filteredStudents, "StudentId", "StudentId");
 
             return View();
         }
@@ -91,26 +108,41 @@ namespace SSMS.Controllers
             if (mark.MaterialId != teacher.MaterialId)
             {
                 ModelState.AddModelError("", "Unauthorized to add mark for this material.");
-                return View(mark);
             }
 
             if (MarkExists(mark.StudentId, mark.ClassId, mark.MaterialId))
             {
                 ModelState.AddModelError("", "This mark already exists.");
+            }
+
+            // ✅ Check: Material is assigned to the selected class
+            bool isMaterialAssignedToClass = await _context.Set<Dictionary<string, object>>("ClassMaterials")
+                .AnyAsync(cm =>
+                    EF.Property<int>(cm, "ClassID") == mark.ClassId &&
+                    EF.Property<int>(cm, "MaterialID") == mark.MaterialId);
+            if (!isMaterialAssignedToClass)
+            {
+                ModelState.AddModelError("", "The selected material is not assigned to the selected class.");
+            }
+
+            // ✅ Check: Student is in the selected class
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == mark.StudentId);
+            if (student == null || student.ClassId != mark.ClassId)
+            {
+                ModelState.AddModelError("", "The selected student does not belong to the selected class.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", mark.ClassId);
+                ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacher.MaterialId), "MaterialId", "MaterialId", mark.MaterialId);
+                ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", mark.StudentId);
                 return View(mark);
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Add(mark);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", mark.ClassId);
-            ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacher.MaterialId), "MaterialId", "MaterialId", mark.MaterialId);
-            ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", mark.StudentId);
-            return View(mark);
+            _context.Add(mark);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -131,6 +163,7 @@ namespace SSMS.Controllers
         // POST: Marks/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "2")]
         public async Task<IActionResult> Edit(int studentId, int classId, int materialId, [Bind("StudentId,ClassId,MaterialId,Mark1")] Mark mark)
         {
             if (studentId != mark.StudentId || classId != mark.ClassId || materialId != mark.MaterialId)
@@ -138,27 +171,56 @@ namespace SSMS.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
+            var teacher = await _context.Teachers.FirstOrDefaultAsync(t => t.UserId == userId);
+            if (teacher == null)
+                return Unauthorized();
+
+            if (mark.MaterialId != teacher.MaterialId)
             {
-                try
-                {
-                    _context.Update(mark);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MarkExists(studentId, classId, materialId))
-                        return NotFound();
-                    else throw;
-                }
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("", "Unauthorized to edit mark for this material.");
             }
-            // Reload dropdowns
-            ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", mark.ClassId);
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", mark.MaterialId);
-            ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", mark.StudentId);
-            return View(mark);
+
+            // ✅ Check: Material is assigned to the selected class
+            bool isMaterialAssignedToClass = await _context.Set<Dictionary<string, object>>("ClassMaterials")
+                .AnyAsync(cm =>
+                    EF.Property<int>(cm, "ClassID") == mark.ClassId &&
+                    EF.Property<int>(cm, "MaterialID") == mark.MaterialId);
+            if (!isMaterialAssignedToClass)
+            {
+                ModelState.AddModelError("", "The selected material is not assigned to the selected class.");
+            }
+
+            // ✅ Check: Student is in the selected class
+            var student = await _context.Students.FirstOrDefaultAsync(s => s.StudentId == mark.StudentId);
+            if (student == null || student.ClassId != mark.ClassId)
+            {
+                ModelState.AddModelError("", "The selected student does not belong to the selected class.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", mark.ClassId);
+                ViewData["MaterialId"] = new SelectList(_context.Materials.Where(m => m.MaterialId == teacher.MaterialId), "MaterialId", "MaterialId", mark.MaterialId);
+                ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "StudentId", mark.StudentId);
+                return View(mark);
+            }
+
+            try
+            {
+                _context.Update(mark);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MarkExists(studentId, classId, materialId))
+                    return NotFound();
+                else throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Marks/Delete/5
         [Authorize(Roles = "2")]
@@ -182,7 +244,6 @@ namespace SSMS.Controllers
         }
 
         // POST: Marks/Delete/5
-        [Authorize(Roles = "2")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "2")]
