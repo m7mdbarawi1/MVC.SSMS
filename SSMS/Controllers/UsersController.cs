@@ -54,18 +54,43 @@ namespace SSMS.Controllers
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "3")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "3")]
         public async Task<IActionResult> Create([Bind("UserId,FullName,UserName,Password,UserType")] User user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(user);
+
+            try
             {
+                // Optional manual PK check if UserId is user-supplied
+                if (_context.Users.Any(u => u.UserId == user.UserId))
+                {
+                    ModelState.AddModelError("UserId", $"User with ID {user.UserId} already exists.");
+                    return View(user);
+                }
+
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                // Handle SQL Server duplicate PK / constraint violations
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("UserId", "A user with this ID already exists.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred. Please try again.");
+                }
+
+                return View(user);
+            }
         }
 
         // GET: Users/Edit/5
@@ -94,32 +119,42 @@ namespace SSMS.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("UserId,FullName,UserName,Password,UserType")] User user)
         {
             if (id != user.UserId)
-            {
                 return NotFound();
-            }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(user);
+
+            try
             {
-                try
-                {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserExists(user.UserId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(user);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(user.UserId))
+                    return NotFound();
+                else
+                    throw; // If it's a real concurrency issue
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                // Handle duplicate PK or constraint violations
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("UserId", "A user with this ID already exists.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred while updating the user.");
+                }
+
+                return View(user);
+            }
         }
+
 
         // GET: Users/Delete/5
         [Authorize(Roles = "3")]

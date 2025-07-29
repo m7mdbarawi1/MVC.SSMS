@@ -54,33 +54,36 @@
                     {
                         var userId = int.Parse(User.FindFirst("UserID")?.Value ?? "0");
                         var role = User.FindFirst(ClaimTypes.Role)?.Value;
+                        var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
                         string displayInfo = "";
 
                         if (role == "1") // Student
                         {
                             var student = _context.Students.Include(s => s.Class).FirstOrDefault(s => s.UserId == userId);
-                            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
-                            if (student != null || user != null)
+                            if (user != null && student != null)
                             {
                                 displayInfo = $"{user.FullName} (Student, {student.Class?.ClassNameEnglish ?? "N/A"})";
+                            }
+                            else if (user != null)
+                            {
+                                displayInfo = $"{user.FullName} (Student)";
                             }
                         }
                         else if (role == "2") // Teacher
                         {
                             var teacher = _context.Teachers.Include(t => t.Material).FirstOrDefault(t => t.UserId == userId);
-                            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
-                            if (teacher != null || user !=null)
+                            if (user != null && teacher != null)
                             {
                                 displayInfo = $"{user.FullName} (Teacher, {teacher.Material?.MaterialNameArabic ?? "N/A"})";
                             }
-                        }
-                        else if (role == "3")
-                        {
-                            var user = _context.Users.FirstOrDefault(u => u.UserId == userId);
-                            if (user != null)
+                            else if (user != null)
                             {
-                                displayInfo = $"{user.FullName} (Admin)";
+                                displayInfo = $"{user.FullName} (Teacher)";
                             }
+                        }
+                        else if (role == "3" && user != null)
+                        {
+                            displayInfo = $"{user.FullName} (Admin)";
                         }
 
                         <span class="user-greeting">@displayInfo</span>

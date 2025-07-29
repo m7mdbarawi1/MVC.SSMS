@@ -32,9 +32,15 @@
 
         <div class="form-group">
             <label asp-for="UserType" class="form-label"></label>
-            <input asp-for="UserType" class="form-input" id="userTypeInput" />
+            <select asp-for="UserType" class="form-input" id="userTypeInput">
+                <option value="">-- Select User Role --</option>
+                <option value="1">Student</option>
+                <option value="2">Teacher</option>
+                <option value="3">Admin</option>
+            </select>
             <span asp-validation-for="UserType" class="form-error"></span>
         </div>
+
 
         <div class="action-buttons">
             <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" />

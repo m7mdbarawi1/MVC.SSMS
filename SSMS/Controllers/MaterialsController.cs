@@ -30,17 +30,10 @@ namespace SSMS.Controllers
         // GET: Materials/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.MaterialId == id);
-            if (material == null)
-            {
-                return NotFound();
-            }
+            var material = await _context.Materials.FirstOrDefaultAsync(m => m.MaterialId == id);
+            if (material == null) return NotFound();
 
             return View(material);
         }
@@ -52,86 +45,110 @@ namespace SSMS.Controllers
         }
 
         // POST: Materials/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaterialId,MaterialNameArabic,MaterialNameEnglish")] Material material)
         {
-            if (ModelState.IsValid)
+            // Check for duplicate ID
+            if (_context.Materials.Any(m => m.MaterialId == material.MaterialId))
+            {
+                ModelState.AddModelError("MaterialId", "A material with this ID already exists.");
+            }
+
+            // Optional: Check for duplicate Arabic name
+            if (_context.Materials.Any(m => m.MaterialNameArabic == material.MaterialNameArabic))
+            {
+                ModelState.AddModelError("MaterialNameArabic", "A material with this Arabic name already exists.");
+            }
+
+            if (!ModelState.IsValid)
+                return View(material);
+
+            try
             {
                 _context.Add(material);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(material);
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("MaterialId", "A material with this ID already exists in the database.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred while creating the material.");
+                }
+
+                return View(material);
+            }
         }
 
         // GET: Materials/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var material = await _context.Materials.FindAsync(id);
-            if (material == null)
-            {
-                return NotFound();
-            }
+            if (material == null) return NotFound();
+
             return View(material);
         }
 
         // POST: Materials/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MaterialId,MaterialNameArabic,MaterialNameEnglish")] Material material)
         {
-            if (id != material.MaterialId)
+            if (id != material.MaterialId) return NotFound();
+
+            // Duplicate name check (excluding itself)
+            if (_context.Materials.Any(m => m.MaterialNameArabic == material.MaterialNameArabic && m.MaterialId != material.MaterialId))
             {
-                return NotFound();
+                ModelState.AddModelError("MaterialNameArabic", "Another material with this Arabic name already exists.");
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(material);
+
+            try
             {
-                try
-                {
-                    _context.Update(material);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MaterialExists(material.MaterialId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(material);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(material);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MaterialExists(material.MaterialId)) return NotFound();
+                else throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                if (message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("MaterialId", "A material with this ID already exists in the database.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred while updating the material.");
+                }
+
+                return View(material);
+            }
         }
 
         // GET: Materials/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var material = await _context.Materials
-                .FirstOrDefaultAsync(m => m.MaterialId == id);
-            if (material == null)
-            {
-                return NotFound();
-            }
+            var material = await _context.Materials.FirstOrDefaultAsync(m => m.MaterialId == id);
+            if (material == null) return NotFound();
 
             return View(material);
         }
@@ -142,13 +159,29 @@ namespace SSMS.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var material = await _context.Materials.FindAsync(id);
-            if (material != null)
+            if (material == null) return RedirectToAction(nameof(Index));
+
+            try
             {
                 _context.Materials.Remove(material);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                if (message.Contains("FOREIGN KEY"))
+                {
+                    TempData["ErrorMessage"] = "Cannot delete this material because it is assigned to teachers or marks.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "An unexpected error occurred while deleting the material.";
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool MaterialExists(int id)

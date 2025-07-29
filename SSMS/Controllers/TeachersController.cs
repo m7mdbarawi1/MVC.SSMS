@@ -63,15 +63,55 @@ namespace SSMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TeacherId,UserId,MaterialId,Gender,FullNameArabic,FullNameEnglish")] Teacher teacher)
         {
-            if (ModelState.IsValid)
+            // Check for duplicate TeacherId (manual PK check)
+            if (_context.Teachers.Any(t => t.TeacherId == teacher.TeacherId))
+            {
+                ModelState.AddModelError("TeacherId", $"A teacher with ID {teacher.TeacherId} already exists.");
+            }
+
+            // Validate unique MaterialId
+            if (_context.Teachers.Any(t => t.MaterialId == teacher.MaterialId))
+            {
+                ModelState.AddModelError("MaterialId", "This material is already assigned to another teacher.");
+            }
+
+            // Validate UserId uniqueness across Students and Teachers
+            if (_context.Students.Any(s => s.UserId == teacher.UserId) ||
+                _context.Teachers.Any(t => t.UserId == teacher.UserId))
+            {
+                ModelState.AddModelError("UserId", "This user is already assigned to a student or teacher.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
+                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                return View(teacher);
+            }
+
+            try
             {
                 _context.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
-            return View(teacher);
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("TeacherId", "A teacher with this ID already exists in the database.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred while creating the teacher.");
+                }
+
+                ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
+                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                return View(teacher);
+            }
         }
 
         // GET: Teachers/Edit/5
@@ -100,34 +140,61 @@ namespace SSMS.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("TeacherId,UserId,MaterialId,Gender,FullNameArabic,FullNameEnglish")] Teacher teacher)
         {
             if (id != teacher.TeacherId)
-            {
                 return NotFound();
+
+            // Validate MaterialId uniqueness
+            if (_context.Teachers.Any(t => t.MaterialId == teacher.MaterialId && t.TeacherId != teacher.TeacherId))
+            {
+                ModelState.AddModelError("MaterialId", "This material is already assigned to another teacher.");
             }
 
-            if (ModelState.IsValid)
+            // Validate UserId uniqueness
+            if (_context.Students.Any(s => s.UserId == teacher.UserId) ||
+                _context.Teachers.Any(t => t.UserId == teacher.UserId && t.TeacherId != teacher.TeacherId))
             {
-                try
-                {
-                    _context.Update(teacher);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TeacherExists(teacher.TeacherId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                ModelState.AddModelError("UserId", "This user is already assigned to a student or teacher.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
+                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                return View(teacher);
+            }
+
+            try
+            {
+                _context.Update(teacher);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
-            return View(teacher);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TeacherExists(teacher.TeacherId))
+                    return NotFound();
+                else
+                    throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("TeacherId", "A teacher with this ID already exists in the database.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred while updating the teacher.");
+                }
+
+                ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
+                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                return View(teacher);
+            }
         }
+
+
 
         // GET: Teachers/Delete/5
         public async Task<IActionResult> Delete(int? id)

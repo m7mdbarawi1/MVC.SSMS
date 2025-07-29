@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SSMS.Models;
 
@@ -14,6 +15,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
+    [Range(1, 3, ErrorMessage = "UserType must be 1 (Student), 2 (Teacher), or 3 (Admin).")]
     public int UserType { get; set; }
 
     [ValidateNever]

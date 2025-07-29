@@ -65,22 +65,51 @@ namespace SSMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Class @class, int[] selectedMaterialIds)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
+                return View(@class);
+            }
+
+            try
+            {
+                // ✅ Optional: Check duplicate PK if it's user-supplied
+                if (_context.Classes.Any(c => c.ClassId == @class.ClassId))
+                {
+                    ModelState.AddModelError("ClassId", $"Class with ID {@class.ClassId} already exists.");
+                    ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
+                    return View(@class);
+                }
+
+                // ✅ Assign selected materials
                 var materials = await _context.Materials
                     .Where(m => selectedMaterialIds.Contains(m.MaterialId))
                     .ToListAsync();
-
                 @class.Materials = materials;
 
                 _context.Add(@class);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
 
-            ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
-            return View(@class);
+                // ✅ Handle SQL Server duplicate PK
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("ClassId", "A class with this ID already exists.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred. Please try again.");
+                }
+
+                ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
+                return View(@class);
+            }
         }
+
 
 
         // GET: Classes/Edit/5
@@ -118,40 +147,60 @@ namespace SSMS.Controllers
             if (id != @class.ClassId)
                 return NotFound();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    var existingClass = await _context.Classes
-                        .Include(c => c.Materials)
-                        .FirstOrDefaultAsync(c => c.ClassId == id);
-
-                    if (existingClass == null) return NotFound();
-
-                    existingClass.ClassNameArabic = @class.ClassNameArabic;
-                    existingClass.ClassNameEnglish = @class.ClassNameEnglish;
-
-                    existingClass.Materials.Clear();
-                    var materials = await _context.Materials
-                        .Where(m => selectedMaterialIds.Contains(m.MaterialId))
-                        .ToListAsync();
-
-                    foreach (var mat in materials)
-                        existingClass.Materials.Add(mat);
-
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClassExists(@class.ClassId)) return NotFound();
-                    else throw;
-                }
+                ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
+                return View(@class);
             }
 
-            ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
-            return View(@class);
+            try
+            {
+                var existingClass = await _context.Classes
+                    .Include(c => c.Materials)
+                    .FirstOrDefaultAsync(c => c.ClassId == id);
+
+                if (existingClass == null)
+                    return NotFound();
+
+                // ✅ Update fields
+                existingClass.ClassNameArabic = @class.ClassNameArabic;
+                existingClass.ClassNameEnglish = @class.ClassNameEnglish;
+
+                // ✅ Update materials
+                existingClass.Materials.Clear();
+                var materials = await _context.Materials
+                    .Where(m => selectedMaterialIds.Contains(m.MaterialId))
+                    .ToListAsync();
+                foreach (var mat in materials)
+                    existingClass.Materials.Add(mat);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClassExists(@class.ClassId)) return NotFound();
+                else throw;
+            }
+            catch (DbUpdateException ex)
+            {
+                var message = ex.InnerException?.Message ?? ex.Message;
+
+                // ✅ Handle SQL Server duplicate PK
+                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
+                {
+                    ModelState.AddModelError("ClassId", "A class with this ID already exists.");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "An unexpected database error occurred while updating the class.");
+                }
+
+                ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
+                return View(@class);
+            }
         }
+
 
 
         // GET: Classes/Delete/5

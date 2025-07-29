@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SSMS.Models;
 
@@ -12,12 +13,14 @@ public partial class Student
 
     public int UserId { get; set; }
 
+    [Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]
     public int Gender { get; set; }
 
     public string FullNameArabic { get; set; } = null!;
 
     public string? FullNameEnglish { get; set; }
 
+    [Range(6, 18, ErrorMessage = "Age must be between 6 and 18.")]
     public int? Age { get; set; }
 
     [ValidateNever]
