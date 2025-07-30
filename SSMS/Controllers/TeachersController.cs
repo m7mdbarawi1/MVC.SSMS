@@ -24,7 +24,9 @@ namespace SSMS.Controllers
         // GET: Teachers
         public async Task<IActionResult> Index()
         {
-            var sSMSContext = _context.Teachers.Include(t => t.Material).Include(t => t.User);
+            var sSMSContext = _context.Teachers
+                .Include(t => t.Material)
+                .Include(t => t.User);
             return View(await sSMSContext.ToListAsync());
         }
 
@@ -32,18 +34,15 @@ namespace SSMS.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var teacher = await _context.Teachers
                 .Include(t => t.Material)
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.TeacherId == id);
+
             if (teacher == null)
-            {
                 return NotFound();
-            }
 
             return View(teacher);
         }
@@ -52,40 +51,49 @@ namespace SSMS.Controllers
         public IActionResult Create()
         {
             ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId");
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["UserId"] = new SelectList(
+                _context.Users.Where(u => u.UserType == 2),
+                "UserId",
+                "UserId"
+            );
             return View();
         }
 
         // POST: Teachers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TeacherId,UserId,MaterialId,Gender,FullNameArabic,FullNameEnglish")] Teacher teacher)
         {
-            // Check for duplicate TeacherId (manual PK check)
+            // Duplicate TeacherId check
             if (_context.Teachers.Any(t => t.TeacherId == teacher.TeacherId))
             {
                 ModelState.AddModelError("TeacherId", $"A teacher with ID {teacher.TeacherId} already exists.");
             }
 
-            // Validate unique MaterialId
+            // Material uniqueness
             if (_context.Teachers.Any(t => t.MaterialId == teacher.MaterialId))
             {
                 ModelState.AddModelError("MaterialId", "This material is already assigned to another teacher.");
             }
 
-            // Validate UserId uniqueness across Students and Teachers
+            // User uniqueness
             if (_context.Students.Any(s => s.UserId == teacher.UserId) ||
                 _context.Teachers.Any(t => t.UserId == teacher.UserId))
             {
                 ModelState.AddModelError("UserId", "This user is already assigned to a student or teacher.");
             }
 
+            // Validate UserType == 2 (Teacher)
+            var user = await _context.Users.FindAsync(teacher.UserId);
+            if (user == null || user.UserType != 2)
+            {
+                ModelState.AddModelError("UserId", "Selected user is not a Teacher type.");
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 2), "UserId", "UserId", teacher.UserId);
                 return View(teacher);
             }
 
@@ -109,7 +117,7 @@ namespace SSMS.Controllers
                 }
 
                 ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 2), "UserId", "UserId", teacher.UserId);
                 return View(teacher);
             }
         }
@@ -118,23 +126,23 @@ namespace SSMS.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var teacher = await _context.Teachers.FindAsync(id);
             if (teacher == null)
-            {
                 return NotFound();
-            }
+
             ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users.Where(u => u.UserType == 2),
+                "UserId",
+                "UserId",
+                teacher.UserId
+            );
             return View(teacher);
         }
 
         // POST: Teachers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TeacherId,UserId,MaterialId,Gender,FullNameArabic,FullNameEnglish")] Teacher teacher)
@@ -142,23 +150,30 @@ namespace SSMS.Controllers
             if (id != teacher.TeacherId)
                 return NotFound();
 
-            // Validate MaterialId uniqueness
+            // Material uniqueness
             if (_context.Teachers.Any(t => t.MaterialId == teacher.MaterialId && t.TeacherId != teacher.TeacherId))
             {
                 ModelState.AddModelError("MaterialId", "This material is already assigned to another teacher.");
             }
 
-            // Validate UserId uniqueness
+            // User uniqueness
             if (_context.Students.Any(s => s.UserId == teacher.UserId) ||
                 _context.Teachers.Any(t => t.UserId == teacher.UserId && t.TeacherId != teacher.TeacherId))
             {
                 ModelState.AddModelError("UserId", "This user is already assigned to a student or teacher.");
             }
 
+            // Validate UserType == 2 (Teacher)
+            var user = await _context.Users.FindAsync(teacher.UserId);
+            if (user == null || user.UserType != 2)
+            {
+                ModelState.AddModelError("UserId", "Selected user is not a Teacher type.");
+            }
+
             if (!ModelState.IsValid)
             {
                 ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 2), "UserId", "UserId", teacher.UserId);
                 return View(teacher);
             }
 
@@ -189,29 +204,24 @@ namespace SSMS.Controllers
                 }
 
                 ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", teacher.UserId);
+                ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 2), "UserId", "UserId", teacher.UserId);
                 return View(teacher);
             }
         }
-
-
 
         // GET: Teachers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var teacher = await _context.Teachers
                 .Include(t => t.Material)
                 .Include(t => t.User)
                 .FirstOrDefaultAsync(m => m.TeacherId == id);
+
             if (teacher == null)
-            {
                 return NotFound();
-            }
 
             return View(teacher);
         }
@@ -223,9 +233,7 @@ namespace SSMS.Controllers
         {
             var teacher = await _context.Teachers.FindAsync(id);
             if (teacher != null)
-            {
                 _context.Teachers.Remove(teacher);
-            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

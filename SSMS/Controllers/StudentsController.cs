@@ -52,7 +52,11 @@ namespace SSMS.Controllers
         public IActionResult Create()
         {
             ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId");
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["UserId"] = new SelectList(
+                _context.Users.Where(u => u.UserType == 1),
+                "UserId", // Value
+                "UserId"  // Text
+            );
             return View();
         }
 
@@ -69,17 +73,25 @@ namespace SSMS.Controllers
                 ModelState.AddModelError("StudentId", $"A student with ID {student.StudentId} already exists.");
             }
 
-            // Check for duplicate UserId across Students and Teachers
+            // Check for duplicate UserId
             if (_context.Students.Any(s => s.UserId == student.UserId) ||
                 _context.Teachers.Any(t => t.UserId == student.UserId))
             {
                 ModelState.AddModelError("UserId", "This user is already assigned to a student or teacher.");
             }
 
+            // Validate UserType
+            var user = await _context.Users.FindAsync(student.UserId);
+            if (user == null || user.UserType != 1)
+            {
+                ModelState.AddModelError("UserId", "Selected user is not a Student type.");
+            }
+
+            // If validation fails
             if (!ModelState.IsValid)
             {
-                ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", student.ClassId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", student.UserId);
+                ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassName", student.ClassId);
+                ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 1), "UserId", "FullName", student.UserId);
                 return View(student);
             }
 
@@ -91,19 +103,9 @@ namespace SSMS.Controllers
             }
             catch (DbUpdateException ex)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("StudentId", "A student with this ID already exists in the database.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while creating the student.");
-                }
-
-                ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", student.ClassId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", student.UserId);
+                ModelState.AddModelError("", "An unexpected database error occurred while creating the student.");
+                ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassName", student.ClassId);
+                ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 1), "UserId", "FullName", student.UserId);
                 return View(student);
             }
         }
@@ -113,26 +115,28 @@ namespace SSMS.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var student = await _context.Students.FindAsync(id);
             if (student == null)
-            {
                 return NotFound();
-            }
+
             ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", student.ClassId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", student.UserId);
+            ViewData["UserId"] = new SelectList(
+                _context.Users.Where(u => u.UserType == 1),
+                "UserId",
+                "UserId",
+                student.UserId
+            );
             return View(student);
         }
 
         // POST: Students/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentId,ClassId,UserId,Gender,FullNameArabic,FullNameEnglish,Age")] Student student)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("StudentId,ClassId,UserId,Gender,FullNameArabic,FullNameEnglish,Age")] Student student)
         {
             if (id != student.StudentId)
                 return NotFound();
@@ -144,10 +148,23 @@ namespace SSMS.Controllers
                 ModelState.AddModelError("UserId", "This user is already assigned to a student or teacher.");
             }
 
+            // Validate that User exists and is a student
+            var user = await _context.Users.FindAsync(student.UserId);
+            if (user == null || user.UserType != 1)
+            {
+                ModelState.AddModelError("UserId", "Selected user is not a Student type.");
+            }
+
             if (!ModelState.IsValid)
             {
+                // Repopulate dropdowns (ONLY student users, display ID)
                 ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", student.ClassId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", student.UserId);
+                ViewData["UserId"] = new SelectList(
+                    _context.Users.Where(u => u.UserType == 1),
+                    "UserId",
+                    "UserId",
+                    student.UserId
+                );
                 return View(student);
             }
 
@@ -177,8 +194,14 @@ namespace SSMS.Controllers
                     ModelState.AddModelError("", "An unexpected database error occurred while updating the student.");
                 }
 
+                // Repopulate dropdowns again on error
                 ViewData["ClassId"] = new SelectList(_context.Classes, "ClassId", "ClassId", student.ClassId);
-                ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", student.UserId);
+                ViewData["UserId"] = new SelectList(
+                    _context.Users.Where(u => u.UserType == 1),
+                    "UserId",
+                    "UserId",
+                    student.UserId
+                );
                 return View(student);
             }
         }
