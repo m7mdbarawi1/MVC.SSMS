@@ -2,15 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SSMS.Models;
 
 public partial class Teacher
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int TeacherId { get; set; }
 
     public int UserId { get; set; }
-
+    
     public int MaterialId { get; set; }
 
     [Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]

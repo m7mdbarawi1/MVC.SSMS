@@ -13,12 +13,6 @@
         <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
         <div class="form-group">
-            <label asp-for="TeacherId" class="form-label"></label>
-            <input asp-for="TeacherId" class="form-input" />
-            <span asp-validation-for="TeacherId" class="validation-message"></span>
-        </div>
-
-        <div class="form-group">
             <label asp-for="UserId" class="form-label"></label>
             <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-select"></select>
             <span asp-validation-for="UserId" class="validation-message"></span>

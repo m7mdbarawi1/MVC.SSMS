@@ -62,14 +62,8 @@ namespace SSMS.Controllers
         // POST: Teachers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TeacherId,UserId,MaterialId,Gender,FullNameArabic,FullNameEnglish")] Teacher teacher)
+        public async Task<IActionResult> Create([Bind("UserId,MaterialId,Gender,FullNameArabic,FullNameEnglish")] Teacher teacher)
         {
-            // Duplicate TeacherId check
-            if (_context.Teachers.Any(t => t.TeacherId == teacher.TeacherId))
-            {
-                ModelState.AddModelError("TeacherId", $"A teacher with ID {teacher.TeacherId} already exists.");
-            }
-
             // Material uniqueness
             if (_context.Teachers.Any(t => t.MaterialId == teacher.MaterialId))
             {
@@ -103,19 +97,9 @@ namespace SSMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("TeacherId", "A teacher with this ID already exists in the database.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while creating the teacher.");
-                }
-
+                ModelState.AddModelError("", "An unexpected database error occurred while saving the teacher.");
                 ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
                 ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 2), "UserId", "UserId", teacher.UserId);
                 return View(teacher);
@@ -192,17 +176,6 @@ namespace SSMS.Controllers
             }
             catch (DbUpdateException ex)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("TeacherId", "A teacher with this ID already exists in the database.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while updating the teacher.");
-                }
-
                 ViewData["MaterialId"] = new SelectList(_context.Materials, "MaterialId", "MaterialId", teacher.MaterialId);
                 ViewData["UserId"] = new SelectList(_context.Users.Where(u => u.UserType == 2), "UserId", "UserId", teacher.UserId);
                 return View(teacher);

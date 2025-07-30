@@ -47,14 +47,8 @@ namespace SSMS.Controllers
         // POST: Materials/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaterialId,MaterialNameArabic,MaterialNameEnglish")] Material material)
+        public async Task<IActionResult> Create([Bind("MaterialNameArabic,MaterialNameEnglish")] Material material)
         {
-            // Check for duplicate ID
-            if (_context.Materials.Any(m => m.MaterialId == material.MaterialId))
-            {
-                ModelState.AddModelError("MaterialId", "A material with this ID already exists.");
-            }
-
             // Optional: Check for duplicate Arabic name
             if (_context.Materials.Any(m => m.MaterialNameArabic == material.MaterialNameArabic))
             {
@@ -70,19 +64,9 @@ namespace SSMS.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("MaterialId", "A material with this ID already exists in the database.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while creating the material.");
-                }
-
+                ModelState.AddModelError("", "An unexpected database error occurred while creating the material.");
                 return View(material);
             }
         }
@@ -125,19 +109,9 @@ namespace SSMS.Controllers
                 if (!MaterialExists(material.MaterialId)) return NotFound();
                 else throw;
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                if (message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("MaterialId", "A material with this ID already exists in the database.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while updating the material.");
-                }
-
+                ModelState.AddModelError("", "An unexpected database error occurred while updating the material.");
                 return View(material);
             }
         }
