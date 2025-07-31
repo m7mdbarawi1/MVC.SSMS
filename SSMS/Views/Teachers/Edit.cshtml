@@ -10,24 +10,27 @@
     <hr />
 
     <form asp-action="Edit" class="form-container" id="teacherForm">
-        <div asp-validation-summary="ModelOnly" class="form-error"></div>
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
         <input type="hidden" asp-for="TeacherId" />
 
+        <!-- User Selection -->
         <div class="form-group">
             <label asp-for="UserId" class="form-label"></label>
-            <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-input" id="userIdSelect"></select>
-            <span asp-validation-for="UserId" class="form-error"></span>
+            <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-select" id="userIdSelect"></select>
+            <span asp-validation-for="UserId" class="validation-message"></span>
         </div>
 
+        <!-- Material Selection -->
         <div class="form-group">
             <label asp-for="MaterialId" class="form-label"></label>
-            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId" class="form-input" id="materialIdSelect"></select>
-            <span asp-validation-for="MaterialId" class="form-error"></span>
+            <select asp-for="MaterialId" asp-items="ViewBag.MaterialId" class="form-select" id="materialIdSelect"></select>
+            <span asp-validation-for="MaterialId" class="validation-message"></span>
         </div>
 
+        <!-- Gender -->
         <div class="form-group">
             <label asp-for="Gender" class="form-label"></label>
-            <select asp-for="Gender" class="form-input">
+            <select asp-for="Gender" class="form-select">
                 <option value="">-- Select Gender --</option>
                 <option value="1">Male</option>
                 <option value="0">Female</option>
@@ -35,20 +38,30 @@
             <span asp-validation-for="Gender" class="validation-message"></span>
         </div>
 
-
+        <!-- Arabic Full Name -->
         <div class="form-group">
             <label asp-for="FullNameArabic" class="form-label"></label>
-            <input asp-for="FullNameArabic" class="form-input" id="fullNameArabicInput" />
-            <span asp-validation-for="FullNameArabic" class="form-error"></span>
+            <input asp-for="FullNameArabic"
+                   class="form-input"
+                   id="fullNameArabicInput"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
+            <span asp-validation-for="FullNameArabic" class="validation-message"></span>
         </div>
 
+        <!-- English Full Name -->
         <div class="form-group">
             <label asp-for="FullNameEnglish" class="form-label"></label>
-            <input asp-for="FullNameEnglish" class="form-input" id="fullNameEnglishInput" />
-            <span asp-validation-for="FullNameEnglish" class="form-error"></span>
+            <input asp-for="FullNameEnglish"
+                   class="form-input"
+                   id="fullNameEnglishInput"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
+            <span asp-validation-for="FullNameEnglish" class="validation-message"></span>
         </div>
 
-        <div class="action-buttons">
+        <!-- Actions -->
+        <div class="form-actions">
             <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" />
             <a asp-action="Index" class="btn btn-secondary back-link" id="backLink">Back to List</a>
         </div>

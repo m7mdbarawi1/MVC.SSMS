@@ -11,18 +11,29 @@
         <div asp-validation-summary="ModelOnly" class="form-error"></div>
         <input type="hidden" asp-for="ClassId" />
 
+        <!-- Arabic Class Name -->
         <div class="form-group">
             <label asp-for="ClassNameArabic" class="form-label"></label>
-            <input asp-for="ClassNameArabic" class="form-input" id="classNameArabicInput" />
+            <input asp-for="ClassNameArabic"
+                   class="form-input"
+                   id="classNameArabicInput"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
             <span asp-validation-for="ClassNameArabic" class="form-error"></span>
         </div>
 
+        <!-- English Class Name -->
         <div class="form-group">
             <label asp-for="ClassNameEnglish" class="form-label"></label>
-            <input asp-for="ClassNameEnglish" class="form-input" id="classNameEnglishInput" />
+            <input asp-for="ClassNameEnglish"
+                   class="form-input"
+                   id="classNameEnglishInput"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
             <span asp-validation-for="ClassNameEnglish" class="form-error"></span>
         </div>
 
+        <!-- Materials Selection -->
         <div class="form-group">
             <label class="form-label">Select Materials</label>
             <div class="checkbox-list">
@@ -43,6 +54,22 @@
     </form>
 </main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <!-- Optional: Real-time input enforcement -->
+    <script>
+        const arabicInput = document.getElementById('classNameArabicInput');
+        const englishInput = document.getElementById('classNameEnglishInput');
+
+        // Allow only Arabic letters and spaces in Arabic input
+        arabicInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^ء-ي\s]/g, '');
+        });
+
+        // Allow only English letters and spaces in English input
+        englishInput.addEventListener('input', function() {
+            this.value = this.value.replace(/[^A-Za-z ]/g, '');
+        });
+    </script>
 }

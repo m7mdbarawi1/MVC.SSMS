@@ -4,34 +4,42 @@
     ViewData["Title"] = "Edit Material";
 }
 
-<main class="page-container" id="editMaterialPage">
-    <h1 class="page-title">Edit Material</h1>
-    <h2 class="section-title">Material Details</h2>
+<main class="page-container">
+    <h1 class="section-title">Edit Material</h1>
+    <h2 class="form-subtitle">Material Details</h2>
     <hr />
 
-    <form asp-action="Edit" class="form-container" id="materialForm">
-        <div asp-validation-summary="ModelOnly" class="form-error"></div>
+    <form asp-action="Edit" class="form-section">
+        <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
         <input type="hidden" asp-for="MaterialId" />
 
+        <!-- Arabic Material Name -->
         <div class="form-group">
             <label asp-for="MaterialNameArabic" class="form-label"></label>
-            <input asp-for="MaterialNameArabic" class="form-input" id="materialNameArabicInput" />
-            <span asp-validation-for="MaterialNameArabic" class="form-error"></span>
+            <input asp-for="MaterialNameArabic"
+                   class="form-input"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
+            <span asp-validation-for="MaterialNameArabic" class="validation-message"></span>
         </div>
 
+        <!-- English Material Name -->
         <div class="form-group">
             <label asp-for="MaterialNameEnglish" class="form-label"></label>
-            <input asp-for="MaterialNameEnglish" class="form-input" id="materialNameEnglishInput" />
-            <span asp-validation-for="MaterialNameEnglish" class="form-error"></span>
+            <input asp-for="MaterialNameEnglish"
+                   class="form-input"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
+            <span asp-validation-for="MaterialNameEnglish" class="validation-message"></span>
         </div>
 
-        <div class="action-buttons">
-            <input type="submit" value="Save" class="btn btn-primary" id="saveBtn" />
-            <a asp-action="Index" class="btn btn-secondary back-link" id="backLink">Back to List</a>
+        <div class="form-actions">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         </div>
     </form>
 </main>
 
-@{
-    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

@@ -12,15 +12,23 @@
     <form asp-action="Create" class="form-section">
         <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
+        <!-- Arabic Material Name -->
         <div class="form-group">
             <label asp-for="MaterialNameArabic" class="form-label"></label>
-            <input asp-for="MaterialNameArabic" class="form-input" />
+            <input asp-for="MaterialNameArabic"
+                   class="form-input"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
             <span asp-validation-for="MaterialNameArabic" class="validation-message"></span>
         </div>
 
+        <!-- English Material Name -->
         <div class="form-group">
             <label asp-for="MaterialNameEnglish" class="form-label"></label>
-            <input asp-for="MaterialNameEnglish" class="form-input" />
+            <input asp-for="MaterialNameEnglish"
+                   class="form-input"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
             <span asp-validation-for="MaterialNameEnglish" class="validation-message"></span>
         </div>
 

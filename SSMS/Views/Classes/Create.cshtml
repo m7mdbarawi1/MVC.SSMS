@@ -12,18 +12,27 @@
     <form asp-action="Create" class="form-section">
         <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
+        <!-- Arabic Class Name -->
         <div class="form-group">
             <label asp-for="ClassNameArabic" class="form-label"></label>
-            <input asp-for="ClassNameArabic" class="form-input" />
+            <input asp-for="ClassNameArabic"
+                   class="form-input"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
             <span asp-validation-for="ClassNameArabic" class="validation-message"></span>
         </div>
 
+        <!-- English Class Name -->
         <div class="form-group">
             <label asp-for="ClassNameEnglish" class="form-label"></label>
-            <input asp-for="ClassNameEnglish" class="form-input" />
+            <input asp-for="ClassNameEnglish"
+                   class="form-input"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
             <span asp-validation-for="ClassNameEnglish" class="validation-message"></span>
         </div>
 
+        <!-- Materials Selection -->
         <div class="form-group">
             <label class="form-label">Select Materials</label>
             <div class="checkbox-list">
@@ -37,12 +46,10 @@
             </div>
         </div>
 
-
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Create</button>
             <a asp-action="Index" class="btn btn-secondary">Back to List</a>
         </div>
-
     </form>
 </main>
 

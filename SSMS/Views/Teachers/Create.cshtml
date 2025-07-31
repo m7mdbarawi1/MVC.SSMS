@@ -12,21 +12,24 @@
     <form asp-action="Create" class="form-section">
         <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
+        <!-- User Selection -->
         <div class="form-group">
             <label asp-for="UserId" class="form-label"></label>
             <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-select"></select>
             <span asp-validation-for="UserId" class="validation-message"></span>
         </div>
 
+        <!-- Material Selection -->
         <div class="form-group">
             <label asp-for="MaterialId" class="form-label"></label>
             <select asp-for="MaterialId" asp-items="ViewBag.MaterialId" class="form-select"></select>
             <span asp-validation-for="MaterialId" class="validation-message"></span>
         </div>
 
+        <!-- Gender -->
         <div class="form-group">
             <label asp-for="Gender" class="form-label"></label>
-            <select asp-for="Gender" class="form-input">
+            <select asp-for="Gender" class="form-select">
                 <option value="">-- Select Gender --</option>
                 <option value="1">Male</option>
                 <option value="0">Female</option>
@@ -34,19 +37,27 @@
             <span asp-validation-for="Gender" class="validation-message"></span>
         </div>
 
-
+        <!-- Arabic Full Name -->
         <div class="form-group">
             <label asp-for="FullNameArabic" class="form-label"></label>
-            <input asp-for="FullNameArabic" class="form-input" />
+            <input asp-for="FullNameArabic"
+                   class="form-input"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
             <span asp-validation-for="FullNameArabic" class="validation-message"></span>
         </div>
 
+        <!-- English Full Name -->
         <div class="form-group">
             <label asp-for="FullNameEnglish" class="form-label"></label>
-            <input asp-for="FullNameEnglish" class="form-input" />
+            <input asp-for="FullNameEnglish"
+                   class="form-input"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
             <span asp-validation-for="FullNameEnglish" class="validation-message"></span>
         </div>
 
+        <!-- Actions -->
         <div class="form-actions">
             <input type="submit" value="Create" class="btn btn-primary" />
             <a asp-action="Index" class="btn btn-secondary">Back to List</a>

@@ -12,18 +12,21 @@
     <form asp-action="Create" class="form-section">
         <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
 
+        <!-- Class Selection -->
         <div class="form-group">
             <label asp-for="ClassId" class="form-label"></label>
             <select asp-for="ClassId" asp-items="ViewBag.ClassId" class="form-select"></select>
             <span asp-validation-for="ClassId" class="validation-message"></span>
         </div>
 
+        <!-- User Selection -->
         <div class="form-group">
             <label asp-for="UserId" class="form-label"></label>
             <select asp-for="UserId" asp-items="ViewBag.UserId" class="form-select"></select>
             <span asp-validation-for="UserId" class="validation-message"></span>
         </div>
 
+        <!-- Gender -->
         <div class="form-group">
             <label asp-for="Gender" class="form-label"></label>
             <select asp-for="Gender" class="form-input">
@@ -34,18 +37,27 @@
             <span asp-validation-for="Gender" class="validation-message"></span>
         </div>
 
+        <!-- Arabic Full Name -->
         <div class="form-group">
             <label asp-for="FullNameArabic" class="form-label"></label>
-            <input asp-for="FullNameArabic" class="form-input" />
+            <input asp-for="FullNameArabic"
+                   class="form-input"
+                   pattern="[ء-ي\s]+"
+                   title="Please enter only Arabic letters and spaces" />
             <span asp-validation-for="FullNameArabic" class="validation-message"></span>
         </div>
 
+        <!-- English Full Name -->
         <div class="form-group">
             <label asp-for="FullNameEnglish" class="form-label"></label>
-            <input asp-for="FullNameEnglish" class="form-input" />
+            <input asp-for="FullNameEnglish"
+                   class="form-input"
+                   pattern="[A-Za-z ]+"
+                   title="Please enter only English letters and spaces" />
             <span asp-validation-for="FullNameEnglish" class="validation-message"></span>
         </div>
 
+        <!-- Age -->
         <div class="form-group">
             <label asp-for="Age" class="form-label"></label>
             <input asp-for="Age" class="form-input" min="6" max="18" type="number" />
