@@ -5,7 +5,7 @@
 namespace SSMS.Migrations
 {
     /// <inheritdoc />
-    public partial class MakeTeacherMaterialOneToOne : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,7 +14,8 @@ namespace SSMS.Migrations
                 name: "Classes",
                 columns: table => new
                 {
-                    ClassID = table.Column<int>(type: "int", nullable: false),
+                    ClassID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ClassNameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ClassNameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
@@ -27,7 +28,8 @@ namespace SSMS.Migrations
                 name: "Materials",
                 columns: table => new
                 {
-                    MaterialID = table.Column<int>(type: "int", nullable: false),
+                    MaterialID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MaterialNameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     MaterialNameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
                 },
@@ -40,7 +42,8 @@ namespace SSMS.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -79,13 +82,14 @@ namespace SSMS.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    StudentID = table.Column<int>(type: "int", nullable: false),
+                    StudentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     ClassID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: true),
+                    UserID = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     FullNameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FullNameEnglish = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Age = table.Column<int>(type: "int", nullable: true)
+                    Age = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,8 +112,9 @@ namespace SSMS.Migrations
                 name: "Teachers",
                 columns: table => new
                 {
-                    TeacherID = table.Column<int>(type: "int", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: true),
+                    TeacherID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
                     MaterialID = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     FullNameArabic = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -187,8 +192,7 @@ namespace SSMS.Migrations
                 name: "UQ__Students__1788CCAD10129B91",
                 table: "Students",
                 column: "UserID",
-                unique: true,
-                filter: "[UserID] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Teachers_MaterialID",
@@ -200,8 +204,7 @@ namespace SSMS.Migrations
                 name: "UQ__Teachers__1788CCADD8C65CBA",
                 table: "Teachers",
                 column: "UserID",
-                unique: true,
-                filter: "[UserID] IS NOT NULL");
+                unique: true);
         }
 
         /// <inheritdoc />

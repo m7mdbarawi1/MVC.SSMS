@@ -11,8 +11,8 @@ using SSMS.Data;
 namespace SSMS.Migrations
 {
     [DbContext(typeof(SSMSContext))]
-    [Migration("20250725180229_MakeTeacherMaterialOneToOne")]
-    partial class MakeTeacherMaterialOneToOne
+    [Migration("20250731075602_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,8 +45,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Class", b =>
                 {
                     b.Property<int>("ClassId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ClassID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassId"));
 
                     b.Property<string>("ClassNameArabic")
                         .IsRequired()
@@ -77,7 +80,7 @@ namespace SSMS.Migrations
                         .HasColumnType("int")
                         .HasColumnName("MaterialID");
 
-                    b.Property<decimal>("Mark1")
+                    b.Property<decimal>("Marks")
                         .HasColumnType("numeric(18, 0)")
                         .HasColumnName("Mark");
 
@@ -94,8 +97,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Material", b =>
                 {
                     b.Property<int>("MaterialId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("MaterialID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaterialId"));
 
                     b.Property<string>("MaterialNameArabic")
                         .IsRequired()
@@ -115,10 +121,13 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("StudentID");
 
-                    b.Property<int?>("Age")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<int>("ClassId")
@@ -137,7 +146,7 @@ namespace SSMS.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserID");
 
@@ -147,8 +156,7 @@ namespace SSMS.Migrations
                     b.HasIndex("ClassId");
 
                     b.HasIndex(new[] { "UserId" }, "UQ__Students__1788CCAD10129B91")
-                        .IsUnique()
-                        .HasFilter("[UserID] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Students");
                 });
@@ -156,8 +164,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Teacher", b =>
                 {
                     b.Property<int>("TeacherId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TeacherID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
 
                     b.Property<string>("FullNameArabic")
                         .IsRequired()
@@ -175,7 +186,7 @@ namespace SSMS.Migrations
                         .HasColumnType("int")
                         .HasColumnName("MaterialID");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnName("UserID");
 
@@ -186,8 +197,7 @@ namespace SSMS.Migrations
                         .IsUnique();
 
                     b.HasIndex(new[] { "UserId" }, "UQ__Teachers__1788CCADD8C65CBA")
-                        .IsUnique()
-                        .HasFilter("[UserID] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Teachers");
                 });
@@ -195,8 +205,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.User", b =>
                 {
                     b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("FullName")
                         .IsRequired()
@@ -281,6 +294,7 @@ namespace SSMS.Migrations
                         .WithOne("Student")
                         .HasForeignKey("SSMS.Models.Student", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("FK__Students__UserID__440B1D61");
 
                     b.Navigation("Class");
@@ -301,6 +315,7 @@ namespace SSMS.Migrations
                         .WithOne("Teacher")
                         .HasForeignKey("SSMS.Models.Teacher", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("FK__Teachers__UserID__3E52440B");
 
                     b.Navigation("Material");

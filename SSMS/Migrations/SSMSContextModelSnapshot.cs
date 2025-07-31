@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SSMS.Data;
 
@@ -11,11 +10,9 @@ using SSMS.Data;
 namespace SSMS.Migrations
 {
     [DbContext(typeof(SSMSContext))]
-    [Migration("20250730101248_s")]
-    partial class s
+    partial class SSMSContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,8 +42,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Class", b =>
                 {
                     b.Property<int>("ClassId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ClassID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassId"));
 
                     b.Property<string>("ClassNameArabic")
                         .IsRequired()
@@ -94,8 +94,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Material", b =>
                 {
                     b.Property<int>("MaterialId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("MaterialID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaterialId"));
 
                     b.Property<string>("MaterialNameArabic")
                         .IsRequired()
@@ -115,10 +118,13 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("StudentID");
 
-                    b.Property<int?>("Age")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+
+                    b.Property<int>("Age")
                         .HasColumnType("int");
 
                     b.Property<int>("ClassId")
@@ -155,8 +161,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.Teacher", b =>
                 {
                     b.Property<int>("TeacherId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("TeacherID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
 
                     b.Property<string>("FullNameArabic")
                         .IsRequired()
@@ -193,8 +202,11 @@ namespace SSMS.Migrations
             modelBuilder.Entity("SSMS.Models.User", b =>
                 {
                     b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("FullName")
                         .IsRequired()

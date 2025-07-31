@@ -33,7 +33,7 @@ public partial class SSMSContext : DbContext
             entity.HasKey(e => e.ClassId).HasName("PK__Classes__CB1927A0B4B0C05C");
 
             entity.Property(e => e.ClassId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("ClassID");
             entity.Property(e => e.ClassNameArabic).HasMaxLength(50);
             entity.Property(e => e.ClassNameEnglish).HasMaxLength(50);
@@ -69,7 +69,7 @@ public partial class SSMSContext : DbContext
             entity.HasKey(e => e.MaterialId).HasName("PK__Material__C506131783370C7D");
 
             entity.Property(e => e.MaterialId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("MaterialID");
             entity.Property(e => e.MaterialNameArabic).HasMaxLength(50);
             entity.Property(e => e.MaterialNameEnglish).HasMaxLength(50);
@@ -99,7 +99,7 @@ public partial class SSMSContext : DbContext
             entity.HasIndex(e => e.UserId, "UQ__Students__1788CCAD10129B91").IsUnique();
 
             entity.Property(e => e.StudentId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("StudentID");
             entity.Property(e => e.ClassId).HasColumnName("ClassID");
             entity.Property(e => e.FullNameArabic).HasMaxLength(50);
@@ -124,7 +124,7 @@ public partial class SSMSContext : DbContext
             entity.HasIndex(e => e.MaterialId).IsUnique();
 
             entity.Property(e => e.TeacherId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("TeacherID");
             entity.Property(e => e.FullNameArabic).HasMaxLength(50);
             entity.Property(e => e.FullNameEnglish).HasMaxLength(50);
@@ -147,7 +147,7 @@ public partial class SSMSContext : DbContext
             entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCACC0EC1719");
 
             entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .HasColumnName("UserID");
             entity.Property(e => e.FullName).HasMaxLength(50);
             entity.Property(e => e.Password).HasMaxLength(50);
