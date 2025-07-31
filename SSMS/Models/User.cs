@@ -29,4 +29,26 @@ public partial class User
 
     [ValidateNever]
     public virtual Teacher? Teacher { get; set; }
+
+
+
+
+
+
+    // Not mapped property for UI display
+    [System.ComponentModel.DataAnnotations.Schema.NotMapped]
+    public string UserTypeDisplay
+    {
+        get
+        {
+            return UserType switch
+            {
+                1 => "Student",
+                2 => "Teacher",
+                3 => "Admin",
+                _ => "Unknown"
+            };
+        }
+    }
+
 }

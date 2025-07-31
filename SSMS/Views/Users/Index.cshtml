@@ -30,7 +30,7 @@
                         <td>@Html.DisplayFor(m => item.FullName)</td>
                         <td>@Html.DisplayFor(m => item.UserName)</td>
                         <td >@Html.DisplayFor(m => item.Password)</td>
-                        <td>@Html.DisplayFor(m => item.UserType)</td>
+                        <td>@item.UserTypeDisplay</td>
                         <td class="action-buttons">
                             <a asp-action="Edit" asp-route-id="@item.UserId" class="btn btn-secondary">Edit</a>
                             <a asp-action="Details" asp-route-id="@item.UserId" class="btn btn-secondary">Details</a>
