@@ -11,8 +11,10 @@ public partial class Material
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int MaterialId { get; set; }
 
+    [Required, StringLength(50)]
     public string MaterialNameArabic { get; set; } = null!;
 
+    [StringLength(50)]
     public string? MaterialNameEnglish { get; set; }
 
     public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();

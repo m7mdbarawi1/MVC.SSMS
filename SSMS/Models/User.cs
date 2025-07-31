@@ -12,13 +12,16 @@ public partial class User
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int UserId { get; set; }
 
+    [Required, StringLength(50)]
     public string FullName { get; set; } = null!;
 
+    [Required, StringLength(50)]
     public string UserName { get; set; } = null!;
 
+    [Required, StringLength(50)]
     public string Password { get; set; } = null!;
 
-    [Range(1, 3, ErrorMessage = "UserType must be 1 (Student), 2 (Teacher), or 3 (Admin).")]
+    [Required, Range(1, 3, ErrorMessage = "UserType must be 1 (Student), 2 (Teacher), or 3 (Admin).")]
     public int UserType { get; set; }
 
     [ValidateNever]

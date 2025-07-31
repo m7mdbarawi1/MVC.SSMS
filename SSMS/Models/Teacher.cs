@@ -12,15 +12,19 @@ public partial class Teacher
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int TeacherId { get; set; }
 
+    [Required]
     public int UserId { get; set; }
-    
+
+    [Required]
     public int MaterialId { get; set; }
 
-    [Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]
+    [Required, Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]
     public int Gender { get; set; }
 
+    [Required, StringLength(50)]
     public string FullNameArabic { get; set; } = null!;
-    //Hello world
+
+    [StringLength(50)]
     public string? FullNameEnglish { get; set; }
 
     [ValidateNever]

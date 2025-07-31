@@ -11,8 +11,10 @@ public partial class Class
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ClassId { get; set; }
 
+    [Required, StringLength(50)]
     public string ClassNameArabic { get; set; } = null!;
 
+    [StringLength(50)]
     public string? ClassNameEnglish { get; set; }
 
     public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();

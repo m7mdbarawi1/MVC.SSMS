@@ -50,45 +50,23 @@ namespace SSMS.Controllers
         {
             return View();
         }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3")]
-        public async Task<IActionResult> Create([Bind("UserId,FullName,UserName,Password,UserType")] User user)
+        public async Task<IActionResult> Create([Bind("FullName,UserName,Password,UserType")] User user)
         {
             if (!ModelState.IsValid)
                 return View(user);
 
             try
             {
-                // Optional manual PK check if UserId is user-supplied
-                if (_context.Users.Any(u => u.UserId == user.UserId))
-                {
-                    ModelState.AddModelError("UserId", $"User with ID {user.UserId} already exists.");
-                    return View(user);
-                }
-
-                _context.Add(user);
+                _context.Add(user);  // UserId auto-generated
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                // Handle SQL Server duplicate PK / constraint violations
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("UserId", "A user with this ID already exists.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred. Please try again.");
-                }
-
+                ModelState.AddModelError("", "An unexpected database error occurred. Please try again.");
                 return View(user);
             }
         }
@@ -109,10 +87,7 @@ namespace SSMS.Controllers
             }
             return View(user);
         }
-
         // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "3")]
@@ -135,22 +110,11 @@ namespace SSMS.Controllers
                 if (!UserExists(user.UserId))
                     return NotFound();
                 else
-                    throw; // If it's a real concurrency issue
+                    throw; // let EF handle real concurrency conflicts
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                // Handle duplicate PK or constraint violations
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("UserId", "A user with this ID already exists.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while updating the user.");
-                }
-
+                ModelState.AddModelError("", "An unexpected database error occurred while updating the user.");
                 return View(user);
             }
         }

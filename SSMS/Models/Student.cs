@@ -12,18 +12,21 @@ public partial class Student
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int StudentId { get; set; }
 
+    [Required]
     public int ClassId { get; set; }
-
+    [Required]
     public int UserId { get; set; }
 
-    [Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]
+    [Required, Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]
     public int Gender { get; set; }
 
+    [Required, StringLength(50)]
     public string FullNameArabic { get; set; } = null!;
 
+    [StringLength(50)]
     public string? FullNameEnglish { get; set; }
 
-    [Range(6, 18, ErrorMessage = "Age must be between 6 and 18.")]
+    [Required, Range(6, 18, ErrorMessage = "Age must be between 6 and 18.")]
     public int? Age { get; set; }
 
     [ValidateNever]

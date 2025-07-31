@@ -73,43 +73,26 @@ namespace SSMS.Controllers
 
             try
             {
-                // ✅ Optional: Check duplicate PK if it's user-supplied
-                if (_context.Classes.Any(c => c.ClassId == @class.ClassId))
-                {
-                    ModelState.AddModelError("ClassId", $"Class with ID {@class.ClassId} already exists.");
-                    ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
-                    return View(@class);
-                }
-
                 // ✅ Assign selected materials
                 var materials = await _context.Materials
                     .Where(m => selectedMaterialIds.Contains(m.MaterialId))
                     .ToListAsync();
                 @class.Materials = materials;
 
-                _context.Add(@class);
+                // ✅ Add new class (ID will be auto-generated)
+                _context.Classes.Add(@class);
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                // ✅ Handle SQL Server duplicate PK
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("ClassId", "A class with this ID already exists.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred. Please try again.");
-                }
-
+                // ✅ Handle unexpected DB errors
+                ModelState.AddModelError("", "An unexpected database error occurred. Please try again.");
                 ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
                 return View(@class);
             }
         }
-
 
 
         // GET: Classes/Edit/5
@@ -182,20 +165,9 @@ namespace SSMS.Controllers
                 if (!ClassExists(@class.ClassId)) return NotFound();
                 else throw;
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                var message = ex.InnerException?.Message ?? ex.Message;
-
-                // ✅ Handle SQL Server duplicate PK
-                if (message.Contains("PRIMARY KEY") || message.Contains("duplicate key"))
-                {
-                    ModelState.AddModelError("ClassId", "A class with this ID already exists.");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "An unexpected database error occurred while updating the class.");
-                }
-
+                ModelState.AddModelError("", "An unexpected database error occurred while updating the class.");
                 ViewBag.Materials = new MultiSelectList(_context.Materials, "MaterialId", "MaterialNameArabic", selectedMaterialIds);
                 return View(@class);
             }
