@@ -33,12 +33,12 @@ namespace SSMS.Controllers
 
             // Build claims using database user
             var claims = new List<Claim>
-{
-    new Claim(ClaimTypes.Name, user.FullName ?? "User"),
-    new Claim("UserID", user.UserId.ToString()),
-    new Claim("UserType", user.UserType.ToString()),
-    new Claim(ClaimTypes.Role, user.UserType.ToString()) // Optional if using role-based [Authorize(Roles = "x")]
-};
+            {
+                new Claim(ClaimTypes.Name, user.FullName ?? "User"),
+                new Claim("UserID", user.UserId.ToString()),
+                new Claim("UserType", user.UserType.ToString()),
+                new Claim(ClaimTypes.Role, user.UserType.ToString()) // Optional if using role-based [Authorize(Roles = "x")]
+            };
 
             var identity = new ClaimsIdentity(claims, "SSMSAuth");
             var principal = new ClaimsPrincipal(identity);

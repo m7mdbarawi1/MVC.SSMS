@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SSMS.Models;
 
-public partial class Student
+public partial class Student : NormalUser
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,17 +14,6 @@ public partial class Student
 
     [Required]
     public int ClassId { get; set; }
-    [Required]
-    public int UserId { get; set; }
-
-    [Required, Range(0, 1, ErrorMessage = "Gender must be 0 (Female) or 1 (Male).")]
-    public int Gender { get; set; }
-
-    [Required, StringLength(50)]
-    public string FullNameArabic { get; set; } = null!;
-
-    [StringLength(50)]
-    public string? FullNameEnglish { get; set; }
 
     [Required, Range(6, 18, ErrorMessage = "Age must be between 6 and 18.")]
     public int? Age { get; set; }
@@ -33,6 +22,5 @@ public partial class Student
     public virtual Class Class { get; set; } = null!;
 
     public virtual ICollection<Mark> Marks { get; set; } = new List<Mark>();
-    [ValidateNever]
-    public virtual User User { get; set; }
+
 }
