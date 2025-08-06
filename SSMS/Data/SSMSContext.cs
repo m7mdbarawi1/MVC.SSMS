@@ -11,9 +11,9 @@ public partial class SSMSContext : DbContext
     {
     }
 
-    public SSMSContext(DbContextOptions<SSMSContext> options)
-        : base(options)
+    public SSMSContext(DbContextOptions<SSMSContext> options) : base(options)
     {
+        Console.WriteLine("Connected to: " + Database.GetDbConnection().ConnectionString);
     }
 
     public virtual DbSet<Class> Classes { get; set; }
@@ -23,8 +23,10 @@ public partial class SSMSContext : DbContext
     public virtual DbSet<Teacher> Teachers { get; set; }
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=Mohammad\\SQLEXPRESS;Database=SSMS;Trusted_Connection=True;Encrypt=False;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+     //   => optionsBuilder.UseSqlServer("Server=Mohammad\\SQLEXPRESS;Database=SSMS;Trusted_Connection=True;Encrypt=False;");
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

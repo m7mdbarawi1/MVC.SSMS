@@ -19,16 +19,23 @@ builder.Services.AddAuthentication("SSMSAuth")
 // you look good!
 builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews();
-
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Pipeline
+// ✅ Environment-based error handling
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts(); // Added for HTTPS security in production
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthentication();
@@ -37,5 +44,4 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 app.Run();
